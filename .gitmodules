@@ -1,0 +1,3 @@
+[submodule "stockscreener-react"]
+	path = stockscreener-react
+	url = https://markojagor@bitbucket.org/markojagor/stock-screener-application.git/src/main/webapp/stockscreener-react
