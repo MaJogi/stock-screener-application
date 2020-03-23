@@ -5,8 +5,11 @@ import com.taltech.stockscreenerapplication.model.Ticker;
 import com.taltech.stockscreenerapplication.repository.TickerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/tickers")
@@ -19,5 +22,11 @@ public class TickerController {
     public Iterable<Ticker> getTickers() {
 
         return tickerRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Ticker> getTicker(@PathVariable long id) {
+
+        return tickerRepository.findById(id);
     }
 }
