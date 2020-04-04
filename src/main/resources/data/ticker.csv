@@ -1,5 +1,5 @@
 id;ticker;company;last_price;chg_percentage;chg;rating;volume;mkt_cap;p_e;eps;employees;sector
-1;TVEAT;TALLINNA VESI;12.85;0;0;Buy;4.731;257;;1.39;;Utilities
+1;TVEAT;TALLINNA VESI;12.85;0;0;Buy;4.731;257;9.24;1.39;;Utilities
 2;TSM1T;TALLINNA SADAM;2.11;-1.40;-0.03;Buy;37.167;562.82;12.63;0.17;;Transportation
 3;TPD1T;TRIGON PROPERTY DEVELOPMENT;0.478;1.7;0.008;Sell;2.628;2.115;;-0.01;;Consumer Durables
 4;TKM1T;TALLINNA KAUBAMAJA GRUPP;9.16;0.22;0.02;Buy;37.715;372.265;11.96;0.76;;Retail Trade
