@@ -1,0 +1,17 @@
+﻿ticker_id;name;employees;sector;industry
+TAL1T;TALLINK GRUPP;;Transportation;Marine Shipping
+TS1T;TALLINNA SADA;;Transportation;Other Transportation
+TK1T;TALLINNA KAUBAAJA GRUPP;;Retail Trade;Food Retail
+LHV1T;LHV GROUP;449;Finance;Financial Conglomerates
+TVEAT;TALLINNA VESI;325;Utilities;Water Utilities
+RK1T;ERKO EHITUS;;Industrial Services;Engineering & Construction
+HAE1T;HARJU ELEKTER;791;Producer Manufacturing;Electrical Products
+PKG1T;PRO KAPITAL GRUPP;;Finance;Real Estate Development
+NCN1T;NORDECON;;Industrial Services;Engineering & Construction
+EEG1T;EKSPRESS GRUPP;;Consumer Services;Publishing: Books/Magazines
+ARC1T;ARCO VARA;;Finance;Real Estate Development
+BLT1T;BALTIKA;;Consumer Non-Durables;Apparel/Footwear
+CPA1T;COOP PANK;;Finance;Regional Banks
+EFT1T;EFTEN REAL ESTATE FUND III;12;Miscellaneous;Investment Trusts/Mutual Funds
+PRF1T;PRFOODS;345;Consumer Non-Durables;Food: Major Diversified
+SFG1T;SILVANO FASHION GROUP;;Consumer Non-Durables;Apparel/Footwear
