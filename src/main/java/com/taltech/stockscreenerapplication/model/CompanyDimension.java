@@ -20,7 +20,7 @@ public class CompanyDimension {
 
     @Id
     @Column(name = "ticker_id")
-    private long ticker_id;
+    private String ticker_id;
 
     @Column(name = "name")
     private String name;
