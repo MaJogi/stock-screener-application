@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -34,14 +31,26 @@ public class CompanyDimension {
     @Column(name = "industry")
     private String industry;
 
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private FinancialsDaily financialsDaily;
+
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private FinancialsQuarterly financialsQuarterly;
+
     @Override
     public String toString() {
         return "CompanyDimension{" +
-                "ticker_id=" + ticker_id +
+                "ticker_id='" + ticker_id + '\'' +
                 ", name='" + name + '\'' +
                 ", employees=" + employees +
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
+                ", financialsDaily=" + financialsDaily +
+                ", financialsQuarterly=" + financialsQuarterly +
                 '}';
     }
 }

@@ -20,7 +20,7 @@ public class FinancialsDaily {
 
     @Id
     @Column(name = "ticker_id")
-    private String ticker_Id;
+    private String ticker_id;
 
     @Column(name = "div_yield")
     private Double div_yield;
@@ -73,7 +73,7 @@ public class FinancialsDaily {
     @Override
     public String toString() {
         return "FinancialsDaily{" +
-                "ticker_Id='" + ticker_Id + '\'' +
+                "ticker_id='" + ticker_id + '\'' +
                 ", div_yield=" + div_yield +
                 ", mkt_cap=" + mkt_cap +
                 ", p_e=" + p_e +
