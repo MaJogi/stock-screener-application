@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "financialsDaily")
+@Table(name = "financials_daily")
 public class FinancialsDaily {
 
     @Id
@@ -23,52 +23,52 @@ public class FinancialsDaily {
     private String ticker_Id;
 
     @Column(name = "div_yield")
-    private double div_yield;
+    private Double div_yield;
 
     @Column(name = "mkt_cap")
-    private double mkt_cap;
+    private Double mkt_cap;
 
     @Column(name = "p_e")
-    private double p_e;
+    private Double p_e;
 
     @Column(name = "price_rev")
-    private double price_rev;
+    private Double price_rev;
 
     @Column(name = "p_b")
-    private double p_b;
+    private Double p_b;
 
     @Column(name = "ev_ebitda")
-    private double ev_ebitda;
+    private Double ev_ebitda;
 
     @Column(name = "ev")
-    private double ev;
+    private Double ev;
 
     @Column(name = "chg")
-    private double chg;
+    private Double chg;
 
     @Column(name = "weekly_perf")
-    private double weekly_perf;
+    private Double weekly_perf;
 
     @Column(name = "monthly_perf")
-    private double monthly_perf;
+    private Double monthly_perf;
 
-    @Column(name = "3_month_perf")
-    private double three_month_perf;
+    @Column(name = "three_month_perf")
+    private Double three_month_perf;
 
-    @Column(name = "6_month_perf")
-    private double six_month_perf;
+    @Column(name = "six_month_perf")
+    private Double six_month_perf;
 
     @Column(name = "ytd_perf")
-    private double ytd_perf;
+    private Double ytd_perf;
 
     @Column(name = "yearly_perf")
-    private double yearly_perf;
+    private Double yearly_perf;
 
-    @Column(name = "1_y_beta")
-    private double one_year_beta;
+    @Column(name = "one_y_beta")
+    private Double one_year_beta;
 
     @Column(name = "volatility")
-    private double volatility;
+    private Double volatility;
 
     @Override
     public String toString() {

@@ -1,4 +1,4 @@
-﻿ticker_id;div_yield;mkt_cap;p_e;price_rev;p_b;ev_ebitda;ev;chg;weekly_perf;monthly_perf;3_month_perf;6_month_perf;ytd_perf;yearly_perf;1_y_beta;volatility
+﻿ticker_id;div_yield;mkt_cap;p_e;price_rev;p_b;ev_ebitda;ev;chg;weekly_perf;monthly_perf;three_month_perf;six_month_perf;ytd_perf;yearly_perf;one_y_beta;volatility
 TAL1T;;411308;9.68;0.43;0.4815;8.01;1160000;0.0195;-0.0063;-0.3129;-0.3485;-0.3362;-0.3566;-0.3843;1.26;0.0225
 TS1T;0.0859;410280;9.36;3.14;1.38;9.39;694718;0.016;0.0292;-0.168;-0.2035;-0.1954;-0.2015;-0.2696;1.04;0.016
 TK1T;0.0966;339682;10.91;0.47;1.59;7.88;526185;0.0106;-0.0821;-0.1611;-0.1556;-0.0663;-0.1461;-0.1364;0.56;0.016

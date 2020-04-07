@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "financialsQuarterly")
+@Table(name = "financials_quarterly")
 public class FinancialsQuarterly {
 
     @Id
@@ -23,82 +23,82 @@ public class FinancialsQuarterly {
     private String ticker_id;
 
     @Column(name = "current_ratio")
-    private double current_ratio;
+    private Double current_ratio;
 
     @Column(name = "debt_to_equity")
-    private double debt_to_equity;
+    private Double debt_to_equity;
 
     @Column(name = "net_debt")
-    private double net_debt;
+    private Double net_debt;
 
     @Column(name = "quick_ratio")
-    private double quick_ratio;
+    private Double quick_ratio;
 
     @Column(name = "assets")
-    private double assets;
+    private Double assets;
 
     @Column(name = "debt")
-    private double debt;
+    private Double debt;
 
     @Column(name = "current_assets")
-    private double current_assets;
+    private Double current_assets;
 
     @Column(name = "eps_fy")
-    private double eps_fy;
+    private Double eps_fy;
 
     @Column(name = "eps_ttm")
-    private double eps_ttm;
+    private Double eps_ttm;
 
     @Column(name = "eps_diluted")
-    private double eps_diluted;
+    private Double eps_diluted;
 
     @Column(name = "ebitda")
-    private double ebitda;
+    private Double ebitda;
 
     @Column(name = "gross_profit_mrq")
-    private double gross_profit_mrq;
+    private Double gross_profit_mrq;
 
     @Column(name = "gross_profit_fy")
-    private double gross_profit_fy;
+    private Double gross_profit_fy;
 
     @Column(name = "revenue")
-    private double revenue;
+    private Double revenue;
 
     @Column(name = "eps_diluted_fy")
-    private double eps_diluted_fy;
+    private Double eps_diluted_fy;
 
     @Column(name = "annual_revenue")
-    private double annual_revenue;
+    private Double annual_revenue;
 
     @Column(name = "income")
-    private double income;
+    private Double income;
 
     @Column(name = "gross_mrq")
-    private double gross_mrq;
+    private Double gross_mrq;
 
     @Column(name = "operating_mrq")
-    private double operating_mrq;
+    private Double operating_mrq;
 
     @Column(name = "pretax_mrq")
-    private double pretax_mrq;
+    private Double pretax_mrq;
 
     @Column(name = "net_mrq")
-    private double net_mrq;
+    private Double net_mrq;
 
     @Column(name = "div_paid")
-    private double div_paid;
+    private Double div_paid;
 
     @Column(name = "div_per_share")
-    private double div_per_share;
+    private Double div_per_share;
 
     @Column(name = "roa")
-    private double roa;
+    private Double roa;
 
     @Column(name = "roe")
-    private double roe;
+    private Double roe;
 
     @Column(name = "shares")
-    private double shares;
+    private Integer shares;
 
     @Override
     public String toString() {

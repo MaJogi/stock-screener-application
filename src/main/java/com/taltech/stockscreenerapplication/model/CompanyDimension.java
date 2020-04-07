@@ -15,7 +15,7 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "companyDimension")
+@Table(name = "company_dimension")
 public class CompanyDimension {
 
     @Id
