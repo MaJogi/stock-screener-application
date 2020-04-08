@@ -1,10 +1,10 @@
 ﻿ticker_id;name;employees;sector;industry
 TAL1T;TALLINK GRUPP;;Transportation;Marine Shipping
-TSM1T;TALLINNA SADA;;Transportation;Other Transportation
-TKM1T;TALLINNA KAUBAAJA GRUPP;;Retail Trade;Food Retail
+TSM1T;TALLINNA SADAM;;Transportation;Other Transportation
+TKM1T;TALLINNA KAUBAMAJA GRUPP;;Retail Trade;Food Retail
 LHV1T;LHV GROUP;449;Finance;Financial Conglomerates
 TVEAT;TALLINNA VESI;325;Utilities;Water Utilities
-MRK1T;ERKO EHITUS;;Industrial Services;Engineering & Construction
+MRK1T;MERKO EHITUS;;Industrial Services;Engineering & Construction
 HAE1T;HARJU ELEKTER;791;Producer Manufacturing;Electrical Products
 PKG1T;PRO KAPITAL GRUPP;;Finance;Real Estate Development
 NCN1T;NORDECON;;Industrial Services;Engineering & Construction
