@@ -22,6 +22,9 @@ public class FinancialsDaily {
     @Column(name = "ticker_id")
     private String ticker_id;
 
+    @Column(name = "price")
+    private Double price;
+
     @Column(name = "div_yield")
     private Double div_yield;
 

@@ -60,7 +60,7 @@ public class FinancialsDailySpringBatchConfig {
 
         lineTokenizer.setDelimiter(";");
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("ticker_id", "div_yield", "mkt_cap", "p_e", "price_rev", "p_b", "ev_ebitda", "ev", "chg", "weekly_perf", "monthly_perf",
+        lineTokenizer.setNames("ticker_id", "price", "div_yield", "mkt_cap", "p_e", "price_rev", "p_b", "ev_ebitda", "ev", "chg", "weekly_perf", "monthly_perf",
                 "three_month_perf", "six_month_perf", "ytd_perf", "yearly_perf", "one_y_beta", "volatility");
 
         BeanWrapperFieldSetMapper<FinancialsDaily> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
