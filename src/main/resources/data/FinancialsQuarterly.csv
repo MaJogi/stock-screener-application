@@ -1,4 +1,4 @@
-﻿ticker_id;current_ratio;debt_to_equity;net_debt;quick_ratio;assets;debt;current_assets;eps_fy;eps_ttm;eps_diluted;ebitda;gross_profit_mrq;gross_profit_fy;revenue;eps_diluted_fy;annual_revenue;income;gross_mrq;operating_mrq;pretax_mrq;net_mrq;div_paid;div_per_share;roa;roe;shares
+﻿ticker_id;current_ratio;debt_to_equity;net_debt;quick_ratio;assets;debt;current_assets;eps_fy;eps_ttm;eps_diluted_ttm;ebitda;gross_profit_mrq;gross_profit_fy;revenue;eps_diluted_fy;annual_revenue;income;gross_mrq;operating_mrq;pretax_mrq;net_mrq;div_paid;div_per_share;roa;roe;shares
 TAL1T;0.51;0.69;526584;0.36;1564000;564821;139767;0.06;0.06;0.06;157691;86682;175469;949723;0.06;949723;40049;0.2027;0.0691;0.0544;0.0448;-20096;0.12;0.0274;0.0507;669882
 TSM1T;1.48;0.55;172663;1.47;625532;207846;46347;0.17;0.17;0.17;73999;8928;50963;130536;0.17;130536;44404;0.4382;0.3904;0.3825;0.3402;-34970;;0.0711;0.1193;263000
 TKM1T;1;0.9;163695;0.41;522313;204324;135838;0.76;0.76;0.76;66783;23752;83647;717223;0.76;717223;31137;0.1127;0.0504;0.0522;0.0434;-28917;0.73;0.0667;0.1373;40729

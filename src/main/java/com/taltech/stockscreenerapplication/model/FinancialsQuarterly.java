@@ -49,8 +49,8 @@ public class FinancialsQuarterly {
     @Column(name = "eps_ttm")
     private Double eps_ttm;
 
-    @Column(name = "eps_diluted")
-    private Double eps_diluted;
+    @Column(name = "eps_diluted_ttm")
+    private Double eps_diluted_ttm;
 
     @Column(name = "ebitda")
     private Double ebitda;
@@ -113,7 +113,7 @@ public class FinancialsQuarterly {
                 ", current_assets=" + current_assets +
                 ", eps_fy=" + eps_fy +
                 ", eps_ttm=" + eps_ttm +
-                ", eps_diluted=" + eps_diluted +
+                ", eps_diluted=" + eps_diluted_ttm +
                 ", ebitda=" + ebitda +
                 ", gross_profit_mrq=" + gross_profit_mrq +
                 ", gross_profit_fy=" + gross_profit_fy +

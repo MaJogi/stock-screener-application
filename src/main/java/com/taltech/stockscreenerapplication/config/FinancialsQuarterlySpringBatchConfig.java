@@ -60,7 +60,7 @@ public class FinancialsQuarterlySpringBatchConfig {
 
         lineTokenizer.setDelimiter(";");
         lineTokenizer.setStrict(false);
-        lineTokenizer.setNames("ticker_id", "current_ratio", "debt_to_equity", "net_debt", "quick_ratio", "assets", "debt", "current_assets", "eps_fy", "eps_ttm", "eps_diluted", "ebitda",
+        lineTokenizer.setNames("ticker_id", "current_ratio", "debt_to_equity", "net_debt", "quick_ratio", "assets", "debt", "current_assets", "eps_fy", "eps_ttm", "eps_diluted_ttm", "ebitda",
                 "gross_profit_mrq", "gross_profit_fy", "revenue", "eps_diluted_fy", "annual_revenue", "income", "gross_mrq",
                 "operating_mrq", "pretax_mrq", "net_mrq", "div_paid", "div_per_share", "roa", "roe", "shares");
 
