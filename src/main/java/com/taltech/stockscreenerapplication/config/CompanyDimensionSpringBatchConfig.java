@@ -1,6 +1,8 @@
 package com.taltech.stockscreenerapplication.config;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.FinancialsDaily;
+import com.taltech.stockscreenerapplication.model.FinancialsQuarterly;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
@@ -23,21 +25,39 @@ import org.springframework.core.io.FileSystemResource;
 public class CompanyDimensionSpringBatchConfig {
 
     @Bean
-    public Job companyDimensionJob(JobBuilderFactory jobBuilderFactory,
-                                   StepBuilderFactory stepBuilderFactory,
-                                   ItemReader<CompanyDimension> itemReader,
-                                   ItemWriter<CompanyDimension> itemWriter
+    public Job companyObjectJob(JobBuilderFactory jobBuilderFactory,
+                                StepBuilderFactory stepBuilderFactory,
+                                ItemReader<CompanyDimension> companyDimensionItemReader,
+                                ItemWriter<CompanyDimension> companyDimensionItemWriter,
+                                ItemReader<FinancialsDaily> financialsDailyItemReader,
+                                ItemWriter<FinancialsDaily> financialsDailyItemWriter,
+                                ItemReader<FinancialsQuarterly> financialsQuarterlyItemReader,
+                                ItemWriter<FinancialsQuarterly> financialsQuarterlyItemWriter
     ) {
 
-        Step step = stepBuilderFactory.get("ETL-file-laod")
+        Step companyDimensionStep = stepBuilderFactory.get("ETL-file-load")
                 .<CompanyDimension, CompanyDimension>chunk(100)
-                .reader(itemReader)
-                .writer(itemWriter)
+                .reader(companyDimensionItemReader)
+                .writer(companyDimensionItemWriter)
+                .build();
+
+        Step financialsDailyStep = stepBuilderFactory.get("ETL-file-load")
+                .<FinancialsDaily, FinancialsDaily>chunk(100)
+                .reader(financialsDailyItemReader)
+                .writer(financialsDailyItemWriter)
+                .build();
+
+        Step financialsQuarterlyStep = stepBuilderFactory.get("ETL-file-load")
+                .<FinancialsQuarterly, FinancialsQuarterly>chunk(100)
+                .reader(financialsQuarterlyItemReader)
+                .writer(financialsQuarterlyItemWriter)
                 .build();
 
         return jobBuilderFactory.get("ETL-Load")
                 .incrementer(new RunIdIncrementer())
-                .start(step)
+                .start(companyDimensionStep)
+                .next(financialsDailyStep)
+                .next(financialsQuarterlyStep)
                 .build();
     }
 

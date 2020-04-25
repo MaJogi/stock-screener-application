@@ -1,14 +1,7 @@
 package com.taltech.stockscreenerapplication.config;
 
 import com.taltech.stockscreenerapplication.model.FinancialsDaily;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
-import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -21,25 +14,6 @@ import org.springframework.core.io.FileSystemResource;
 @Configuration
 @EnableBatchProcessing
 public class FinancialsDailySpringBatchConfig {
-
-    @Bean
-    public Job financialsDailyJob(JobBuilderFactory jobBuilderFactory,
-                                  StepBuilderFactory stepBuilderFactory,
-                                  ItemReader<FinancialsDaily> itemReader,
-                                  ItemWriter<FinancialsDaily> itemWriter
-    ) {
-
-        Step step = stepBuilderFactory.get("ETL-file-laod")
-                .<FinancialsDaily, FinancialsDaily>chunk(100)
-                .reader(itemReader)
-                .writer(itemWriter)
-                .build();
-
-        return jobBuilderFactory.get("ETL-Load")
-                .incrementer(new RunIdIncrementer())
-                .start(step)
-                .build();
-    }
 
     @Bean
     public FlatFileItemReader<FinancialsDaily> financialsDailyItemReader() {
