@@ -15,7 +15,7 @@ public class FinancialsQuarterlyDBWriter implements ItemWriter<FinancialsQuarter
     private FinancialsQuarterlyRepository financialsQuarterlyRepository;
 
     @Override
-    public void write(List<? extends FinancialsQuarterly> financialsQuarterlies) throws Exception {
+    public void write(List<? extends FinancialsQuarterly> financialsQuarterlies) {
         financialsQuarterlyRepository.saveAll(financialsQuarterlies);
     }
 }

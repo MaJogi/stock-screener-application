@@ -34,7 +34,7 @@ class CompanyDimensionSpringBatchConfigTest {
 
     @Autowired
     FinancialsDailyRepository financialsDailyRepository;
-    
+
     @Autowired
     FinancialsQuarterlyRepository financialsQuarterlyRepository;
 
@@ -48,21 +48,21 @@ class CompanyDimensionSpringBatchConfigTest {
         financialsQuarterlyRepository.deleteAll();
 
         List<CompanyDimension> companyDimensions = companyDimensionRepository.findAll();
-        Assert.assertTrue(companyDimensions.size() == 0);
+        Assert.assertEquals(0, companyDimensions.size());
         List<FinancialsDaily> financialsDailies = financialsDailyRepository.findAll();
-        Assert.assertTrue(financialsDailies.size() == 0);
+        Assert.assertEquals(0, financialsDailies.size());
         List<FinancialsQuarterly> financialsQuarterlies = financialsQuarterlyRepository.findAll();
-        Assert.assertTrue(financialsQuarterlies.size() == 0);
+        Assert.assertEquals(0, financialsQuarterlies.size());
 
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
 
         Assert.assertEquals("COMPLETED", jobExecution.getExitStatus().getExitCode());
 
         companyDimensions = companyDimensionRepository.findAll();
-        Assert.assertTrue(companyDimensions.size() == companiesCount);
+        Assert.assertEquals(companyDimensions.size(), companiesCount);
         financialsDailies = financialsDailyRepository.findAll();
-        Assert.assertTrue(financialsDailies.size() == companiesCount);
+        Assert.assertEquals(financialsDailies.size(), companiesCount);
         financialsQuarterlies = financialsQuarterlyRepository.findAll();
-        Assert.assertTrue(financialsQuarterlies.size() == companiesCount);
+        Assert.assertEquals(financialsQuarterlies.size(), companiesCount);
     }
 }

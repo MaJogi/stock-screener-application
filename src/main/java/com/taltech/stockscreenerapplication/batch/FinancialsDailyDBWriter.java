@@ -15,7 +15,7 @@ public class FinancialsDailyDBWriter implements ItemWriter<FinancialsDaily> {
     private FinancialsDailyRepository financialsDailyRepository;
 
     @Override
-    public void write(List<? extends FinancialsDaily> financialsDailies) throws Exception {
+    public void write(List<? extends FinancialsDaily> financialsDailies) {
         financialsDailyRepository.saveAll(financialsDailies);
     }
 }

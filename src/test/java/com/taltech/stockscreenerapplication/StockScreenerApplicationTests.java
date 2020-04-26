@@ -14,7 +14,7 @@ class StockScreenerApplicationTests {
     private CompanyDimensionController companyDimensionController;
 
     @Test
-    void contextLoads() throws Exception {
+    void contextLoads() {
         assertThat(companyDimensionController).isNotNull();
     }
 

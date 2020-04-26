@@ -15,7 +15,7 @@ public class CompanyDimensionDBWriter implements ItemWriter<CompanyDimension> {
     private CompanyDimensionRepository companyDimensionRepository;
 
     @Override
-    public void write(List<? extends CompanyDimension> companyDimensions) throws Exception {
+    public void write(List<? extends CompanyDimension> companyDimensions) {
         companyDimensionRepository.saveAll(companyDimensions);
     }
 }
