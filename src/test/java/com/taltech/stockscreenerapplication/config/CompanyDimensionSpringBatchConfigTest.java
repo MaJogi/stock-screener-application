@@ -31,13 +31,15 @@ class CompanyDimensionSpringBatchConfigTest {
 
     @Autowired
     CompanyDimensionRepository companyDimensionRepository;
+
     @Autowired
     FinancialsDailyRepository financialsDailyRepository;
+    
     @Autowired
     FinancialsQuarterlyRepository financialsQuarterlyRepository;
 
     @Test
-    void companyObjectJob() throws Exception {
+    void companyObjectJobTest() throws Exception {
 
         int companiesCount = 16;
 
