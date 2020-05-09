@@ -37,12 +37,12 @@ class CompanyDimensionControllerTest {
     @Test
     void getCompanyTest() {
         CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/TAL1T", CompanyDimension.class);
-        assertNotNull(companyDimension);
+        assertNotNull(companyDimension.getTicker_id());
     }
 
     @Test
     void getCompanyIsNullTest() {
         CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/AAAAA", CompanyDimension.class);
-        assertNull(companyDimension);
+        assertNull(companyDimension.getTicker_id());
     }
 }
