@@ -29,20 +29,20 @@ class CompanyDimensionControllerTest {
 
     @Test
     void getCompaniesTest() {
-        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/company", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/companies", String.class);
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         assertNotNull(response.getBody());
     }
 
     @Test
     void getCompanyTest() {
-        CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "company/TAL1T", CompanyDimension.class);
+        CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/TAL1T", CompanyDimension.class);
         assertNotNull(companyDimension);
     }
 
     @Test
     void getCompanyIsNullTest() {
-        CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "company/AAAAA", CompanyDimension.class);
+        CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/AAAAA", CompanyDimension.class);
         assertNull(companyDimension);
     }
 }
