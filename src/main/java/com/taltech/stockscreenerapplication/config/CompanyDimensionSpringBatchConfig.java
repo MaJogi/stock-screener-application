@@ -100,12 +100,13 @@ public class CompanyDimensionSpringBatchConfig {
         if (type == CompanyDimension.class) {
             lineTokenizer.setNames("ticker_id", "name", "employees", "sector", "industry");
         } else if (type == FinancialsDaily.class) {
-            lineTokenizer.setNames("ticker_id", "price", "div_yield", "mkt_cap", "p_e", "price_rev", "p_b", "ev_ebitda", "ev", "chg", "weekly_perf", "monthly_perf",
-                    "three_month_perf", "six_month_perf", "ytd_perf", "yearly_perf", "one_y_beta", "volatility");
+            lineTokenizer.setNames("ticker_id", "price", "div_yield", "mkt_cap", "p_e", "price_rev", "p_b", "ev_ebitda",
+                    "ev", "chg", "weekly_perf", "monthly_perf", "three_month_perf", "six_month_perf", "ytd_perf",
+                    "yearly_perf", "one_y_beta", "volatility");
         } else if (type == FinancialsQuarterly.class) {
-            lineTokenizer.setNames("ticker_id", "current_ratio", "debt_to_equity", "net_debt", "quick_ratio", "assets", "debt",
-                    "current_assets", "eps_fy", "eps_ttm", "eps_diluted_ttm", "ebitda",
-                    "gross_profit_mrq", "gross_profit_fy", "revenue", "eps_diluted_fy", "annual_revenue", "income", "gross_mrq",
+            lineTokenizer.setNames("ticker_id", "current_ratio", "debt_to_equity", "net_debt", "quick_ratio", "assets",
+                    "debt", "current_assets", "eps_fy", "eps_ttm", "eps_diluted_ttm", "ebitda", "gross_profit_mrq",
+                    "gross_profit_fy", "revenue", "eps_diluted_fy", "annual_revenue", "income", "gross_mrq",
                     "operating_mrq", "pretax_mrq", "net_mrq", "div_paid", "div_per_share", "roa", "roe", "shares");
         }
 
