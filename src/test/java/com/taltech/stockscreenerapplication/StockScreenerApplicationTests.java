@@ -13,7 +13,7 @@ class StockScreenerApplicationTests {
     private CompanyDimensionController companyDimensionController;
 
     @Test
-    void contextLoads() {
+        /* default */ void contextLoads() {
         Assert.assertNotNull(companyDimensionController);
     }
 

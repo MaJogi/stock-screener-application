@@ -23,10 +23,10 @@ public class CompanyDimensionController {
         return companyDimensionRepository.findAll();
     }
 
-    @GetMapping(value = "/{id}")
-    public CompanyDimension getCompany(@PathVariable String id) {
+    @GetMapping("/{tickerId}")
+    public CompanyDimension getCompany(@PathVariable final String tickerId) {
 
-        return companyDimensionRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + id));
+        return companyDimensionRepository.findById(tickerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + tickerId));
     }
 }

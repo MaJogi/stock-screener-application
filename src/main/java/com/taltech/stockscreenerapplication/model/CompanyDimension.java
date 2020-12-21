@@ -2,15 +2,12 @@ package com.taltech.stockscreenerapplication.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "company_dimension")
 public class CompanyDimension {
@@ -19,7 +16,7 @@ public class CompanyDimension {
     @Column(name = "ticker_id")
     private String ticker_id;
 
-    @Column(name = "name")
+    @Column(name = "company_name")
     private String name;
 
     @Column(name = "employees")
@@ -41,11 +38,14 @@ public class CompanyDimension {
     @PrimaryKeyJoinColumn
     private FinancialsQuarterly financialsQuarterly;
 
+    public CompanyDimension() { //empty constructor
+    }
+
     @Override
     public String toString() {
         return "CompanyDimension{" +
                 "ticker_id='" + ticker_id + '\'' +
-                ", name='" + name + '\'' +
+                ", company_name='" + name + '\'' +
                 ", employees=" + employees +
                 ", sector='" + sector + '\'' +
                 ", industry='" + industry + '\'' +
