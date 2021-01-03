@@ -27,7 +27,7 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
-    private Set<CompanyDimension> companyDimensions;
+    private transient Set<CompanyDimension> companyDimensions;
 
     private Collection<? extends GrantedAuthority> authorities;
 

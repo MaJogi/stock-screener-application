@@ -1,6 +1,5 @@
 INSERT INTO roles(name)
-VALUES ('ROLE_USER'),
-        ('ROLE_ADMIN');
+VALUES ('ROLE_USER');
 
 INSERT INTO company_dimension (ticker_id,company_name,employees,sector,industry)
 VALUES ('TAL1T','TALLINK GRUPP',null,'Transportation','Marine Shipping'),

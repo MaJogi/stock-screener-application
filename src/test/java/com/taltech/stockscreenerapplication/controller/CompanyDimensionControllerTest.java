@@ -30,19 +30,18 @@ class CompanyDimensionControllerTest {
     @Test
     void getCompaniesTest() {
         ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/companies", String.class);
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-        assertNotNull(response.getBody());
+        assertThat("The response status to query company by id is not 200.", response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
     @Test
     void getCompanyTest() {
         CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/TAL1T", CompanyDimension.class);
-        assertNotNull(companyDimension.getTicker_id());
+        assertNotNull(companyDimension.getTicker_id(), "The request does not return company by id.");
     }
 
     @Test
     void getCompanyIsNullTest() {
         CompanyDimension companyDimension = restTemplate.getForObject(getRootUrl() + "companies/AAAAA", CompanyDimension.class);
-        assertNull(companyDimension.getTicker_id());
+        assertNull(companyDimension.getTicker_id(), "The response for non-existing company should be null.");
     }
 }

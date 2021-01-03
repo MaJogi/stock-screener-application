@@ -23,7 +23,7 @@ public class User {
 
     @NotBlank
     @Size(min = 3, max = 20)
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @NotBlank

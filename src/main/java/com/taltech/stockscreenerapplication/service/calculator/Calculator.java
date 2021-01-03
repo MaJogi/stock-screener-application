@@ -40,7 +40,7 @@ public class Calculator {
         }
     }
 
-    private Map<String, Double> getTickerPriceMap() {
+    public Map<String, Double> getTickerPriceMap() {
         Iterable<FinancialsDaily> results = financialsDailyRepository.findAll();
 
         Map<String, Double> tickerPriceMap = new HashMap<>();
@@ -50,7 +50,7 @@ public class Calculator {
         return tickerPriceMap;
     }
 
-    private Map<String, Double> getEpsValuesMap() {
+    public Map<String, Double> getEpsValuesMap() {
         Iterable<FinancialsQuarterly> results = financialsQuarterlyRepository.findAll();
 
         Map<String, Double> epsValuesMap = new HashMap<>();
@@ -60,7 +60,7 @@ public class Calculator {
         return epsValuesMap;
     }
 
-    private Map<String, Double> getDividendPaidPerShareMap() {
+    public Map<String, Double> getDividendPaidPerShareMap() {
         Iterable<FinancialsQuarterly> results = financialsQuarterlyRepository.findAll();
 
         Map<String, Double> dividendPaidPerShareMap = new HashMap<>();
@@ -70,7 +70,7 @@ public class Calculator {
         return dividendPaidPerShareMap;
     }
 
-    private static Map<String, Double> doCalculations(final Map<String, Double> firstSet, final Map<String, Double> secondSet) {
+    public static Map<String, Double> doCalculations(final Map<String, Double> firstSet, final Map<String, Double> secondSet) {
         Map<String, Double> calculatedSet = new HashMap<>();
 
         for (Map.Entry<String, Double> firstEntry : firstSet.entrySet()) {

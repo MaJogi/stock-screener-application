@@ -53,7 +53,7 @@ public class AuthenticationController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
+        String jwt = jwtUtils.createJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
@@ -79,20 +79,15 @@ public class AuthenticationController {
                     .body(new MessageResponse("Username is already taken!"));
         }
 
-        //Create new account
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getFirstName(),
                 signUpRequest.getLastName(),
                 encoder.encode(signUpRequest.getPassword()));
 
-        Set<String> strRoles = signUpRequest.getRole();
         Set<UserRole> userRoles = new HashSet<>();
-
-        if (strRoles == null) {
-            UserRole userRole = userRoleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            userRoles.add(userRole);
-        }
+        UserRole userRole = userRoleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        userRoles.add(userRole);
 
         user.setRoles(userRoles);
         userRepository.save(user);
