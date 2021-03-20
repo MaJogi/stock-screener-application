@@ -1,0 +1,1 @@
+Security.jwt paketis on JWT (JSON Web Token) võtmega seotud tegevused nagu võtme genereerimine, valideerimine, filtri defineerimine.

@@ -1,0 +1,1 @@
+Service.calculator paketis olevaid klasse kasutatakse finantssuhtarvude arvutamiseks ning perioodiliselt jooksva kalkulaatori töövoo defineerimiseks.

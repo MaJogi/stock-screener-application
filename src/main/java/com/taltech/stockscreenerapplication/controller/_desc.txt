@@ -1,0 +1,1 @@
+Controller paketis olevad klassid kontrollivad andmete liikumist päringute kaudu.

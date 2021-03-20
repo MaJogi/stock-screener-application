@@ -1,0 +1,1 @@
+Reposotory paketis olevad klassid võimaldavad teostada erinevaid päringuid andmebaasis olevate andmete vastu.

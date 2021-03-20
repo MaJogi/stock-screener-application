@@ -1,0 +1,1 @@
+Test kaust sisaldab rakenduse kontrolliks koostatud unit-teste.

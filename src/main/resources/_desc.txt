@@ -1,0 +1,1 @@
+Resources kaust sisaldab rakenduse parameetreid sisaldavat faili ning sql skripti alusandmestiku loomiseks.

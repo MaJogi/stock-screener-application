@@ -1,0 +1,1 @@
+Service.consumer paketis olev klass teostab RabbitMQ's olevate sõnumite korje ning salvestamise.

@@ -1,0 +1,1 @@
+Util.payload.response klassid kirjeldavad controller päringute väljundiks olevaid objekte.

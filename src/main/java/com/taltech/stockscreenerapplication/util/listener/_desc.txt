@@ -1,0 +1,1 @@
+Util.listener paketis olevad klassid defineerivad listener meetodid, mis algatavad perioodilised töövood tagarakenduse käivitamisel.

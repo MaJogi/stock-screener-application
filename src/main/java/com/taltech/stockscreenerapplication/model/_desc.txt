@@ -1,0 +1,1 @@
+Model paketis olevad klassid kirjeldavad andmetabeleid, tabelite vahelisi ühendusi ja valideerimist.
