@@ -1,0 +1,1 @@
+Config paketis olevad klassid konfigureerivad teistes domeenides olevatele ressurssidele päringute tegemist ning kasutaja autentimisega seotud protseduure.
