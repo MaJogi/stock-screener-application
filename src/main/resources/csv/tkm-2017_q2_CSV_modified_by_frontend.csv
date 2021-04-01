@@ -1,0 +1,83 @@
+﻿<balance_sheet>;;;;;
+Date_information;Note;30.06.2017;31.12.2016;;
+Cash and cash equivalents;2;5,774;32,375;;
+Trade and other receivables;3;12,139;15,396;;
+Inventories;5;69,579;70,186;;
+Total current assets;;87,492;117,957;;
+Long-term trade and other receivables;8;250;264;;
+Investments in associates;7;1,74;1,762;;
+Investment property;9;48,726;48,684;;
+Property, plant and equipment;10;212,583;211,511;;
+Intangible assets;11;8,174;8,505;;
+Total non-current assets;;271,473;270,726;;
+TOTAL ASSETS;;358,965;388,683;;
+Borrowings;12;17,884;26,852;;
+Trade and other payables;13;76,315;83,812;;
+Total current liabilities;;94,199;110,664;;
+Borrowings;12;77,799;73,772;;
+Provisions for other liabilities and charges;;403;403;;
+Total non-current liabilities;;78,202;74,175;;
+TOTAL LIABILITIES;;172,401;184,839;;
+Share capital;15;16,292;16,292;;
+Statutory reserve capital;;2,603;2,603;;
+Revaluation reserve;;83,028;83,932;;
+Currency translation differences;;-255;-255;;
+Retained earnings;;84,896;101,272;;
+TOTAL EQUITY;;186,564;203,844;;
+TOTAL LIABILITIES AND EQUITY;;358,965;388,683;;
+</balance_sheet>;;;;;
+<income_statement>;;;;;
+Date_information;Note;Q2 2017;Q2 2016;6 months 2017;6 months 2016
+Revenue;16;164,645;150,534;315,333;287,384
+Other operating income;;259;684;741;951
+Cost of sales;5;-123,213;-112,648;-236,879;-215,496
+Other operating expenses;17;-13,585;-12,807;-27,079;-25,566
+Staff costs;18;-15,747;-13,964;-29,902;-27,262
+Depreciation,   amortisation   and   impairment losses;10, 11;-3,306;-2,875;-6,587;-5,681
+Other expenses;;-228;-148;-557;-389
+Operating profit;;8,825;8,776;15,07;13,941
+Finance income;;0;0;0;2
+Finance costs;;-200;-223;-383;-431
+Finance income on shares of associates;7;27;51;78;97
+Profit before tax;;8,652;8,604;14,765;13,609
+Income tax expense;15;-15;0;-6,386;-5,219
+NET PROFIT FOR THE FINANCIAL YEAR;;8,637;8,604;8,379;8,39
+Other comprehensive income: Items that may be subsequently reclassified to profit or loss Currency translation differences;;0;0;0;0
+Other comprehensive income for the financial year;;0;0;0;0
+TOTAL COMPREHENSIVE INCOME FOR THE FINANCIAL YEAR;;8637;8604;8379;8390
+Basic and diluted earnings per share (euros);19;0,21;0,21;0,21;0,21
+</income_statement>;;;;;
+<cash_flow_statement>;;;;;
+Date_information;Note;6 months 2017;6 months 2016;;
+Net profit;;8,379;8,39;;
+Income tax on dividends;15;6,371;5,219;;
+Interest expense;;383;431;;
+Interest income;;0;-2;;
+Depreciation, amortisation;10, 11;6,587;5,668;;
+Loss on sale and write-off of non-current assets;10;1;13;;
+Profit on sale of non-current assets;10;-200;-9;;
+Effect of equity method;7;-78;-97;;
+Change in inventories;;608;1,559;;
+Change  in  receivables  and  prepayments  related  to operating activities;;3270;3839;;
+Change   in   liabilities   and   prepayments   related   to operating activities;;-7478;-8056;;
+TOTAL CASH FLOWS FROM OPERATING ACTIVITIES;;17,843;16,955;;
+Purchase of property, plant and equipment (excl. finance lease);10;-8,388;-6,66;;
+Proceeds from sale of property, plant and equipment;10;1,246;841;;
+Purchase of intangible assets;11;-28;-81;;
+Change in  balance of parent company’s group account;20;0;5;;
+Dividends received;7;100;0;;
+Interest received;;0;2;;
+TOTAL CASH FLOWS USED IN INVESTING ACTIVITIES;;-7,07;-898;;
+Proceeds from borrowings;12;30,024;39,87;;
+Repayments of borrowings;12;-35,343;-29,407;;
+Change in overdraft balance;12;378;104;;
+Dividends paid;15;-25,659;-21,179;;
+Income tax on dividends;15;-6,371;-5,259;;
+Interest paid;;-403;-454;;
+TOTAL CASH FLOWS USED IN FINANCING ACTIVITIES;;-37,374;-16,325;;
+TOTAL CASH FLOWS;;-26,601;-268;;
+Effect of exchange rate changes;;0;0;;
+Cash  and  cash  equivalents  at  the  beginning  of  the period;2;32375;13911;;
+Cash and cash equivalents at the end of the period;2;5,774;13,643;;
+Net change in cash and cash equivalents;;-26,601;-268;;
+</cash_flow_statement>;;;;;

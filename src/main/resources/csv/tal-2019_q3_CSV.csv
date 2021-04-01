@@ -1,0 +1,88 @@
+﻿<income_statement>;;;;
+Date_information;Q3 2019;Q3 2018;Jan-Sep 2019;Jan-Sep 2018
+Revenue (Note 3);287771;283609;722744;723173
+Cost of sales;-201089;-205160;-564929;-573964
+Gross profit;86682;78449;157815;149209
+Sales and marketing expenses;-15108;-15959;-51362;-52601
+Administrative expenses;-12897;-12591;-42408;-39124
+Other operating income;713;1432;1876;2499
+Other operating expenses;2;-72;-23;-153
+Result from operating activities;59392;51259;65898;59830
+Finance income (Note 4);-104;1809;991;7767
+Finance costs (Note 4);-4609;-6959;-14446;-22176
+Profit before income tax;54679;46109;52443;45421
+Income tax;-70;-13;-8199;-3612
+Net profit for the period;54609;46096;44244;41809
+Net profit for the period attributable to equity holders of the Parent;54609;46096;44244;41809
+Items that may be reclassified to profit or loss Exchange differences on translating foreign operations;34;-91;456;302
+Other comprehensive income for the period;34;-91;456;302
+Total comprehensive income for the period;54643;46005;44700;42111
+Total comprehensive income for the period attributable to equity holders of the Parent;54643;46005;44700;42111
+Earnings per share (in EUR, Note 5);0,082;0,069;0,066;0,062
+</income_statement>;;;;
+<balance_sheet>;;;;
+Date_information;30.09.2019;30.09.2018;31.12.2018;
+Cash and cash equivalents;38237;92978;82175;
+Trade and other receivables;48271;50341;43805;
+Prepayments;12775;15417;6084;
+Prepaid income tax;44;49;46;
+Inventories;40440;37574;35741;
+Current assets;139767;196359;167851;
+Investments in equity-accounted investees;407;403;407;
+Other financial assets;326;338;320;
+Deferred income tax assets;17934;18718;17934;
+Investment property;300;300;300;
+Property, plant and equipment (Note 6);1360619;1272234;1267928;
+Intangible assets (Note 7);44844;46435;46164;
+Non-current assets;1424430;1338428;1333053;
+TOTAL ASSETS;1564197;1534787;1500904;
+Interest-bearing loans and borrowings (Note 8);94421;161951;78658;
+Trade and other payables;99107;100081;100682;
+Derivatives;0;26633;918;
+Payables to owners;46876;2;2;
+Income tax liability;0;34;116;
+Deferred income;35735;34084;32113;
+Current liabilities;276139;322785;212489;
+Interest-bearing loans and borrowings (Note 8);470400;353281;431477;
+Other liabilities;0;16;22;
+Non-current liabilities;470400;353297;431499;
+Total liabilities;746539;676082;643988;
+Share capital (Note 9);314844;361736;361736;
+Share premium;663;639;662;
+Reserves;70415;70038;69474;
+Retained earnings;431736;426292;425044;
+Equity attributable to equity holders of the Parent;817658;858705;856916;
+Total equity;817658;858705;856916;
+TOTAL LIABILITIES AND EQUITY;1564197;1534787;1500904;
+</balance_sheet>;;;;
+<cash_flow_statement>;;;;
+Date_information;Q3 2019;Q3 2018;Jan-Sep 2019;Jan-Sep 2018
+Net profit for the period;54609;46096;44244;41809
+Adjustments;28455;24692;93832;77235
+Receivables and prepayments related to operating activities;5153;4647;-10368;-13891
+Inventories;-1114;3379;-4699;3101
+Liabilities related to operating activities;-18535;-17297;3169;8123
+Changes in assets and liabilities;-14496;-9271;-11898;-2667
+Cash generated from operating activities;68568;61517;126178;116377
+Income tax paid;-70;-2;-288;-73
+NET CASH FROM OPERATING ACTIVITIES;68498;61515;125890;116304
+Purchase of property, plant, equipment and intangible assets (Notes 6, 7);-7138;-5470;-50856;-20119
+Proceeds from disposals of property, plant, equipment;70;26;212;68
+Interest received;0;1;1;2
+NET CASH USED IN INVESTING ACTIVITIES;-7068;-5443;-50643;-20049
+Repayment of loans received (Note 8);-25041;-21999;-56375;-49333
+Change in overdraft (Note 8);-13852;0;5157;0
+Payments for settlement of derivatives;0;-876;-1029;-2622
+Payment of lease liabilities (Note 8);-3800;-27;-10934;-79
+Interest paid;-5214;-5888;-13648;-15448
+Payment of transaction costs related to loans;-795;-1047;-795;-1047
+Dividends paid (Note 10);-33458;-20096;-33458;-20096
+Reduction of share capital;0;-1;0;-1
+Income tax on dividends paid;-8103;-3562;-8103;-3562
+NET CASH USED IN FINANCING ACTIVITIES;-90263;-53496;-119185;-92188
+TOTAL NET CASH FLOW;-28833;2576;-43938;4067
+Cash and cash equivalents at the beginning of period;67070;90402;82175;88911
+Increase in cash and cash equivalents;-28833;2576;-43938;4067
+Cash and cash equivalents at the end of period;38237;92978;38237;92978
+</cash_flow_statement>;;;;
+;;;;
