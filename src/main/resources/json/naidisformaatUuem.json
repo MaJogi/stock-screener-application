@@ -1,0 +1,23 @@
+{
+    "incomeStatement":{
+        "columnHeader":["Q2 2017", "Q2 2016", "6 months 2017", "6 months 2016"],
+        "rows":[
+          ["Revenue (note: 16)", 164.645, 150.534, 315.333, 287.384], ["Other operating income", 259, 684, 741, 951],
+          ["Cost of sales (note: 5)", -123.213, -112.648, -236.879, -215.496], ["Other operating expenses (note: 17)", -13.585, -12.807, -27.079, -25.566]
+        ]
+    },
+    "balanceSheet":{
+        "columnHeader":["30.06.2017", "31.12.2016"],
+        "rows":[
+          ["Cash and cash equivalents (note: 2)", 5.774, 32.375], ["Trade and other receivables (note: 3)", 12.139, 15.396],
+          ["Trade and other receivables (note: 3)", 69.579, 70.186], ["Total current assets", 87.492, 117.957]
+        ]
+    },
+    "cashFlowStatement":{
+        "columnHeader":["6 months 2017", "6 months 2016"],
+        "rows":[
+          ["Net profit", 8.379, 8.39],["Income tax on dividends (note: 15)", 6.371, 5.219],
+          ["Interest expense", 383, 431],["Interest income", 0, -2]
+        ]
+    }
+}
