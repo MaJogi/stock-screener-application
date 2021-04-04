@@ -52,6 +52,10 @@ public class StockScreenerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/companies/**").permitAll()
+                // Custom (for dev purposes, i turned authentication off for some pages)
+                .antMatchers("/uploadFile/**").permitAll()
+                .antMatchers("/downloadFile/**").permitAll()
+                // End custom
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
 
