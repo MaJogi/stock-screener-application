@@ -3,6 +3,7 @@ package com.taltech.stockscreenerapplication.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
@@ -38,6 +39,23 @@ public class CompanyDimension {
     @PrimaryKeyJoinColumn
     private FinancialsQuarterly financialsQuarterly;
 
+    /*
+        Trial. Maybe will be removed in the future db changes
+        Company can have many of this statements
+    */
+
+    /*
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<BalanceStatRaw> bilanceRawStatements = new LinkedList<>();
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
+
+
+     */
     public CompanyDimension() { //empty constructor
     }
 
