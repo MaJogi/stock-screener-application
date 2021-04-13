@@ -167,7 +167,7 @@ public class UploadCsvController {
             // Creating raw income statement object for specific period (Q2 2017)
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
             // setting source file
-            newIncomeStatRaw.setSourceCsvFile(newSourceFile);
+            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
 
             // Setting current period for raw income statement
             newIncomeStatRaw.setDateOrPeriod(dateEntry);
@@ -263,7 +263,8 @@ public class UploadCsvController {
             // Creating raw income statement object for specific period (Q2 2017)
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
             // setting source file
-            newIncomeStatRaw.setSourceCsvFile(newSourceFile);
+
+            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
 
             // Setting current period for raw income statement
             LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
@@ -302,6 +303,10 @@ public class UploadCsvController {
 
             i++;
         }
+
+
+
+
         // saving modified company, now with newly added rawStatements
         companyDimensionRepository.save(company.get());
 
@@ -335,6 +340,26 @@ public class UploadCsvController {
         return listOfRawIncomeStatements;
     }
 
+    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:0000/TKM1T
+    public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+        Long incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Optional<IncomeStatRaw> incomeStatement = incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate);
+
+        return incomeStatement.get();
+    }
+
+    // TODO Other cashflow & bilance statement requests
+
+
+    /*
+    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:0000/TKM1T
+    public List<IncomeStatRaw> getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+        List<IncomeStatRaw> incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+
+        return incomeStatementIdWithSpecificDate;
+    }
      */
 
 

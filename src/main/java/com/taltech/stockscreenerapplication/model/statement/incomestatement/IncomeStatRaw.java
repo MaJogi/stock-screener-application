@@ -1,6 +1,5 @@
 package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
-import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,10 +32,21 @@ public class IncomeStatRaw {
 
     // is it really one to one. Every balance instance can have only one parent csv file
     // (because one csv file can't have multiple balance sheets & balance sheet can't have multiple source files)
+
+    /*
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private SourceCsvFile sourceCsvFile;
+    /*
+
+     */
+
+    /* Seems like its not necessary
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    //@PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
+    private CompanyDimension ticker_id;
+    */
 
 
     public IncomeStatRaw() {}
