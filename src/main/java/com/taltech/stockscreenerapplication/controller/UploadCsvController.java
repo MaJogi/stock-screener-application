@@ -4,6 +4,7 @@ import com.taltech.stockscreenerapplication.Constants;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
+import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.repository.*;
@@ -19,7 +20,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
 
 @RestController
 /*@RequestMapping("/upload")*/
@@ -250,29 +254,35 @@ public class UploadCsvController {
         List<List<String>> incomeList = result.get(0);
         List<List<String>> cashFlowList = result.get(1);
         List<List<String>> bilanceList = result.get(2);
+        LOGGER.info("Bilance list has {} entities",  bilanceList.size());
 
         // first rows of all income statements (header)
         // Ex: [Date_information (note: Note), Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
 
         List<String> firstIncomeStatRow = incomeList.get(0);
-        List<String> firstCashflowRow = cashFlowList.get(1);
+        List<String> firstCashflowRow = cashFlowList.get(0);
+        List<String> firstBilanceRow = bilanceList.get(0);
         LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
         LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
+        LOGGER.info("Size of the list is {} <-----------", firstBilanceRow.size());
 
         // Pure date lists of specific financial statements
         // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-
         List<String> incomeListDateEntries = firstIncomeStatRow.subList(1, firstIncomeStatRow.size());
         List<String> cashflowListDateEntries = firstCashflowRow.subList(1, firstCashflowRow.size());
+
+        List<String> bilanceListDateEntries = firstBilanceRow.subList(1, firstBilanceRow.size());
 
         // Specific financial statement list of attributes with data
         // Ex: [Revenue (note: 16), 164,645, 150,534, 315,333, 287,384],
         //     [Other operating income, 259, 684, 741, 951] ...
         List<List<String>> incomeListAttributesWithData = incomeList.subList(1, incomeList.size());
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
+        List<List<String>> bilanceListAttributesWithData = bilanceList.subList(1, bilanceList.size());
 
         createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries, incomeListAttributesWithData, company);
         createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries, cashflowListAttributesWithData, company);
+        createNewBilanceFinStatementForSpecPeriod(bilanceListDateEntries, bilanceListAttributesWithData, company);
 
         companyDimensionRepository.save(company.get());
 
@@ -285,8 +295,7 @@ public class UploadCsvController {
         try {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
             Number valueNum = format.parse(dataLine.get(j));
-            double valueDouble = valueNum.doubleValue();
-            return valueDouble;
+            return valueNum.doubleValue();
 
         }
         catch (ParseException e) {
@@ -296,26 +305,62 @@ public class UploadCsvController {
     }
 
     public void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> incomeListAttributesWithData, List<Attribute> currentPeriodAttributes, int i){
+        //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
         for (List<String> dataLine : incomeListAttributesWithData) {
-            //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-
             Attribute attr = new Attribute();
             attr.setFieldName(dataLine.get(0));
 
-            // additional parsing , to .
+            // Parsing "," to "."
             double valueDouble = parseNumToDouble(dataLine, i);
             attr.setValue(valueDouble);
 
-            // saving newly created attribute to db
+            // saving new attribute to db
             currentPeriodAttributes.add(attr);
         }
+    }
+
+    public void createNewFinStatementForSpecPeriod(List<String> finStatementListDateEntries,
+                                                           List<List<String>> finStatementListAttributesWithData,
+                                                           Optional<CompanyDimension> company) {
+        // TODO instead of different method for each one
+
+        /*
+        // starting from first value column
+        int i = 1;
+        //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+        for (String dateEntry : finStatementListDateEntries) {
+            // Creating raw income statement object for specific period (Q2 2017)
+
+            // how to choose type
+            CashflowStatRaw newFinStatementRaw = new CashflowStatRaw();
+
+            // Setting current period for raw income statement
+            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
+            newFinStatementRaw.setDateOrPeriod(dateEntry);
+
+            List<Attribute> currentPeriodAttributes = new LinkedList<>();
+            iterateDataLinesAndCreateFinStatementAttrs(finStatementListAttributesWithData, currentPeriodAttributes, i);
+            newFinStatementRaw.setAttributes(currentPeriodAttributes);
+
+            cashflowStatRawRepository.save(newFinStatementRaw);
+
+
+
+            company.get().getCashflowRawStatements().add(newFinStatementRaw);
+
+
+
+            i++;
+        }
+
+         */
     }
 
     public void createNewCashflowFinStatementForSpecPeriod(List<String> cashflowListDateEntries,
                                                            List<List<String>> cashflowListAttributesWithData,
                                                            Optional<CompanyDimension> company) {
         // starting from first value column
-        int j = 1;
+        int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         for (String dateEntry : cashflowListDateEntries) {
             // Creating raw income statement object for specific period (Q2 2017)
@@ -326,37 +371,47 @@ public class UploadCsvController {
             newCashflowStatRaw.setDateOrPeriod(dateEntry);
 
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            iterateDataLinesAndCreateFinStatementAttrs(cashflowListAttributesWithData, currentPeriodAttributes, j);
-//            for (List<String> dataLine : cashflowListAttributesWithData) {
-//                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-//
-//                Attribute attr = new Attribute();
-//                attr.setFieldName(dataLine.get(0));
-//
-//                // additional parsing , to .
-//
-//                double valueDouble = parseNumToDouble(dataLine, j);
-//                attr.setValue(valueDouble);
-//
-//                // saving newly created attribute to db
-//                currentPeriodAttributes.add(attr);
-//            }
-
+            iterateDataLinesAndCreateFinStatementAttrs(cashflowListAttributesWithData, currentPeriodAttributes, i);
             newCashflowStatRaw.setAttributes(currentPeriodAttributes);
+
             cashflowStatRawRepository.save(newCashflowStatRaw);
             company.get().getCashflowRawStatements().add(newCashflowStatRaw);
-            j++;
+            i++;
+        }
+    }
+
+    public void createNewBilanceFinStatementForSpecPeriod(List<String> bilanceListDateEntries,
+                                                           List<List<String>> bilanceListAttributesWithData,
+                                                           Optional<CompanyDimension> company) {
+        // starting from first value column
+        int i = 1;
+        //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+        for (String dateEntry : bilanceListDateEntries) {
+            // Creating raw income statement object for specific period (Q2 2017)
+            BalanceStatRaw newBalanceStatRaw = new BalanceStatRaw();
+
+            // Setting current period for raw income statement
+            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
+            newBalanceStatRaw.setDateOrPeriod(dateEntry);
+
+            List<Attribute> currentPeriodAttributes = new LinkedList<>();
+            iterateDataLinesAndCreateFinStatementAttrs(bilanceListAttributesWithData, currentPeriodAttributes, i);
+            newBalanceStatRaw.setAttributes(currentPeriodAttributes);
+
+            balanceStatRawRepository.save(newBalanceStatRaw);
+            company.get().getBilanceRawStatements().add(newBalanceStatRaw);
+            i++;
         }
     }
 
     public void createNewIncomeFinStatementForSpecPeriod(List<String> incomeListDateEntries,
                                                            List<List<String>> incomeListAttributesWithData,
                                                            Optional<CompanyDimension> company) {
-        int i = 1; // starting from first value column
+        int i = 1;
         for (String dateEntry : incomeListDateEntries) {
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
 
-            LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
+            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
             newIncomeStatRaw.setDateOrPeriod(dateEntry);
 
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
@@ -370,27 +425,10 @@ public class UploadCsvController {
         }
     }
 
+    @GetMapping("/{tickerId}/incomeStatements") // localhost:0000/TKM1T
+    public List<IncomeStatRaw> getCompanyRawIncomeStats(@PathVariable final String tickerId) {
+        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
 
-    @GetMapping("/test/1")
-    public List<Attribute> income1testing() {
-        long one = 1;
-        Optional<IncomeStatRaw> incomeStat1 = incomeStatRawRepository.findById(one);
-        List<Attribute> incomeStat1Attributes = incomeStat1.get().getAttributes();
-        return incomeStat1Attributes;
-    }
-
-    @GetMapping("/test/2")
-    public List<Attribute> income2testing() {
-        long two = 2;
-        Optional<IncomeStatRaw> incomeStat2 = incomeStatRawRepository.findById(two);
-        List<Attribute> incomeStat1Attributes = incomeStat2.get().getAttributes();
-        return incomeStat1Attributes;
-    }
-
-    /*
-    @GetMapping("/getTKM1TCompanyIncomeStatementsRaw")
-    public List<IncomeStatRaw> getCompanyIncomeStatRaw() {
-        Optional<CompanyDimension> company = companyDimensionRepository.findById("TKM1T");
         List<IncomeStatRaw> listOfRawIncomeStatements = company.get().getIncomeRawStatements();
 
         return listOfRawIncomeStatements;

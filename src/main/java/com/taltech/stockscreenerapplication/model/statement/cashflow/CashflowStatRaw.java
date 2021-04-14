@@ -15,7 +15,7 @@ import java.util.List;
 @Table(name = "cash_flow_statement_as_imported")
 public class CashflowStatRaw {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_stat_raw_id")
     private Long cashflow_raw_id;
 
