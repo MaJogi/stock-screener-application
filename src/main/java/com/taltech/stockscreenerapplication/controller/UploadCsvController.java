@@ -239,14 +239,11 @@ public class UploadCsvController {
         newSourceFile.setSourceFileName(Constants.FILENAME);
 
         // we need to find a firm, to upload a csv file to its name.
-
         Optional<CompanyDimension> company = companyDimensionRepository.findById(Constants.TESTFIRM);
 
         newSourceFile.setTicker_id(company.get());
         //String insertNewFileQuery = String.format("insert into source_csv_file (source_file_name) values %s", Constants.FILENAME);
         sourceCsvFileRepository.save(newSourceFile);
-
-
 
         // get lists for all statements rows of particular file
         // Example nr 1 (readme)
@@ -259,6 +256,8 @@ public class UploadCsvController {
 
         List<String> firstIncomeStatRow = incomeList.get(0);
         List<String> firstCashflowRow = cashFlowList.get(1);
+        LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
+        LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
 
         // Pure date lists of specific financial statements
         // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -272,119 +271,9 @@ public class UploadCsvController {
         List<List<String>> incomeListAttributesWithData = incomeList.subList(1, incomeList.size());
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
 
-        // 3. Luuakse incomeStatRaw objekt
+        createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries, incomeListAttributesWithData, company);
+        createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries, cashflowListAttributesWithData, company);
 
-        // first row will always contain dates for second column.
-
-
-        LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
-
-        int i = 1; // starting from first value column
-        for (String dateEntry : incomeListDateEntries) {
-            // Creating raw income statement object for specific period (Q2 2017)
-            IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
-            // setting source file
-
-            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
-
-            // Setting current period for raw income statement
-            LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
-            newIncomeStatRaw.setDateOrPeriod(dateEntry);
-
-            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            for (List<String> dataLine : incomeListAttributesWithData) {
-                //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-
-                Attribute attr = new Attribute();
-                attr.setFieldName(dataLine.get(0));
-
-                // additional parsing , to .
-                try {
-                    NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
-                    Number valueNum = format.parse(dataLine.get(i));
-                    double valueDouble = valueNum.doubleValue();
-
-                    LOGGER.info("This might break something <- Parsing to Double instead of double");
-                    attr.setValue(valueDouble);
-                }
-                catch (ParseException e) {
-                    LOGGER.error("PARSEEXCEPTION <-------------------");
-                }
-                // saving newly created attribute to db
-                currentPeriodAttributes.add(attr);
-                //attributeRepository.save(attr);
-            }
-            newIncomeStatRaw.setAttributes(currentPeriodAttributes);
-            incomeStatRawRepository.save(newIncomeStatRaw);
-
-            /*
-            company.get().getIncomeRawStatements().add(newIncomeStatRaw);
-            */
-
-            i++;
-        }
-
-        // 4. Luuakse cashFlowStatRaw objekt
-
-        // get all incomeList rows of particular file
-        // first row will always contain dates for second column.
-
-
-        LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
-
-
-
-        int j = 1; // starting from first value column
-        for (String dateEntry : cashflowListDateEntries) {
-            // Creating raw income statement object for specific period (Q2 2017)
-            CashflowStatRaw newCashflowStatRaw = new CashflowStatRaw();
-            // setting source file
-
-            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
-
-            // Setting current period for raw income statement
-            LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
-            newCashflowStatRaw.setDateOrPeriod(dateEntry);
-
-            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            for (List<String> dataLine : cashflowListAttributesWithData) {
-                //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-
-                Attribute attr = new Attribute();
-                attr.setFieldName(dataLine.get(0));
-
-                // additional parsing , to .
-
-
-//                try {
-//                    NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
-//                    Number valueNum = format.parse(dataLine.get(j));
-//                    double valueDouble = valueNum.doubleValue();
-//
-//                    attr.setValue(valueDouble);
-//                }
-//                catch (ParseException e) {
-//                    LOGGER.error("PARSEEXCEPTION <-------------------");
-//                }
-
-                parseNumToDouble(dataLine, attr, j);
-
-
-                // saving newly created attribute to db
-                currentPeriodAttributes.add(attr);
-                //attributeRepository.save(attr);
-            }
-            newCashflowStatRaw.setAttributes(currentPeriodAttributes);
-            cashflowStatRawRepository.save(newCashflowStatRaw);
-            company.get().getCashflowRawStatements().add(newCashflowStatRaw);
-            j++;
-        }
-
-
-
-        // saving modified company, now with newly added rawStatements
         companyDimensionRepository.save(company.get());
 
         return ResponseEntity
@@ -392,19 +281,95 @@ public class UploadCsvController {
                 .body(new MessageResponse("Database seems to be populated successfully, check database"));
     }
 
-    public void parseNumToDouble(List<String> dataLine, Attribute attr, int j) {
+    public double parseNumToDouble(List<String> dataLine, int j) {
         try {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
             Number valueNum = format.parse(dataLine.get(j));
             double valueDouble = valueNum.doubleValue();
+            return valueDouble;
 
-            attr.setValue(valueDouble);
         }
         catch (ParseException e) {
-            LOGGER.error("PARSEEXCEPTION <-------------------");
+            LOGGER.error("PARSEEXCEPTION <-------------------, value is set to -1");
+            return -1;
         }
-
     }
+
+    public void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> incomeListAttributesWithData, List<Attribute> currentPeriodAttributes, int i){
+        for (List<String> dataLine : incomeListAttributesWithData) {
+            //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
+
+            Attribute attr = new Attribute();
+            attr.setFieldName(dataLine.get(0));
+
+            // additional parsing , to .
+            double valueDouble = parseNumToDouble(dataLine, i);
+            attr.setValue(valueDouble);
+
+            // saving newly created attribute to db
+            currentPeriodAttributes.add(attr);
+        }
+    }
+
+    public void createNewCashflowFinStatementForSpecPeriod(List<String> cashflowListDateEntries,
+                                                           List<List<String>> cashflowListAttributesWithData,
+                                                           Optional<CompanyDimension> company) {
+        // starting from first value column
+        int j = 1;
+        //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+        for (String dateEntry : cashflowListDateEntries) {
+            // Creating raw income statement object for specific period (Q2 2017)
+            CashflowStatRaw newCashflowStatRaw = new CashflowStatRaw();
+
+            // Setting current period for raw income statement
+            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
+            newCashflowStatRaw.setDateOrPeriod(dateEntry);
+
+            List<Attribute> currentPeriodAttributes = new LinkedList<>();
+            iterateDataLinesAndCreateFinStatementAttrs(cashflowListAttributesWithData, currentPeriodAttributes, j);
+//            for (List<String> dataLine : cashflowListAttributesWithData) {
+//                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
+//
+//                Attribute attr = new Attribute();
+//                attr.setFieldName(dataLine.get(0));
+//
+//                // additional parsing , to .
+//
+//                double valueDouble = parseNumToDouble(dataLine, j);
+//                attr.setValue(valueDouble);
+//
+//                // saving newly created attribute to db
+//                currentPeriodAttributes.add(attr);
+//            }
+
+            newCashflowStatRaw.setAttributes(currentPeriodAttributes);
+            cashflowStatRawRepository.save(newCashflowStatRaw);
+            company.get().getCashflowRawStatements().add(newCashflowStatRaw);
+            j++;
+        }
+    }
+
+    public void createNewIncomeFinStatementForSpecPeriod(List<String> incomeListDateEntries,
+                                                           List<List<String>> incomeListAttributesWithData,
+                                                           Optional<CompanyDimension> company) {
+        int i = 1; // starting from first value column
+        for (String dateEntry : incomeListDateEntries) {
+            IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
+
+            LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
+            newIncomeStatRaw.setDateOrPeriod(dateEntry);
+
+            List<Attribute> currentPeriodAttributes = new LinkedList<>();
+
+            iterateDataLinesAndCreateFinStatementAttrs(incomeListAttributesWithData, currentPeriodAttributes, i);
+
+            newIncomeStatRaw.setAttributes(currentPeriodAttributes);
+            incomeStatRawRepository.save(newIncomeStatRaw);
+            company.get().getIncomeRawStatements().add(newIncomeStatRaw);
+            i++;
+        }
+    }
+
 
     @GetMapping("/test/1")
     public List<Attribute> income1testing() {

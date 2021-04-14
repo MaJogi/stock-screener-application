@@ -63,6 +63,7 @@ public class StockScreenerSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
+
     @Bean
     public BCryptPasswordEncoder bCryptpasswordEncoder() {
         return new BCryptPasswordEncoder();
