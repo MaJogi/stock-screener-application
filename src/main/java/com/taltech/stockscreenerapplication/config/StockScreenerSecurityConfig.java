@@ -56,6 +56,9 @@ public class StockScreenerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/uploadFile/**").permitAll()
                 .antMatchers("/downloadFile/**").permitAll()
                 .antMatchers("/test/**").permitAll()
+                .antMatchers("/getTKM1TCompanyIncomeStatementsRaw/**").permitAll()
+                .antMatchers("/TKM1T/**").permitAll()
+                .antMatchers("/TKM1T/income/**").permitAll()
                 // End custom
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();

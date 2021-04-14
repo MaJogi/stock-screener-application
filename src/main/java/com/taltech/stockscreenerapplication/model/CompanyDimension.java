@@ -1,10 +1,15 @@
 package com.taltech.stockscreenerapplication.model;
 
+import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -44,18 +49,18 @@ public class CompanyDimension {
         Company can have many of this statements
     */
 
-    /*
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BalanceStatRaw> bilanceRawStatements = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
 
 
-     */
     public CompanyDimension() { //empty constructor
     }
 

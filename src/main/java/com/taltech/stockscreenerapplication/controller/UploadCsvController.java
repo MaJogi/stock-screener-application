@@ -246,7 +246,6 @@ public class UploadCsvController {
         Optional<CompanyDimension> company = companyDimensionRepository.findById(Constants.TESTFIRM);
 
         newSourceFile.setTicker_id(company.get());
-        //String insertNewFileQuery = String.format("insert into source_csv_file (source_file_name) values %s", Constants.FILENAME);
         sourceCsvFileRepository.save(newSourceFile);
 
         // get lists for all statements rows of particular file
@@ -285,6 +284,17 @@ public class UploadCsvController {
         createNewBilanceFinStatementForSpecPeriod(bilanceListDateEntries, bilanceListAttributesWithData, company);
 
         companyDimensionRepository.save(company.get());
+
+        LOGGER.info("Thats how many company have incomestatements now: {} ", company.get().getIncomeRawStatements().size());
+        LOGGER.info("Thats how many company have cashflowstatements now: {} ", company.get().getCashflowRawStatements().size());
+        LOGGER.info("Thats how many company have bilancestatements now: {} ", company.get().getBilanceRawStatements().size());
+
+
+        Optional<CompanyDimension> com = companyDimensionRepository.findById(Constants.TESTFIRM);
+        LOGGER.info("Thats how many company have check 2: {} ", com.get().getIncomeRawStatements().size());
+        LOGGER.info("Thats how many company have check 2: {} ", com.get().getCashflowRawStatements().size());
+        LOGGER.info("Thats how many company have check 2: {} ", com.get().getBilanceRawStatements().size());
+
 
         return ResponseEntity
                 .status(201)
@@ -430,6 +440,9 @@ public class UploadCsvController {
         Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
 
         List<IncomeStatRaw> listOfRawIncomeStatements = company.get().getIncomeRawStatements();
+        for (IncomeStatRaw statement : listOfRawIncomeStatements) {
+            LOGGER.info("{}", statement.getIncome_stat_raw_id());
+        }
 
         return listOfRawIncomeStatements;
     }
