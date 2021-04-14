@@ -97,10 +97,17 @@ public class CsvReaderImpl implements IReader {
     List<List<String>> bilanceList;
     List<List<String>> cashflowList;
     List<List<String>> incomeList;
+    String fileName;
 
     public CsvReaderImpl() {
+        LOGGER.info("Default CsvReaderImpl constructor called");
         createCsvParser();
     }
+
+//    public CsvReaderImpl(String fileName) {
+//        super(); //This is supposed to call default constructor // createCsvParser(); // does
+//        this.fileName = fileName;
+//    }
 
     public void createCsvParser() {
         this.parser = new CSVParserBuilder()
@@ -217,7 +224,9 @@ public class CsvReaderImpl implements IReader {
         String[] lineArray;
         List<String> line;
 
+        LOGGER.info("Starting reading first line <----------");
         while ((lineArray = csvReader.readNext()) != null) {
+            LOGGER.info("{}", lineArray);
             line = new LinkedList<>(Arrays.asList(lineArray));
 
             // check if empty line. This will remove lines like: , , , ,
@@ -280,10 +289,7 @@ public class CsvReaderImpl implements IReader {
         // insert into balance_stat_as_imported (...)
     }
 
-    public void insertFieldToRightDatebase() {
-    }
-
-    public List<List<List<String>>> createReaderAndUseReadingMethod() throws Exception {
+    public List<List<List<String>>> createReaderAndUseReadingMethod(String fileName) throws Exception {
         LOGGER.info("Starting using reader");
         /*
         URL pathToCsv = ClassLoader.getSystemResource("csv/twoColumn.csv");
@@ -294,11 +300,21 @@ public class CsvReaderImpl implements IReader {
         //String fileName = "src/main/resources/csv/tal-2019_q3_CSV.csv";
         //String fileName = "src/main/resources/csv/tkm-2017_q2_CSV.csv";
 
+        /*
+
         String fileName = "src/main/resources/csv/tkm-2017_q2_CSV_modified_by_frontend.csv";
         Path myPath = Paths.get(fileName);
         LOGGER.info("Path at which csv is found {}", myPath);
+        */
+
+        //tkm-2017_q2_CSV_modified_by_frontend
+        String stringPath = String.format("src/main/resources/csv/%s.csv", fileName);
+        Path myPath = Paths.get(stringPath);
+        LOGGER.info("Path at which csv is found {}", myPath);
 
         /*
+
+
         Reader reader = Files.newBufferedReader(Paths.get(
                 ClassLoader.getSystemResource("csv/twoColumn.csv").toURI()));
         */

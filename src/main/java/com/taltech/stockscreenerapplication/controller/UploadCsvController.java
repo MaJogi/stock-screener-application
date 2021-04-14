@@ -121,7 +121,7 @@ public class UploadCsvController {
         List<List<List<String>>> result = null;
         try {
             // Nr n source file, which contains 1 up to 3 statements
-            result = readerImpl.createReaderAndUseReadingMethod();
+            result = readerImpl.createReaderAndUseReadingMethod("tkm-2017_q2_CSV_modified_by_frontend.csv");
         }
         catch (Exception e) {
             LOGGER.error(e.getMessage());
@@ -217,14 +217,14 @@ public class UploadCsvController {
 
          */
 
-    @GetMapping("/test")
-    public ResponseEntity<MessageResponse> testing() {
+    @GetMapping("/test/{fileName}")
+    public ResponseEntity<MessageResponse> testing(@PathVariable String fileName) {
         LOGGER.info("STARTING A test method from controller");
         CsvReaderImpl readerImpl = new CsvReaderImpl();
         List<List<List<String>>> result = null;
         try {
             // Nr n source file, which contains 1 up to 3 statements
-            result = readerImpl.createReaderAndUseReadingMethod();
+            result = readerImpl.createReaderAndUseReadingMethod(fileName);
         }
         catch (Exception e) {
             LOGGER.error(e.getMessage());
