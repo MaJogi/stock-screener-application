@@ -4,6 +4,7 @@ import com.taltech.stockscreenerapplication.Constants;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.repository.*;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderImpl;
@@ -200,6 +201,18 @@ public class UploadCsvController {
     }
 
 
+    // now we want to save every statement and their period data to database.
+        /*
+        1. Andmed on kindlal kujul csv formaadis.
+        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: bilance
+        2. Luuakse uus SourceCsvFile üksus
+        3. Luuakse incomeStatRaw objekt
+        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk)
+        6. (Tehakse kõik sama läbi teiste finantsaruannetega)
+        7.
+
+         */
+
     @GetMapping("/test")
     public ResponseEntity<MessageResponse> testing() {
         LOGGER.info("STARTING A test method from controller");
@@ -212,21 +225,6 @@ public class UploadCsvController {
         catch (Exception e) {
             LOGGER.error(e.getMessage());
         }
-
-        // now we want to save every statement and their period data to database.
-        /*
-        1. Andmed on kindlal kujul csv formaadis.
-        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: bilance
-        2. Luuakse uus SourceCsvFile üksus
-        3. Luuakse incomeStatRaw objekt
-        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk)
-        5. Need incomeStatRaw atribuudid on võimalik kätte saada läbi getAttributesMap'i
-        5.1 või alternatiivina luuakse repositooriumis eraldi getAttributes meetod, mille abil saadakse kätte
-        5.1 atribuutide id'd, mis kuuluvad kindla firma esitatud aruandele ning millel on kindla perioodi väärtus
-        6. (Tehakse kõik sama läbi teiste finantsaruannetega)
-        7.
-
-         */
 
         if (result == null) {
             LOGGER.error("Result entity contains null, which should actually be a list of three different lists");
@@ -248,15 +246,38 @@ public class UploadCsvController {
         //String insertNewFileQuery = String.format("insert into source_csv_file (source_file_name) values %s", Constants.FILENAME);
         sourceCsvFileRepository.save(newSourceFile);
 
-        // 3. Luuakse balanceStatRaw objekt
 
-        // get all incomeList rows of particular file
-        // first row will always contain dates for second column.
+
+        // get lists for all statements rows of particular file
+        // Example nr 1 (readme)
         List<List<String>> incomeList = result.get(0);
-        List<String> firstRow = incomeList.get(0);
-        LOGGER.info("Size of the list is {} <-----------", firstRow.size());
-        List<String> incomeListDateEntries = firstRow.subList(1, firstRow.size());
+        List<List<String>> cashFlowList = result.get(1);
+        List<List<String>> bilanceList = result.get(2);
+
+        // first rows of all income statements (header)
+        // Ex: [Date_information (note: Note), Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+
+        List<String> firstIncomeStatRow = incomeList.get(0);
+        List<String> firstCashflowRow = cashFlowList.get(1);
+
+        // Pure date lists of specific financial statements
+        // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+
+        List<String> incomeListDateEntries = firstIncomeStatRow.subList(1, firstIncomeStatRow.size());
+        List<String> cashflowListDateEntries = firstCashflowRow.subList(1, firstCashflowRow.size());
+
+        // Specific financial statement list of attributes with data
+        // Ex: [Revenue (note: 16), 164,645, 150,534, 315,333, 287,384],
+        //     [Other operating income, 259, 684, 741, 951] ...
         List<List<String>> incomeListAttributesWithData = incomeList.subList(1, incomeList.size());
+        List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
+
+        // 3. Luuakse incomeStatRaw objekt
+
+        // first row will always contain dates for second column.
+
+
+        LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
 
         int i = 1; // starting from first value column
         for (String dateEntry : incomeListDateEntries) {
@@ -304,6 +325,62 @@ public class UploadCsvController {
             i++;
         }
 
+        // 4. Luuakse cashFlowStatRaw objekt
+
+        // get all incomeList rows of particular file
+        // first row will always contain dates for second column.
+
+
+        LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
+
+
+
+        int j = 1; // starting from first value column
+        for (String dateEntry : cashflowListDateEntries) {
+            // Creating raw income statement object for specific period (Q2 2017)
+            CashflowStatRaw newCashflowStatRaw = new CashflowStatRaw();
+            // setting source file
+
+            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
+
+            // Setting current period for raw income statement
+            LOGGER.info("Working with DATEORPERIOD: {} <---------", dateEntry);
+            newCashflowStatRaw.setDateOrPeriod(dateEntry);
+
+            List<Attribute> currentPeriodAttributes = new LinkedList<>();
+            for (List<String> dataLine : cashflowListAttributesWithData) {
+                //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
+                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
+
+                Attribute attr = new Attribute();
+                attr.setFieldName(dataLine.get(0));
+
+                // additional parsing , to .
+
+
+//                try {
+//                    NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+//                    Number valueNum = format.parse(dataLine.get(j));
+//                    double valueDouble = valueNum.doubleValue();
+//
+//                    attr.setValue(valueDouble);
+//                }
+//                catch (ParseException e) {
+//                    LOGGER.error("PARSEEXCEPTION <-------------------");
+//                }
+
+                parseNumToDouble(dataLine, attr, j);
+
+
+                // saving newly created attribute to db
+                currentPeriodAttributes.add(attr);
+                //attributeRepository.save(attr);
+            }
+            newCashflowStatRaw.setAttributes(currentPeriodAttributes);
+            cashflowStatRawRepository.save(newCashflowStatRaw);
+            company.get().getCashflowRawStatements().add(newCashflowStatRaw);
+            j++;
+        }
 
 
 
@@ -312,7 +389,21 @@ public class UploadCsvController {
 
         return ResponseEntity
                 .status(201)
-                .body(new MessageResponse("testing seems to work, check database"));
+                .body(new MessageResponse("Database seems to be populated successfully, check database"));
+    }
+
+    public void parseNumToDouble(List<String> dataLine, Attribute attr, int j) {
+        try {
+            NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
+            Number valueNum = format.parse(dataLine.get(j));
+            double valueDouble = valueNum.doubleValue();
+
+            attr.setValue(valueDouble);
+        }
+        catch (ParseException e) {
+            LOGGER.error("PARSEEXCEPTION <-------------------");
+        }
+
     }
 
     @GetMapping("/test/1")
@@ -347,6 +438,27 @@ public class UploadCsvController {
         Optional<IncomeStatRaw> incomeStatement = incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate);
 
         return incomeStatement.get();
+    }
+
+    @GetMapping("/{tickerId}/cashflowStatements") // localhost:0000/TKM1T
+    public List<CashflowStatRaw> getCompanyRawCashflowStats(@PathVariable final String tickerId) {
+        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
+
+        List<CashflowStatRaw> listOfRawCashflowStatements = company.get().getCashflowRawStatements();
+        for (CashflowStatRaw statement : listOfRawCashflowStatements) {
+            LOGGER.info("{}", statement.getCashflow_raw_id());
+        }
+
+        return listOfRawCashflowStatements;
+    }
+
+    @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:0000/TKM1T
+    public CashflowStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+        Long cashflowStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Optional<CashflowStatRaw> cashflowStatement = cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate);
+
+        return cashflowStatement.get();
     }
 
     // TODO Other cashflow & bilance statement requests
