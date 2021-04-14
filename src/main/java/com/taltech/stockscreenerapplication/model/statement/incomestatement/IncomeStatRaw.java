@@ -50,4 +50,15 @@ public class IncomeStatRaw {
 
 
     public IncomeStatRaw() {}
+
+    @Override
+    public String toString() {
+        return "IncomeStatRaw{" +
+                "income_stat_raw_id=" + income_stat_raw_id +
+                ", dateOrPeriod='" + dateOrPeriod + '\'' +
+                ", attributes=" + attributes +
+                /*", sourceCsvFile=" + sourceCsvFile + */
+                /*", ticker_id=" + ticker_id + */
+                '}';
+    }
 }
