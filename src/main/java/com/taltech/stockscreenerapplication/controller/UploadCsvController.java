@@ -13,10 +13,8 @@ import com.taltech.stockscreenerapplication.util.payload.response.MessageRespons
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -454,29 +452,6 @@ public class UploadCsvController {
         Optional<BalanceStatRaw> balanceStatement = balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate);
 
         return balanceStatement.get();
-    }
-
-
-    /*
-    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:0000/TKM1T
-    public List<IncomeStatRaw> getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
-        List<IncomeStatRaw> incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
-
-        return incomeStatementIdWithSpecificDate;
-    }
-     */
-
-
-
-
-    // This will get tickedId from url, which will be available there from previous page and will
-    // be forwarded to this moment
-    @GetMapping("/{tickerId}")
-    public CompanyDimension getCompany(@PathVariable final String tickerId) {
-
-        return companyDimensionRepository.findById(tickerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + tickerId));
     }
 
 }

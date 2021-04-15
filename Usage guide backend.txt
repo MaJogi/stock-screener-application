@@ -1,5 +1,5 @@
 Example of usage:
-UPDATED: 15.04.2021
+UPDATED: 15.04.2021 19:35
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
@@ -12,7 +12,7 @@ Example: http://localhost:8080/readCsvAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_
 // Now data is persisted in postgre database.
 
 3. GET method to get information about a company by ticker.
-http://localhost:8080/{ticker}.
+http://localhost:8080/companies/{ticker}.
 Example: http://localhost:8080/TKM1T
 Example json result:
 {
@@ -49,9 +49,9 @@ properties with values.)
 ...
 
 4. GET method to get financial statement information about specific period/date.
-http://localhost:8080/{ticker}}/{"cashflow", "income", "bilance"}}/{date_or_period}}
+http://localhost:8080/{ticker}}/{"cashflow", "income", "balance"}}/{date_or_period}}
 Example: http://localhost:8080/TKM1T/cashflow/Q2%202016 (browser converted 'Q2 2016' to 'Q2%202016')
 
 5. GET method to get all company specific financial statements
-http://localhost:8080/{ticker}}/{"incomeStatements", "cashflowStatements", "bilanceStatements"}
+http://localhost:8080/{ticker}}/{"incomeStatements", "cashflowStatements", "balanceStatements"}
 Example: http://localhost:8080/TKM1T/incomeStatements
