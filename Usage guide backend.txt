@@ -1,4 +1,5 @@
 Example of usage:
+UPDATED: 15.04.2021
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv

@@ -407,7 +407,7 @@ public class UploadCsvController {
 
     @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:0000/TKM1T
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+        LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
         Optional<IncomeStatRaw> incomeStatement = incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate);
 
@@ -427,7 +427,7 @@ public class UploadCsvController {
     }
 
     @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:0000/TKM1T
-    public CashflowStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
+    public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long cashflowStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
         Optional<CashflowStatRaw> cashflowStatement = cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate);
@@ -435,7 +435,26 @@ public class UploadCsvController {
         return cashflowStatement.get();
     }
 
-    // TODO Other cashflow & bilance statement requests
+    @GetMapping("/{tickerId}/balanceStatements") // localhost:0000/TKM1T
+    public List<BalanceStatRaw> getCompanyRawBalanceStats(@PathVariable final String tickerId) {
+        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
+
+        List<BalanceStatRaw> listOfRawBalanceStatements = company.get().getBilanceRawStatements();
+        for (BalanceStatRaw statement : listOfRawBalanceStatements) {
+            LOGGER.info("{}", statement.getBalance_stat_raw_id());
+        }
+
+        return listOfRawBalanceStatements;
+    }
+
+    @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:0000/TKM1T
+    public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+        Long balanceStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Optional<BalanceStatRaw> balanceStatement = balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate);
+
+        return balanceStatement.get();
+    }
 
 
     /*
