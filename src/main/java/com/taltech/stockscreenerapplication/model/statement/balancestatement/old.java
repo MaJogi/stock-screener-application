@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.balancestatement;
+// package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
 /*
 @Entity
