@@ -47,52 +47,7 @@ public class UploadCsvController {
     @Autowired
     private SourceCsvFileRepository sourceCsvFileRepository;
 
-    /* Examples:
-
-    @GetMapping
-    public Iterable<CompanyDimension> getCompanies() {
-
-        return companyDimensionRepository.findAll();
-    }
-
-    @GetMapping("/{tickerId}")
-    public CompanyDimension getCompany(@PathVariable final String tickerId) {
-
-        return companyDimensionRepository.findById(tickerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + tickerId));
-    }
-
-     */
-
-/*
-    @GetMapping("/") // default mapping without additional arguments. Right now reading in csv
-    public void getUploadPage() {
-        // Is there even necessary to return smth on standard get?
-        // Maybe we will return company information for which we need to upload data
-
-    }
-
- */
-
-
-//    // This will accept CSV file that was inserted with React frontend
-//    @PostMapping
-//    public Iterable<BalanceStatRaw> postDefaultPageItems() {
-//        CsvReaderImpl readerImpl = new CsvReaderImpl();
-//        try {
-//            List<List<List<String>>> result = readerImpl.createReaderAndUseReadingMethod();
-//        }
-//        catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//        }
-//
-//        // now we want to save every statement and their period data to database.
-//
-//
-//        return null;
-//    }
-
-    /*
+    /* Advanced request example:
     @PostMapping(value = "/{userId}/tickers", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId, @RequestBody final AddTickerRequest addTickerRequest) {
@@ -112,9 +67,8 @@ public class UploadCsvController {
      */
 
 
-    // This will accept CSV file that was inserted with React frontend as Json string
+    // This will accept CSV file that was inserted with React frontend as Json string or pure csv and return json result.
     // It will be in unclean format!
-    // tagastab clean faili jsonina, et olla kindel, et andmed loeti õigesti
     @PostMapping(value="csvUpload", consumes = "application/json", produces = "application/json")
     public ResponseEntity<MessageResponse> saveFormDataToDb(@PathVariable final String ticker, @RequestBody final String csvFile) {
         CsvReaderImpl readerImpl = new CsvReaderImpl();
@@ -204,26 +158,38 @@ public class UploadCsvController {
         return null;
     }
 
+    @GetMapping("/") // default mapping without additional arguments. Right now reading in csv
+    public ResponseEntity<MessageResponse> getDefaultPage() {
+        return ResponseEntity
+                .status(201)
+                .body(new MessageResponse("Welcome to home page"));
+    }
 
-    // now we want to save every statement and their period data to database.
+    @GetMapping("/error") // default mapping without additional arguments. Right now reading in csv
+    public ResponseEntity<MessageResponse> getErrorPage() {
+        return ResponseEntity
+                .status(404)
+                .body(new MessageResponse("It appears, that page you are searching for doesn't exist. 1. Check if you entered" +
+                        "url correctly. 2. Check if page is accepted by StockScreenerSecuirtyConfig"));
+    }
+
         /*
         1. Andmed on kindlal kujul csv formaadis.
-        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: bilance
+        1. 1. Index 0: Income, Index 1: cashflow, Index 2: bilance
         2. Luuakse uus SourceCsvFile üksus
         3. Luuakse incomeStatRaw objekt
-        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk)
+        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk) ja lisatakse sellele.
         6. (Tehakse kõik sama läbi teiste finantsaruannetega)
-        7.
+        7. Salvestatakse company uuendatud aruannetega
+        */
 
-         */
-
-    @GetMapping("/test/{fileName}")
-    public ResponseEntity<MessageResponse> testing(@PathVariable String fileName) {
-        LOGGER.info("STARTING A test method from controller");
+    // TKM1T
+    @GetMapping("/readCsvAndSave/{ticker}/{fileName}")
+    public ResponseEntity<MessageResponse> testing(@PathVariable String ticker, @PathVariable String fileName) {
+        LOGGER.info("Starting reading in csv file");
         CsvReaderImpl readerImpl = new CsvReaderImpl();
         List<List<List<String>>> result = null;
         try {
-            // Nr n source file, which contains 1 up to 3 statements
             result = readerImpl.createReaderAndUseReadingMethod(fileName);
         }
         catch (Exception e) {
@@ -240,10 +206,10 @@ public class UploadCsvController {
         // 2. Luuakse uus SourceCsvFile üksus
 
         SourceCsvFile newSourceFile = new SourceCsvFile();
-        newSourceFile.setSourceFileName(Constants.FILENAME);
+        newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
 
         // we need to find a firm, to upload a csv file to its name.
-        Optional<CompanyDimension> company = companyDimensionRepository.findById(Constants.TESTFIRM);
+        Optional<CompanyDimension> company = companyDimensionRepository.findById(ticker);
 
         newSourceFile.setTicker_id(company.get());
         sourceCsvFileRepository.save(newSourceFile);
@@ -253,7 +219,6 @@ public class UploadCsvController {
         List<List<String>> incomeList = result.get(0);
         List<List<String>> cashFlowList = result.get(1);
         List<List<String>> bilanceList = result.get(2);
-        LOGGER.info("Bilance list has {} entities",  bilanceList.size());
 
         // first rows of all income statements (header)
         // Ex: [Date_information (note: Note), Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -269,7 +234,6 @@ public class UploadCsvController {
         // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         List<String> incomeListDateEntries = firstIncomeStatRow.subList(1, firstIncomeStatRow.size());
         List<String> cashflowListDateEntries = firstCashflowRow.subList(1, firstCashflowRow.size());
-
         List<String> bilanceListDateEntries = firstBilanceRow.subList(1, firstBilanceRow.size());
 
         // Specific financial statement list of attributes with data
@@ -285,16 +249,10 @@ public class UploadCsvController {
 
         companyDimensionRepository.save(company.get());
 
-        LOGGER.info("Thats how many company have incomestatements now: {} ", company.get().getIncomeRawStatements().size());
-        LOGGER.info("Thats how many company have cashflowstatements now: {} ", company.get().getCashflowRawStatements().size());
-        LOGGER.info("Thats how many company have bilancestatements now: {} ", company.get().getBilanceRawStatements().size());
-
-
         Optional<CompanyDimension> com = companyDimensionRepository.findById(Constants.TESTFIRM);
-        LOGGER.info("Thats how many company have check 2: {} ", com.get().getIncomeRawStatements().size());
-        LOGGER.info("Thats how many company have check 2: {} ", com.get().getCashflowRawStatements().size());
-        LOGGER.info("Thats how many company have check 2: {} ", com.get().getBilanceRawStatements().size());
-
+        LOGGER.info("Thats how many company have incomestatements now: {} ", com.get().getIncomeRawStatements().size());
+        LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.get().getCashflowRawStatements().size());
+        LOGGER.info("Thats how many company have bilancestatements now: {} ", com.get().getBilanceRawStatements().size());
 
         return ResponseEntity
                 .status(201)
@@ -306,7 +264,6 @@ public class UploadCsvController {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
             Number valueNum = format.parse(dataLine.get(j));
             return valueNum.doubleValue();
-
         }
         catch (ParseException e) {
             LOGGER.error("PARSEEXCEPTION <-------------------, value is set to -1");
@@ -324,7 +281,7 @@ public class UploadCsvController {
             double valueDouble = parseNumToDouble(dataLine, i);
             attr.setValue(valueDouble);
 
-            // saving new attribute to db
+            // adding new attribute to current attributes list
             currentPeriodAttributes.add(attr);
         }
     }
@@ -373,10 +330,10 @@ public class UploadCsvController {
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         for (String dateEntry : cashflowListDateEntries) {
-            // Creating raw income statement object for specific period (Q2 2017)
+            // Creating raw cashflow statement object for specific period (Q2 2017)
             CashflowStatRaw newCashflowStatRaw = new CashflowStatRaw();
 
-            // Setting current period for raw income statement
+            // Setting current period for raw cashflow statement
             LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
             newCashflowStatRaw.setDateOrPeriod(dateEntry);
 
@@ -397,7 +354,7 @@ public class UploadCsvController {
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         for (String dateEntry : bilanceListDateEntries) {
-            // Creating raw income statement object for specific period (Q2 2017)
+            // Creating raw balance statement object for specific period (Q2 2017)
             BalanceStatRaw newBalanceStatRaw = new BalanceStatRaw();
 
             // Setting current period for raw income statement
@@ -435,6 +392,7 @@ public class UploadCsvController {
         }
     }
 
+    //  Iterable<IncomeStatRaw>
     @GetMapping("/{tickerId}/incomeStatements") // localhost:0000/TKM1T
     public List<IncomeStatRaw> getCompanyRawIncomeStats(@PathVariable final String tickerId) {
         Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);

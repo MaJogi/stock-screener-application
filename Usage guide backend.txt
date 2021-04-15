@@ -1,0 +1,56 @@
+Example of usage:
+
+1.
+// POST method with included key: file, value: exampleFinStatement.csv
+localhost:8080/uploadFile
+// now file is stored under resources/csv folder. Example: resources/csv/exampleFinStatement.csv
+
+2. GET method to read csv file that is already stored under resources/csv.
+http://localhost:8080/readCsvAndSave/{company ticker}}/{filenameWithout ".csv"}}.
+Example: http://localhost:8080/readCsvAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend
+// Now data is persisted in postgre database.
+
+3. GET method to get information about a company by ticker.
+http://localhost:8080/{ticker}.
+Example: http://localhost:8080/TKM1T
+Example json result:
+{
+"ticker_id": "TKM1T",
+"name": "TALLINNA KAUBAMAJA GRUPP",
+"employees": null,
+"sector": "Retail Trade",
+"industry": "Food Retail",
+"financialsDaily": {}, // 18 items
+"financialsQuarterly": {}, // 27 items
+"incomeRawStatements": [], // 4 items
+"bilanceRawStatements": [], // 2 items
+"cashflowRawStatements": [] // 2 items
+}
+
+(by clicking on unfold button, you can see all of the statements and its
+properties with values.)
+
+"cashflowRawStatements": [
+{
+"cashflow_raw_id": 1,
+"dateOrPeriod": "6 months 2017",
+"attributes": [
+{
+"attr_id": 73,
+"fieldName": "Net profit",
+"value": 8.379
+},
+{
+"attr_id": 74,
+"fieldName": "Income tax on dividends (note: 15)",
+"value": 6.371
+},
+...
+
+4. GET method to get financial statement information about specific period/date.
+http://localhost:8080/{ticker}}/{"cashflow", "income", "bilance"}}/{date_or_period}}
+Example: http://localhost:8080/TKM1T/cashflow/Q2%202016 (browser converted 'Q2 2016' to 'Q2%202016')
+
+5. GET method to get all company specific financial statements
+http://localhost:8080/{ticker}}/{"incomeStatements", "cashflowStatements", "bilanceStatements"}
+Example: http://localhost:8080/TKM1T/incomeStatements
