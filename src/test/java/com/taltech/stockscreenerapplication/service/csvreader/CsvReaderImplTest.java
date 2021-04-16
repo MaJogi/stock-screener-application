@@ -1,5 +1,10 @@
 package com.taltech.stockscreenerapplication.service.csvreader;
 
+import com.opencsv.CSVParser;
+import com.opencsv.CSVParserBuilder;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.enums.CSVReaderNullFieldIndicator;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
@@ -242,29 +247,118 @@ class CsvReaderImplTest {
 
     @Test
     void removeUnnecessaryCols() {
-        List<List<String>> testFinStatementList = new ArrayList<>();
+        List<Integer> emptyLineOrNoteLineStatement = new LinkedList<>(Arrays.asList(1, 4, 5));
+
+        // LinkedList is dynamic and arraylist is static and can't be manipulated (add, remove etc)
+        List<List<String>> testFinStatementList = new LinkedList<>();
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Date_information", "Note", "6 months 2017", "6 months 2016", "", ""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Net profit","","8,379","8,39","",""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Income tax on dividends","15","6,371","5,219","",""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Interest expense","","383","431","",""))));
+
+        List<List<String>> expectedFinStatList = new LinkedList<>(Arrays.asList(
+                Arrays.asList("Date_information", "6 months 2017", "6 months 2016"),
+                Arrays.asList("Net profit","8,379","8,39"),
+                Arrays.asList("Income tax on dividends","6,371","5,219"),
+                Arrays.asList("Interest expense","383","431")
+        ));
+
+        csvReaderImpl.removeUnnecessaryCols(testFinStatementList, emptyLineOrNoteLineStatement);
+        Assert.assertTrue(testFinStatementList.equals(expectedFinStatList));
+
     }
 
     @Test
     void determineUnnecessaryCols() {
 
+        List<List<String>> testFinStatementList = new LinkedList<>();
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Date_information", "Note", "6 months 2017", "6 months 2016", "", ""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Net profit","","8,379","8,39","",""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Income tax on dividends","15","6,371","5,219","",""))));
+        testFinStatementList.add(new LinkedList<>((Arrays.asList("Interest expense","","383","431","",""))));
+
+        List<Integer> expectedResultList = new LinkedList<>(Arrays.asList(1, 4, 5));
+        List<Integer> resultList = new LinkedList<>();
         /*
         determineAndRemoveUnnecessaryCols(cashflowList);
         determineAndRemoveUnnecessaryCols(balanceList);
         determineAndRemoveUnnecessaryCols(incomeList);
         */
+        csvReaderImpl.determineUnnecessaryCols(testFinStatementList, resultList);
+        Assert.assertTrue(expectedResultList.equals(resultList));
 
     }
 
     @Test
     void determineAndRemoveUnnecessaryCols() {
+        // Already tested individually
     }
 
     @Test
     void readCsvAndReturnLists() {
+        // Global with specific file which values i know
+
+        CSVParser parser = new CSVParserBuilder()
+                .withSeparator(';')
+                .withIgnoreQuotations(true)
+                .build();
+
+        String stringPath = String.format("src/main/resources/csv/%s.csv", "tkm-2017_q2_CSV_modified_by_frontend");
+        Path myPath = Paths.get(stringPath);
+
+        List<List<List<String>>> result = null;
+
+        try {
+            Reader reader = Files.newBufferedReader(myPath, StandardCharsets.UTF_8);
+            CSVReader csvReader = new CSVReaderBuilder(reader)
+                    .withSkipLines(0)
+                    .withCSVParser(parser)
+                    .withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_QUOTES)
+                    .build();
+
+            result = csvReaderImpl.readCsvAndReturnLists(csvReader);
+        }
+        catch (Exception e) {
+            LOGGER.info("{}", e.getMessage());
+        }
+
+
+        Assert.assertEquals(19, result.get(0).size());
+        Assert.assertEquals(32, result.get(1).size());
+        Assert.assertEquals(26, result.get(2).size());
+
+        // we can test more things later
+
     }
 
     @Test
     void createReaderAndUseReadingMethod() {
+        List<List<List<String>>> result = null;
+
+        String fileName = "tkm-2017_q2_CSV_modified_by_frontend";
+        try {
+            result = csvReaderImpl.createReaderAndUseReadingMethod(fileName);
+        }
+        catch (Exception e) {
+
+        }
+
+        Assert.assertEquals(19, result.get(0).size());
+        Assert.assertEquals(32, result.get(1).size());
+        Assert.assertEquals(26, result.get(2).size());
+
+    }
+
+    @Test
+    void initListsAndDefaultReadProperties() {
+        Assert.assertNull(csvReaderImpl.balanceList);
+        Assert.assertNull(csvReaderImpl.cashflowList);
+        Assert.assertNull(csvReaderImpl.incomeList);
+        csvReaderImpl.initListsAndDefaultReadProperties();
+        Assert.assertNotNull(csvReaderImpl.balanceList);
+        Assert.assertNotNull(csvReaderImpl.cashflowList);
+        Assert.assertNotNull(csvReaderImpl.incomeList);
+        Assert.assertEquals(Statement.Statement_notinitialized, csvReaderImpl.currentStatement);
+        Assert.assertFalse(csvReaderImpl.foundNoteColumn);
     }
 }
