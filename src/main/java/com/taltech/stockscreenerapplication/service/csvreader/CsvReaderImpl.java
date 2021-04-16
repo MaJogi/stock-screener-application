@@ -23,91 +23,16 @@ import java.util.List;
 public class CsvReaderImpl implements IReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
 
-    /*
-    public Table bushTable;
-    public String[] animals;
-    public double[] cuteness;
-    public Table cuteAnimals;
-
-    public CsvReader() {
-        animals = new String[]{"bear", "cat", "giraffe"};
-        cuteness = new double[]{90.1, 84.3, 99.7};
-    }
-
-
-
-    public void readExampleTable() {
-        System.out.println("Starting reading exampleTable");
-
-        cuteAnimals =
-                Table.create("Cute Animals")
-                        .addColumns(
-                                StringColumn.create("Animal types", animals),
-                                DoubleColumn.create("rating", cuteness));
-
-        System.out.println("Ending reading exampleTable");
-    }
-
-
-
-    public void readCsvFile() throws IOException {
-        System.out.println("starting reading csv");
-        //bushTable = Table.read().csv("C:\\Users\\Marko\\Desktop\\Ülikool\\6 semester\\CSV\\tal-2019_q3_CSV.csv");
-
-        // Good old way to read and format data (kirjuta, miks olemasolevad vahendid ei sobinud)
-        String pathToCsv = "C:\\Users\\Marko\\Desktop\\Ülikool\\6 semester\\CSV\\tal-2019_q3_CSV.csv";
-        File csvFile = new File(pathToCsv);
-
-        BufferedReader csvReader = new BufferedReader(new FileReader(pathToCsv));
-        String row;
-        while ((row = csvReader.readLine()) != null) {
-            String[] data = row.split(";");
-            // Andmete puhastamine!!!
-            // Nüüd on vaja midagi teha <income_statement>; ; ; ;
-            System.out.println(data);
-
-            // Date_information; Q3 2019;Q3 2018;Jan-Sep 2019;Jan-Sep 2018
-            // Revenue (Note 3);287771;283609;722744;723173      (Tuleb eemaldada (Note ...), kasutades regexi?)
-            //
-
-
-
-            // do something with the data
-        }
-        csvReader.close();
-
-
-        System.out.println("ending reading csv");
-    }
-
-     */
-
-    /*
-    public List<String[]> readAll(Reader reader) throws Exception {
-        CSVReader csvReader = new CSVReader(reader);
-        List<String[]> list = new ArrayList<>();
-        list = csvReader.readAll();
-        reader.close();
-        csvReader.close();
-        return list;
-    }
-    */
     CSVParser parser;
     CSVReader csvReader;
-    List<List<String>> bilanceList;
+    List<List<String>> balanceList;
     List<List<String>> cashflowList;
     List<List<String>> incomeList;
-    String fileName;
 
     public CsvReaderImpl() {
         LOGGER.info("Default CsvReaderImpl constructor called");
         createCsvParser();
     }
-
-//    public CsvReaderImpl(String fileName) {
-//        super(); //This is supposed to call default constructor // createCsvParser(); // does
-//        this.fileName = fileName;
-//    }
 
     public void createCsvParser() {
         this.parser = new CSVParserBuilder()
@@ -124,24 +49,36 @@ public class CsvReaderImpl implements IReader {
     }
 
     public boolean isCurrentRowStatementBlock(List<String> line) {
-        return line.get(0).contains("<income_statement>") || line.get(0).contains("<cash_flow_statement>")
-                || line.get(0).contains("<balance_sheet>");
+        if (line == null) {
+            return false;
+        }
+
+        return line.get(0).toLowerCase().contains("<income_statement>")
+                || line.get(0).toLowerCase().contains("<cash_flow_statement>")
+                || line.get(0).toLowerCase().contains("<balance_sheet>");
     }
 
     public void determineCurrentSpecificStatementBlock(List<String> line) {
-        if (line.get(0).contains("<income_statement>")) {
+        if (line == null) {
+            return;
+        }
+        if (line.get(0).toLowerCase().contains("<income_statement>")) {
             this.currentStatement = Statement.Statement_income;
         }
-        else if (line.get(0).contains("<cash_flow_statement>")) {
+        else if (line.get(0).toLowerCase().contains("<cash_flow_statement>")) {
             this.currentStatement = Statement.Statement_cashflow;
         }
-        else if (line.get(0).contains("<balance_sheet>")) {
+        else if (line.get(0).toLowerCase().contains("<balance_sheet>")) {
             this.currentStatement = Statement.Statement_balance;
         }
     }
 
     public boolean isEndingStatementBlock(List<String> line) {
-        return line.get(0).contains("</income_statement>") || line.get(0).contains("</cash_flow_statement>")
+        if (line == null) {
+            return false;
+        }
+        return line.get(0).contains("</income_statement>")
+                || line.get(0).contains("</cash_flow_statement>")
                 || line.get(0).contains("</balance_sheet>");
     }
 
@@ -149,7 +86,9 @@ public class CsvReaderImpl implements IReader {
     boolean foundNoteColumn;
 
     public boolean doesHeaderColContainNote(List<String> line) {
-        // This is needed to get rid of note column later
+        if (line == null) {
+            return false;
+        }
         String stringToSearch = "note";
         if (line.get(1).toLowerCase().contains(stringToSearch)) {
             return true;
@@ -167,7 +106,7 @@ public class CsvReaderImpl implements IReader {
             cashflowList.add(line);
         }
         else if (currentStatement == Statement.Statement_balance) {
-            bilanceList.add(line);
+            balanceList.add(line);
         }
     }
 
@@ -178,69 +117,70 @@ public class CsvReaderImpl implements IReader {
         }
     }
 
-    public void removeUnnecessaryCols(List<List<String>> cashflowList, List<Integer> emptyLineOrNoteLineCashFlow) {
-        for (List<String> row : cashflowList) {
-
-            int tempHelperInt = 0;
-            for (int index : emptyLineOrNoteLineCashFlow) {
-                index = index - tempHelperInt;
+    // Removing unnecessary columns for clean file, than can be persisted in database.
+    public void removeUnnecessaryCols(List<List<String>> finStatementList, List<Integer> emptyLineOrNoteLineStatement) {
+        LOGGER.info("Starting removing empty && note columns");
+        for (List<String> row : finStatementList) {
+            int tempCounter = 0;
+            for (int index : emptyLineOrNoteLineStatement) {
+                index = index - tempCounter;
                 row.remove(index);
-                tempHelperInt++;
+                tempCounter++;
             }
         }
     }
 
-    public void determineUnnecessaryCols(List<List<String>> specificStatementList, List<Integer> emptyLineOrNoteList) {
-        LOGGER.info("Starting removing empty && note columns");
+    public void determineUnnecessaryCols(List<List<String>> specificStatementList, List<Integer> emptyLineOrNoteIndexList) {
         int colCounter = 0;
         // Looking which header to remove
         for (String columnName : specificStatementList.get(0)) {
             if (columnName.toLowerCase().trim().equals("note")  ||
                     columnName.trim().equals("")) {
-                emptyLineOrNoteList.add(colCounter);
+                emptyLineOrNoteIndexList.add(colCounter);
             }
             colCounter++;
         }
-        LOGGER.info("Column indexes we want to get rid of: {}", emptyLineOrNoteList);
+        LOGGER.info("Column indexes we want to get rid of: {}", emptyLineOrNoteIndexList);
     }
 
     public void determineAndRemoveUnnecessaryCols(List<List<String>> list) {
-        List<Integer> emptyLineOrNoteResultList = new ArrayList<>();
-        determineUnnecessaryCols(list, emptyLineOrNoteResultList);
-        removeUnnecessaryCols(list, emptyLineOrNoteResultList);
+        List<Integer> emptyOrNoteLineIndexList = new ArrayList<>();
+        determineUnnecessaryCols(list, emptyOrNoteLineIndexList);
+        removeUnnecessaryCols(list, emptyOrNoteLineIndexList);
     }
 
-    // Similarly, we can abstract readNext() which reads a supplied .csv line by line:
-    public List<List<List<String>>> readCsvAndReturnLists(CSVReader csvReader) throws Exception {
-
-        // Default initialization
-        bilanceList = new ArrayList<>();
+    public void initListsAndDefaultReadProperties() {
+        balanceList = new ArrayList<>();
         cashflowList = new ArrayList<>();
         incomeList = new ArrayList<>();
 
         currentStatement = Statement.Statement_notinitialized;
         foundNoteColumn = false;
+    }
+
+    // Similarly, we can abstract readNext() which reads a supplied .csv line by line:
+    public List<List<List<String>>> readCsvAndReturnLists(CSVReader csvReader) throws Exception {
+        // Default initialization
+        initListsAndDefaultReadProperties();
 
         String[] lineArray;
         List<String> line;
 
-        LOGGER.info("Starting reading first line <----------");
+        LOGGER.info("Trying to start reading csv file <----------");
         while ((lineArray = csvReader.readNext()) != null) {
-            LOGGER.info("{}", lineArray);
             line = new LinkedList<>(Arrays.asList(lineArray));
 
             // check if empty line. This will remove lines like: , , , ,
             if (line.get(0).isEmpty()) { continue; }
 
-            if (!foundNoteColumn) {
+            if (!foundNoteColumn && csvReader.getLinesRead() < 2) {
                 // Mõtle hiljem kuidas teha nii, et see kontroll tehakse ainult ühe korra
                 foundNoteColumn = doesHeaderColContainNote(line);
             }
 
             // 1st step: We have to check, if we have something inside <>
-            // Check which financial statement we have: <income_statement>, <balance_sheet>, <cash_flow_statement>
-
             if (isCurrentRowStatementBlock(line)) {
+                // Check which financial statement we have: <income_statement>, <balance_sheet>, <cash_flow_statement>
                 determineCurrentSpecificStatementBlock(line);
                 continue;
             }
@@ -267,57 +207,25 @@ public class CsvReaderImpl implements IReader {
 
         // Determining and removing unnecessary columns
         determineAndRemoveUnnecessaryCols(cashflowList);
-        determineAndRemoveUnnecessaryCols(bilanceList);
+        determineAndRemoveUnnecessaryCols(balanceList);
         determineAndRemoveUnnecessaryCols(incomeList);
 
         // Creating a list to hold all statements
         List<List<List<String>>> combinedLists = new ArrayList<>();
         combinedLists.add(incomeList);
         combinedLists.add(cashflowList);
-        combinedLists.add(bilanceList);
-
-        // Kindlasti front endi peal kuvamisel tuleks kontrollida, kas saadud list
-        // (või mõni muu collection) on tühi!
+        combinedLists.add(balanceList);
 
         return combinedLists;
-
-        // After that, we should add this information to database.
-        // For example, if we upload first ever csv file about TKM firm, then
-        // 1) Database creates source_csv_file table entry:
-        // insert into source_csv_file (source_file_id: 1, source_file_name: "tkm-2017_q2_CSV")
-        // 2) For example, we found only bilance and cashflow statement
-        // insert into balance_stat_as_imported (...)
     }
 
     public List<List<List<String>>> createReaderAndUseReadingMethod(String fileName) throws Exception {
         LOGGER.info("Starting using reader");
-        /*
-        URL pathToCsv = ClassLoader.getSystemResource("csv/twoColumn.csv");
-        LOGGER.info("{}", pathToCsv);
-        System.out.println(ClassLoader.getSystemResource("csv/twoColumn.csv"));
-         */
 
-        //String fileName = "src/main/resources/csv/tal-2019_q3_CSV.csv";
-        //String fileName = "src/main/resources/csv/tkm-2017_q2_CSV.csv";
-
-        /*
-
-        String fileName = "src/main/resources/csv/tkm-2017_q2_CSV_modified_by_frontend.csv";
-        Path myPath = Paths.get(fileName);
-        LOGGER.info("Path at which csv is found {}", myPath);
-        */
-
-        //tkm-2017_q2_CSV_modified_by_frontend
         String stringPath = String.format("src/main/resources/csv/%s.csv", fileName);
         Path myPath = Paths.get(stringPath);
         LOGGER.info("Path at which csv is found {}", myPath);
 
-        /*
-
-
-        Reader reader = Files.newBufferedReader(Paths.get(
-                ClassLoader.getSystemResource("csv/twoColumn.csv").toURI()));
-        */
         Reader reader = Files.newBufferedReader(myPath, StandardCharsets.UTF_8);
 
         LOGGER.info("Initial reader done");
