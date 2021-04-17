@@ -14,12 +14,13 @@ import com.taltech.stockscreenerapplication.util.payload.response.MessageRespons
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 /*@RequestMapping("/upload")*/
@@ -206,9 +207,9 @@ public class UploadCsvController {
         newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
 
         // we need to find a firm, to upload a csv file to its name.
-        Optional<CompanyDimension> company = companyDimensionRepository.findById(ticker);
+        CompanyDimension company = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
 
-        newSourceFile.setTicker_id(company.get());
+        newSourceFile.setTicker_id(company);
         sourceCsvFileRepository.save(newSourceFile);
 
         // get lists for all statements rows of particular file
@@ -244,12 +245,12 @@ public class UploadCsvController {
         statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries, cashflowListAttributesWithData, company);
         statementsToDbHelper.createNewBilanceFinStatementForSpecPeriod(bilanceListDateEntries, bilanceListAttributesWithData, company);
 
-        companyDimensionRepository.save(company.get());
+        companyDimensionRepository.save(company);
 
-        Optional<CompanyDimension> com = companyDimensionRepository.findById(ticker);
-        LOGGER.info("Thats how many company have incomestatements now: {} ", com.get().getIncomeRawStatements().size());
-        LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.get().getCashflowRawStatements().size());
-        LOGGER.info("Thats how many company have bilancestatements now: {} ", com.get().getBilanceRawStatements().size());
+        CompanyDimension com = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
+        LOGGER.info("Thats how many company have incomestatements now: {} ", com.getIncomeRawStatements().size());
+        LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.getCashflowRawStatements().size());
+        LOGGER.info("Thats how many company have bilancestatements now: {} ", com.getBilanceRawStatements().size());
 
         return ResponseEntity
                 .status(201)
@@ -259,9 +260,9 @@ public class UploadCsvController {
     //  Maybe Iterable<IncomeStatRaw>
     @GetMapping("/{tickerId}/incomeStatements") // localhost:0000/TKM1T
     public List<IncomeStatRaw> getCompanyRawIncomeStats(@PathVariable final String tickerId) {
-        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
+        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
 
-        List<IncomeStatRaw> listOfRawIncomeStatements = company.get().getIncomeRawStatements();
+        List<IncomeStatRaw> listOfRawIncomeStatements = company.getIncomeRawStatements();
         for (IncomeStatRaw statement : listOfRawIncomeStatements) {
             LOGGER.info("{}", statement.getIncome_stat_raw_id());
         }
@@ -273,16 +274,16 @@ public class UploadCsvController {
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
-        Optional<IncomeStatRaw> incomeStatement = incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate);
+        IncomeStatRaw incomeStatement = incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find income financial statement with Id: " + incomeStatementIdWithSpecificDate));
 
-        return incomeStatement.get();
+        return incomeStatement;
     }
 
     @GetMapping("/{tickerId}/cashflowStatements") // localhost:0000/TKM1T
     public List<CashflowStatRaw> getCompanyRawCashflowStats(@PathVariable final String tickerId) {
-        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
+        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
 
-        List<CashflowStatRaw> listOfRawCashflowStatements = company.get().getCashflowRawStatements();
+        List<CashflowStatRaw> listOfRawCashflowStatements = company.getCashflowRawStatements();
         for (CashflowStatRaw statement : listOfRawCashflowStatements) {
             LOGGER.info("{}", statement.getCashflow_raw_id());
         }
@@ -294,16 +295,16 @@ public class UploadCsvController {
     public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long cashflowStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
-        Optional<CashflowStatRaw> cashflowStatement = cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate);
+        CashflowStatRaw cashflowStatement = cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find cashflow financial statement with id: " + cashflowStatementIdWithSpecificDate));
 
-        return cashflowStatement.get();
+        return cashflowStatement;
     }
 
     @GetMapping("/{tickerId}/balanceStatements") // localhost:0000/TKM1T
     public List<BalanceStatRaw> getCompanyRawBalanceStats(@PathVariable final String tickerId) {
-        Optional<CompanyDimension> company = companyDimensionRepository.findById(tickerId);
+        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
 
-        List<BalanceStatRaw> listOfRawBalanceStatements = company.get().getBilanceRawStatements();
+        List<BalanceStatRaw> listOfRawBalanceStatements = company.getBilanceRawStatements();
         for (BalanceStatRaw statement : listOfRawBalanceStatements) {
             LOGGER.info("{}", statement.getBalance_stat_raw_id());
         }
@@ -315,8 +316,8 @@ public class UploadCsvController {
     public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long balanceStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
-        Optional<BalanceStatRaw> balanceStatement = balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate);
+        BalanceStatRaw balanceStatement = balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find balance financial statement with id: " + balanceStatementIdWithSpecificDate));
 
-        return balanceStatement.get();
+        return balanceStatement;
     }
 }

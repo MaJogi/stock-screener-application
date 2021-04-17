@@ -19,7 +19,6 @@ import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
 
 @Service
 public class StatementsToDbHelperImpl {
@@ -64,7 +63,7 @@ public class StatementsToDbHelperImpl {
 
     public void createNewCashflowFinStatementForSpecPeriod(List<String> cashflowListDateEntries,
                                                            List<List<String>> cashflowListAttributesWithData,
-                                                           Optional<CompanyDimension> company) {
+                                                           CompanyDimension company) {
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -81,14 +80,14 @@ public class StatementsToDbHelperImpl {
             newCashflowStatRaw.setAttributes(currentPeriodAttributes);
 
             cashflowStatRawRepository.save(newCashflowStatRaw);
-            company.get().getCashflowRawStatements().add(newCashflowStatRaw);
+            company.getCashflowRawStatements().add(newCashflowStatRaw);
             i++;
         }
     }
 
     public void createNewFinStatementForSpecPeriod(List<String> finStatementListDateEntries,
                                                    List<List<String>> finStatementListAttributesWithData,
-                                                   Optional<CompanyDimension> company) {
+                                                   CompanyDimension company) {
         // TODO instead of different method for each one
 
         /*
@@ -125,7 +124,7 @@ public class StatementsToDbHelperImpl {
 
     public void createNewBilanceFinStatementForSpecPeriod(List<String> bilanceListDateEntries,
                                                           List<List<String>> bilanceListAttributesWithData,
-                                                          Optional<CompanyDimension> company) {
+                                                          CompanyDimension company) {
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -142,14 +141,14 @@ public class StatementsToDbHelperImpl {
             newBalanceStatRaw.setAttributes(currentPeriodAttributes);
 
             balanceStatRawRepository.save(newBalanceStatRaw);
-            company.get().getBilanceRawStatements().add(newBalanceStatRaw);
+            company.getBilanceRawStatements().add(newBalanceStatRaw);
             i++;
         }
     }
 
     public void createNewIncomeFinStatementForSpecPeriod(List<String> incomeListDateEntries,
                                                          List<List<String>> incomeListAttributesWithData,
-                                                         Optional<CompanyDimension> company) {
+                                                         CompanyDimension company) {
         int i = 1;
         for (String dateEntry : incomeListDateEntries) {
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
@@ -163,7 +162,7 @@ public class StatementsToDbHelperImpl {
 
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
             incomeStatRawRepository.save(newIncomeStatRaw);
-            company.get().getIncomeRawStatements().add(newIncomeStatRaw);
+            company.getIncomeRawStatements().add(newIncomeStatRaw);
             i++;
         }
     }
