@@ -19,6 +19,11 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+    This class only reads CSV file and returns clean balance sheet, income statement
+    and cashflow statement AS A list.
+ */
+
 @Service
 public class CsvReaderImpl implements IReader {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
