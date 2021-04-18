@@ -42,34 +42,28 @@ public class CompanyDimensionController {
 
     @GetMapping
     public Iterable<CompanyDimension> getCompanies() {
-
         return companyDimensionRepository.findAll();
     }
 
     @GetMapping("/{tickerId}")
     public CompanyDimension getCompany(@PathVariable final String tickerId) {
 
-        return companyDimensionRepository.findById(tickerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + tickerId));
+        return findCompanyByIdWithExceptionHelper(tickerId);
     }
 
     //  Maybe Iterable<IncomeStatRaw>
-    @GetMapping("/{tickerId}/incomeStatements") // localhost:0000/companies/TKM1T/incomeStatements
+    @GetMapping("/{tickerId}/incomeStatements") // localhost:8080/companies/TKM1T/incomeStatements
     public List<IncomeStatRaw> getCompanyRawIncomeStats(@PathVariable final String tickerId) {
-        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
-        List<IncomeStatRaw> listOfRawIncomeStatements = company.getIncomeRawStatements();
-        for (IncomeStatRaw statement : listOfRawIncomeStatements) {
-            LOGGER.info("{}", statement.getIncome_stat_raw_id());
-        }
-
-        return listOfRawIncomeStatements;
+        return company.getIncomeRawStatements();
     }
 
-    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:0000/companies/TKM1T
+    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:8080/companies/TKM1T
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
-        Long incomeStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Long incomeStatementIdWithSpecificDate = companyDimensionRepository
+                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -77,47 +71,45 @@ public class CompanyDimensionController {
     }
 
 
-    @GetMapping("/{tickerId}/cashflowStatements") // localhost:0000/companies/TKM1T/cashflowStatements
+    @GetMapping("/{tickerId}/cashflowStatements") // localhost:8080/companies/TKM1T/cashflowStatements
     public List<CashflowStatRaw> getCompanyRawCashflowStats(@PathVariable final String tickerId) {
-        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
-        List<CashflowStatRaw> listOfRawCashflowStatements = company.getCashflowRawStatements();
-        for (CashflowStatRaw statement : listOfRawCashflowStatements) {
-            LOGGER.info("{}", statement.getCashflow_raw_id());
-        }
-
-        return listOfRawCashflowStatements;
+        return company.getCashflowRawStatements();
     }
 
-    @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:0000/companies/TKM1T/cashflow/{dateOrPeriod}
+    @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:8080/companies/TKM1T/cashflow/{dateOrPeriod}
     public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
-        Long cashflowStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Long cashflowStatementIdWithSpecificDate = companyDimensionRepository
+                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find cashflow financial statement with id: " + cashflowStatementIdWithSpecificDate));
     }
 
-    @GetMapping("/{tickerId}/balanceStatements") // localhost:0000/companies/TKM1T/balanceStatements
+    @GetMapping("/{tickerId}/balanceStatements") // localhost:8080/companies/TKM1T/balanceStatements
     public List<BalanceStatRaw> getCompanyRawBalanceStats(@PathVariable final String tickerId) {
-        CompanyDimension company = companyDimensionRepository.findById(tickerId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with tickerId: " + tickerId));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
-        List<BalanceStatRaw> listOfRawBalanceStatements = company.getBilanceRawStatements();
-        for (BalanceStatRaw statement : listOfRawBalanceStatements) {
-            LOGGER.info("{}", statement.getBalance_stat_raw_id());
-        }
-
-        return listOfRawBalanceStatements;
+        return company.getBilanceRawStatements();
     }
 
-    @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:0000/companies/TKM1T/balance/{dateOrPeriod}
+    @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:8080/companies/TKM1T/balance/{dateOrPeriod}
     public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
-        Long balanceStatementIdWithSpecificDate = companyDimensionRepository.findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+        Long balanceStatementIdWithSpecificDate = companyDimensionRepository
+                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND
                         , "Unable to find balance financial statement with id: " + balanceStatementIdWithSpecificDate));
+    }
+
+    public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
+        return companyDimensionRepository.findById(tickerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with tickerId: " + tickerId));
     }
 }

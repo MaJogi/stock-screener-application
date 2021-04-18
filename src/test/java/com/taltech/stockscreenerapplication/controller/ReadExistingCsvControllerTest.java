@@ -76,41 +76,24 @@ class ReadExistingCsvControllerTest {
 
      */
 
-    @Test
-    void saveFormDataToDb() {
-    }
 
     @Test
     void getDefaultPage() {
-        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/", String.class);
-        assertThat("The response status to query company by id is not 200.", response.getStatusCode(), equalTo(HttpStatus.OK));
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/", String.class);
+        assertThat("Insert reason here.", response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
     @Test
-    void testing() {
+    void readAndSaveToDbStatusOK() {
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/readAndSaveToDb/TKM1T/tkm-2017_q2_CSV_modified_by_frontend", String.class);
+        assertThat("Insert reason here", response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
     @Test
-    void getCompanyRawIncomeStats() {
+    void readAndSaveToDbBadRequest() {
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/readAndSaveToDb/TKM1T/nonExisting", String.class);
+        assertThat("Insert reason here", response.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
+
     }
 
-    @Test
-    void getCompanySpecificTimeRawIncomeStats() {
-    }
-
-    @Test
-    void getCompanyRawCashflowStats() {
-    }
-
-    @Test
-    void getCompanySpecificTimeRawBalanceStat() {
-    }
-
-    @Test
-    void getCompanyRawBalanceStats() {
-    }
-
-    @Test
-    void getCompanySpecificTimeRawCashflowStat() {
-    }
 }

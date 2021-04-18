@@ -176,7 +176,7 @@ public class ReadExistingCsvController {
 
     // TKM1T
     @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
-    public ResponseEntity<MessageResponse> testing(@PathVariable String ticker, @PathVariable String fileName) {
+    public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         LOGGER.info("Starting reading in csv file");
         CsvReaderImpl readerImpl = new CsvReaderImpl();
         List<List<List<String>>> result = null;
