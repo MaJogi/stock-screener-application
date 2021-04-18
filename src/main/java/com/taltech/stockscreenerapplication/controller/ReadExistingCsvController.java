@@ -14,14 +14,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @RestController
-/*@RequestMapping("/uploadCsv")*/
-public class UploadCsvController {
+@RequestMapping("/readCsv")
+public class ReadExistingCsvController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
 
@@ -149,7 +150,8 @@ public class UploadCsvController {
     public ResponseEntity<MessageResponse> getDefaultPage() {
         return ResponseEntity
                 .status(200)
-                .body(new MessageResponse("Welcome to home page"));
+                .body(new MessageResponse("Welcome to readCsvController homepage. " +
+                        "Read Usage guide to know how this controller can be used"));
     }
 
     /* (DOESN'T WORK)
@@ -173,7 +175,7 @@ public class UploadCsvController {
     */
 
     // TKM1T
-    @GetMapping("/readCsvAndSave/{ticker}/{fileName}")
+    @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> testing(@PathVariable String ticker, @PathVariable String fileName) {
         LOGGER.info("Starting reading in csv file");
         CsvReaderImpl readerImpl = new CsvReaderImpl();
@@ -244,11 +246,7 @@ public class UploadCsvController {
         LOGGER.info("Thats how many company have bilancestatements now: {} ", com.getBilanceRawStatements().size());
 
         return ResponseEntity
-                .status(201)
+                .status(200)
                 .body(new MessageResponse("Database seems to be populated successfully, check database"));
     }
-
-
-
-
 }

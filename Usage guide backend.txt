@@ -1,5 +1,5 @@
 Example of usage:
-UPDATED: 18.04.2021 13:40
+UPDATED: 18.04.2021 14:00
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
@@ -7,7 +7,7 @@ localhost:8080/uploadFile
 // now file is stored under resources/csv folder. Example: resources/csv/exampleFinStatement.csv
 
 2. GET method to read csv file that is already stored under resources/csv.
-http://localhost:8080/readCsvAndSave/{company ticker}}/{filenameWithout ".csv"}}.
+http://localhost:8080/readCsv/readAndSaveToDb/{company ticker}}/{filenameWithout ".csv"}}.
 Example: http://localhost:8080/readCsvAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend
 // Now data is persisted in postgre database.
 

@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 // https://www.baeldung.com/junit-5
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class UploadCsvControllerTest {
+class ReadExistingCsvControllerTest {
 
     @LocalServerPort
     private int port;
