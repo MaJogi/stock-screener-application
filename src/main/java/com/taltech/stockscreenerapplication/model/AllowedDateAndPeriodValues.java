@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+// TODO
+// REMOVE THIS AND ADD THOSE VALUES TO ALLOWEDDATEANDPERIODVALUES TABLE WITH INSERT INTO METHOD
+// in data.sql file
+
 public class AllowedDateAndPeriodValues {
     public static List<String> allowedBalanceDateValues = new LinkedList<>(
             Arrays.asList("") // + custom value dd-mm-yyyy, yyyy

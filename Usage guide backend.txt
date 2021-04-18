@@ -1,5 +1,5 @@
 Example of usage:
-UPDATED: 15.04.2021 19:35
+UPDATED: 18.04.2021 13:40
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
@@ -49,9 +49,19 @@ properties with values.)
 ...
 
 4. GET method to get financial statement information about specific period/date.
-http://localhost:8080/{ticker}}/{"cashflow", "income", "balance"}}/{date_or_period}}
-Example: http://localhost:8080/TKM1T/cashflow/Q2%202016 (browser converted 'Q2 2016' to 'Q2%202016')
+http://localhost:8080/companies/{ticker}}/{"cashflow", "income", "balance"}}/{date_or_period}}
+Example: http://localhost:8080/companies/TKM1T/cashflow/Q2%202016 (browser converted 'Q2 2016' to 'Q2%202016')
 
 5. GET method to get all company specific financial statements
-http://localhost:8080/{ticker}}/{"incomeStatements", "cashflowStatements", "balanceStatements"}
-Example: http://localhost:8080/TKM1T/incomeStatements
+http://localhost:8080/companies/{ticker}}/{"incomeStatements", "cashflowStatements", "balanceStatements"}
+Example: http://localhost:8080/companies/TKM1T/incomeStatements
+
+
+///
+
+Each financial statemant has its own controller.
+Right now it can be used to get all instances and specific instance by id.
+
+Ex: /rawCashflowStats and /rawCashflowStats/{id}
+Ex: /rawIncomeStats and /rawIncomeStats/{id}
+Ex: /rawBalanceSheets and /rawBalanceSheets/{id}
