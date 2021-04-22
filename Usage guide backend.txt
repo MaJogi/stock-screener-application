@@ -1,5 +1,5 @@
 Example of usage:
-UPDATED: 18.04.2021 14:00
+UPDATED: 22.04.2021 21:25
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
@@ -65,3 +65,25 @@ Right now it can be used to get all instances and specific instance by id.
 Ex: /rawCashflowStats and /rawCashflowStats/{id}
 Ex: /rawIncomeStats and /rawIncomeStats/{id}
 Ex: /rawBalanceSheets and /rawBalanceSheets/{id}
+
+POST meetod URLile: http://localhost:8080/map/createMappingFor/TKM1T (ticker võib olla muu)
+Programm ootab jsoni formaadis json faili, mille sees on kolm kollektsiooni: incomeRequest, balanceRequest,
+cashflowRequest.
+Postmanis tuleb valida body -> raw -> JSON ja sisestada andmed kujul:
+{
+    "incomeRequest":{
+        "dateFrom": "2017",
+        ...
+        "weightedAverageShsOutDil": null
+    },
+    "balanceRequest":{
+        "dateFrom": "2017",
+        ...
+        "netDebt": "#Revenue + #Other operating income"
+    },
+    "cashflowRequest":{
+        "dateFrom": "2017",
+        ...
+        "debtRepayment": "#Other expenses"
+    }
+}
