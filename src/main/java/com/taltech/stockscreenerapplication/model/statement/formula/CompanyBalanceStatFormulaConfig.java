@@ -1,36 +1,40 @@
-package com.taltech.stockscreenerapplication.model.statement.balancestatement;
+package com.taltech.stockscreenerapplication.model.statement.formula;
 
-import com.taltech.stockscreenerapplication.model.CompanyDimension;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
-public class BalanceStatStandard {
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Table(name = "firm_balance_statement_formula")
+public class CompanyBalanceStatFormulaConfig {
     @Id
-    @Column(name = "balance_stat_standard_id")
-    private String balance_stat_standard_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "balance_stat_formula_id")
+    private Long income_stat_formula_id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
+    // Financial administrator can choose a collection of financial configurations
+    @Column(name = "company_config_collection_id")
+    private Long company_config_collection_id;
 
-    @Column(name = "date_quarter_year")
-    private String dateOrQuarterOrYear;
+    /*
+    @Column(name = "symbol") // which company it belong to
+    private String symbol;
+     */
 
-    @Column(name = "symbol")
-    private String symbol; // we need to check if they are identical
+    // NB: Maybe we should manually choose which formula configuration file should be used on each financial statement
 
-    @Column(name = "reported_currency")
-    private String reportedCurrency;
+    @Column(name = "date_from") // For example 2014-
+    private String DateFrom;
 
-    @Column(name = "filling_date")
-    private Date fillingDate;
-
-    @Column(name = "accepted_date")
-    private Date acceptedDate;
-
-    @Column(name = "period")
-    private String period;
+    @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
+    // because company changed statement writing policy
+    private String DateTo;
 
     @Column(name = "cash_and_cash_equivalents")
     private String cashAndCashEquivalents;
@@ -148,5 +152,7 @@ public class BalanceStatStandard {
 
     @Column(name = "net_debt")
     private String netDebt;
+
+    public CompanyBalanceStatFormulaConfig() {}
 
 }

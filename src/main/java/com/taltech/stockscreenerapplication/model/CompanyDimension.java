@@ -2,6 +2,9 @@ package com.taltech.stockscreenerapplication.model;
 
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +52,6 @@ public class CompanyDimension {
         Company can have many of this statements
     */
 
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
 
@@ -60,9 +62,17 @@ public class CompanyDimension {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CompanyIncomeStatFormulaConfig> incomeConfigurations = new LinkedList<>();
 
-    public CompanyDimension() { //empty constructor
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CompanyBalanceStatFormulaConfig> balanceConfigurations = new LinkedList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<CompanyCashflowStatFormulaConfig> cashflowConfigurations = new LinkedList<>();
+
+
+    public CompanyDimension() { }
 
     @Override
     public String toString() {
