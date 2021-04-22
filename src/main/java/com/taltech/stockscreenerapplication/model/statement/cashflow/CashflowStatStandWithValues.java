@@ -52,7 +52,7 @@ public class CashflowStatStandWithValues {
     private double stockBasedCompensation;
 
     @Column(name = "change_in_working_capital")
-    private double ChangeInWorkingCapital;
+    private double changeInWorkingCapital;
 
     @Column(name = "accounts_receivables")
     private double accountsReceivables;

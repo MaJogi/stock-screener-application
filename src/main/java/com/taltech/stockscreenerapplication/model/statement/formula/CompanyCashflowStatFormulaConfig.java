@@ -21,14 +21,7 @@ public class CompanyCashflowStatFormulaConfig {
     // Financial administrator can choose a collection of financial configurations
     @Column(name = "company_config_collection_id")
     private Long company_config_collection_id;
-
-    /*
-    @Column(name = "symbol") // which company it belong to
-    private String symbol;
-     */
-
-    // NB: Maybe we should manually choose which formula configuration file should be used on each financial statement
-
+    
     @Column(name = "date_from") // For example 2014-
     private String DateFrom;
 
@@ -37,55 +30,55 @@ public class CompanyCashflowStatFormulaConfig {
     private String DateTo;
 
     @Column(name = "net_income")
-    private double netIncome;
+    private String netIncome;
 
     @Column(name = "deprication_and_amortization")
-    private double depriciationAndAmortization;
+    private String depriciationAndAmortization;
 
     @Column(name = "stock_based_compensation")
-    private double stockBasedCompensation;
+    private String stockBasedCompensation;
 
     @Column(name = "change_in_working_capital")
-    private double ChangeInWorkingCapital;
+    private String ChangeInWorkingCapital;
 
     @Column(name = "accounts_receivables")
-    private double accountsReceivables;
+    private String accountsReceivables;
 
     @Column(name = "inventory")
-    private double inventory;
+    private String inventory;
 
     @Column(name = "accounts_payments")
-    private double accountsPayments;
+    private String accountsPayments;
 
     @Column(name = "other_working_capital")
-    private double otherWorkingCapital;
+    private String otherWorkingCapital;
 
     @Column(name = "other_non_cash_items")
-    private double otherNonCashItems;
+    private String otherNonCashItems;
 
     @Column(name = "net_cash_provided_by_operating_activities")
-    private double netCashProvidedByOperatingActivities;
+    private String netCashProvidedByOperatingActivities;
 
     @Column(name = "investments_in_property_plant_and_equipment")
-    private double investmentsInPropertyPlantAndEquipment;
+    private String investmentsInPropertyPlantAndEquipment;
 
     @Column(name = "acquisitions_net")
-    private double acquisitionsNet;
+    private String acquisitionsNet;
 
     @Column(name = "purchases_of_investments")
-    private double purchasesOfInvestments;
+    private String purchasesOfInvestments;
 
     @Column(name = "sales_maturities_of_investments")
-    private double salesMaturitiesOfInvestments;
+    private String salesMaturitiesOfInvestments;
 
     @Column(name = "other_investing_activities")
-    private double otherInvestingActivities;
+    private String otherInvestingActivities;
 
     @Column(name = "net_cash_used_for_investing_activities")
-    private double netCashUsedForInvestingActivities;
+    private String netCashUsedForInvestingActivities;
 
     @Column(name = "debt_repayment")
-    private double debtRepayment;
+    private String debtRepayment;
 
     public CompanyCashflowStatFormulaConfig() {}
 
