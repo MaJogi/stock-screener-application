@@ -54,6 +54,7 @@ public class StatementsToDbHelperImpl {
             attr.setFieldName(dataLine.get(0).replace(',', ' ')
                     .replace('(', ' ')
                     .replace(')', ' ')
+                    .replace('-', ' ')
                     .replaceAll("\\s+", " ")
                     .trim()
                     );

@@ -5,6 +5,11 @@ import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@Table(name = "balance_statement_stand_values")
 public class BalanceStatStandWithValues {
     @Id
     @Column(name = "balance_stat_stand_with_values")

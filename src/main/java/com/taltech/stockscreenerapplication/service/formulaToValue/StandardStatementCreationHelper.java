@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public class StandardStatementCreationHelper {
     String stockBasedCompensationString;
     String changeInWorkingCapitalString;
     String accountsReceivablesString;
-    String inventoryString;
+    String inventoryCashflowString;
     String accountsPaymentsString;
     String otherWorkingCapitalString;
     String otherNonCashItemsString;
@@ -68,12 +69,53 @@ public class StandardStatementCreationHelper {
     String netCashUsedForInvestingActivitiesString;
     String debtRepaymentString;
 
+    List<String> balanceStandardFieldFormulas;
+
+    String cashAndCashEquivalentsString;
+    String shortTermInvestmentsString;
+    String cashAndShortTermInvestmentsString;
+    String netReceivablesString;
+    String inventoryBalanceString;
+    String otherCurrentAssetsString;
+    String totalCurrentAssetsString;
+    String propertyPlantEquipmentAssetsString;
+    String goodwillString;
+    String intangibleAssetsString;
+    String goodwillAndIntangibleAssetsString;
+    String longTermInvestmetsString;
+    String taxAssetsString;
+    String otherNonCurrentAssetsString;
+    String totalNonCurrentAssetsString;
+    String otherAssetsString;
+    String totalAssetsString;
+    String accountPayablesString;
+    String shortTermDebtString;
+    String taxPayablesString;
+    String deferredRevenueString;
+    String otherCurrentLiabilitiesString;
+    String totalCurrentLiabilitiesString;
+    String longTermDebtString;
+    String deferredRevenueNonCurrentString;
+    String deferredTaxLiabilitiesNonCurrentString;
+    String otherNonCurrentLiabilitiesString;
+    String totalNonCurrentLiabilitiesString;
+    String otherLiabilitiesString;
+    String totalLiabilitiesString;
+    String commonStockString;
+    String retainedEarningsString;
+    String accumulatedOtherComprehensiveIncomeLossString;
+    String otherTotalStockholdersEquityString;
+    String totalStockholdersEquityString;
+    String totalLiabilitiesAndStockHoldersEquityString;
+    String totalInvestmentsString;
+    String totalDebtString;
+    String netDebtString;
 
 
     public StandardStatementCreationHelper() {
         incomeStandardFieldFormulas = new LinkedList<>();
         cashflowStandardFieldFormulas = new LinkedList<>();
-
+        balanceStandardFieldFormulas = new LinkedList<>();
     }
 
     public void createValuesForIncomeStatementFromFormulas(List<String> incomeStandardFieldFormulas,
@@ -90,6 +132,16 @@ public class StandardStatementCreationHelper {
                                                            SpelExpressionParser parser,
                                                            StandardEvaluationContext stContext){
         for (String currentFormulaString : cashflowStandardFieldFormulas) {
+            LOGGER.info(currentFormulaString);
+            SpelExpression expression = parser.parseRaw(currentFormulaString);
+            expression.getValue(stContext);
+        }
+    }
+
+    public void createValuesForBalanceStatementFromFormulas(List<String> balanceStandardFieldFormulas,
+                                                             SpelExpressionParser parser,
+                                                             StandardEvaluationContext stContext){
+        for (String currentFormulaString : balanceStandardFieldFormulas) {
             LOGGER.info(currentFormulaString);
             SpelExpression expression = parser.parseRaw(currentFormulaString);
             expression.getValue(stContext);
@@ -134,7 +186,7 @@ public class StandardStatementCreationHelper {
         stockBasedCompensationString = String.format("stockBasedCompensation=%s", rightCompanyCashflowConfig.getStockBasedCompensation());
         changeInWorkingCapitalString = String.format("changeInWorkingCapital=%s", rightCompanyCashflowConfig.getChangeInWorkingCapital());
         accountsReceivablesString = String.format("accountsReceivables=%s", rightCompanyCashflowConfig.getAccountsReceivables());
-        inventoryString = String.format("inventory=%s", rightCompanyCashflowConfig.getInventory());
+        inventoryCashflowString = String.format("inventory=%s", rightCompanyCashflowConfig.getInventory());
         accountsPaymentsString = String.format("accountsPayments=%s", rightCompanyCashflowConfig.getAccountsPayments());
         otherWorkingCapitalString = String.format("otherWorkingCapital=%s", rightCompanyCashflowConfig.getOtherWorkingCapital());
         otherNonCashItemsString = String.format("otherNonCashItems=%s", rightCompanyCashflowConfig.getOtherNonCashItems());
@@ -149,6 +201,54 @@ public class StandardStatementCreationHelper {
         LOGGER.info("End of string .format");
 
         createListOfCashflowStrings();
+    }
+
+    public void createBalanceStrings(CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig) {
+        LOGGER.info("Start of string .format");
+        cashAndCashEquivalentsString = String.format("cashAndCashEquivalents=%s", rightCompanyBalanceConfig.getCashAndCashEquivalents());
+        shortTermInvestmentsString = String.format("shortTermInvestments=%s", rightCompanyBalanceConfig.getShortTermInvestments());
+        cashAndShortTermInvestmentsString = String.format("cashAndShortTermInvestments=%s", rightCompanyBalanceConfig.getCashAndShortTermInvestments());
+        netReceivablesString = String.format("netReceivables=%s", rightCompanyBalanceConfig.getNetReceivables());
+        inventoryBalanceString = String.format("inventory=%s", rightCompanyBalanceConfig.getInventory());
+        otherCurrentAssetsString = String.format("otherCurrentAssets=%s", rightCompanyBalanceConfig.getOtherCurrentAssets());
+        totalCurrentAssetsString = String.format("totalCurrentAssets=%s", rightCompanyBalanceConfig.getTotalCurrentAssets());
+        propertyPlantEquipmentAssetsString = String.format("propertyPlantEquipmentAssets=%s", rightCompanyBalanceConfig.getPropertyPlantEquipmentAssets());
+        goodwillString = String.format("goodwill=%s", rightCompanyBalanceConfig.getGoodwill());
+        intangibleAssetsString = String.format("intangibleAssets=%s", rightCompanyBalanceConfig.getIntangibleAssets());
+        goodwillAndIntangibleAssetsString = String.format("goodwillAndIntangibleAssets=%s", rightCompanyBalanceConfig.getGoodwillAndIntangibleAssets());
+        longTermInvestmetsString = String.format("longTermInvestmets=%s", rightCompanyBalanceConfig.getLongTermInvestmets());
+        taxAssetsString = String.format("taxAssets=%s", rightCompanyBalanceConfig.getTaxAssets());
+        otherNonCurrentAssetsString = String.format("otherNonCurrentAssets=%s", rightCompanyBalanceConfig.getOtherNonCurrentAssets());
+        totalNonCurrentAssetsString = String.format("totalNonCurrentAssets=%s", rightCompanyBalanceConfig.getTotalNonCurrentAssets());
+        otherAssetsString = String.format("otherAssets=%s", rightCompanyBalanceConfig.getOtherAssets());
+        totalAssetsString = String.format("totalAssets=%s", rightCompanyBalanceConfig.getTotalAssets());
+        accountPayablesString = String.format("accountPayables=%s", rightCompanyBalanceConfig.getAccountPayables());
+        shortTermDebtString = String.format("shortTermDebt=%s", rightCompanyBalanceConfig.getShortTermDebt());
+        taxPayablesString = String.format("taxPayables=%s", rightCompanyBalanceConfig.getTaxPayables());
+        deferredRevenueString = String.format("deferredRevenue=%s", rightCompanyBalanceConfig.getDeferredRevenue());
+        otherCurrentLiabilitiesString = String.format("otherCurrentLiabilities=%s", rightCompanyBalanceConfig.getOtherCurrentLiabilities());
+        totalCurrentLiabilitiesString = String.format("totalCurrentLiabilities=%s", rightCompanyBalanceConfig.getTotalCurrentLiabilities());
+        longTermDebtString = String.format("longTermDebt=%s", rightCompanyBalanceConfig.getLongTermDebt());
+        deferredRevenueNonCurrentString = String.format("deferredRevenueNonCurrent=%s", rightCompanyBalanceConfig.getDeferredRevenueNonCurrent());
+        deferredTaxLiabilitiesNonCurrentString = String.format("deferredTaxLiabilitiesNonCurrent=%s", rightCompanyBalanceConfig.getDeferredTaxLiabilitiesNonCurrent());
+        otherNonCurrentLiabilitiesString = String.format("otherNonCurrentLiabilities=%s", rightCompanyBalanceConfig.getOtherNonCurrentAssets());
+        totalNonCurrentLiabilitiesString = String.format("totalNonCurrentLiabilities=%s", rightCompanyBalanceConfig.getTotalNonCurrentLiabilities());
+        otherLiabilitiesString = String.format("otherLiabilities=%s", rightCompanyBalanceConfig.getOtherLiabilities());
+        totalLiabilitiesString = String.format("totalLiabilities=%s", rightCompanyBalanceConfig.getTotalLiabilities());
+        commonStockString = String.format("commonStock=%s", rightCompanyBalanceConfig.getCommonStock());
+        retainedEarningsString = String.format("retainedEarnings=%s", rightCompanyBalanceConfig.getRetainedEarnings());
+        accumulatedOtherComprehensiveIncomeLossString = String.format("accumulatedOtherComprehensiveIncomeLoss=%s", rightCompanyBalanceConfig.getAccumulatedOtherComprehensiveIncomeLoss());
+        otherTotalStockholdersEquityString = String.format("otherTotalStockholdersEquity=%s", rightCompanyBalanceConfig.getOtherTotalStockholdersEquity());
+        totalStockholdersEquityString = String.format("totalStockholdersEquity=%s", rightCompanyBalanceConfig.getTotalStockholdersEquity());
+        totalLiabilitiesAndStockHoldersEquityString = String.format("totalLiabilitiesAndStockHoldersEquity=%s", rightCompanyBalanceConfig.getTotalLiabilitiesAndStockHoldersEquity());
+        totalInvestmentsString = String.format("totalInvestments=%s", rightCompanyBalanceConfig.getTotalInvestments());
+        totalDebtString = String.format("totalDebt=%s", rightCompanyBalanceConfig.getTotalDebt());
+        netDebtString = String.format("netDebt=%s", rightCompanyBalanceConfig.getNetDebt());
+
+
+        LOGGER.info("End of string .format");
+
+        createListOfBalanceStrings();
     }
 
     public void createListOfIncomeStrings(){
@@ -186,7 +286,7 @@ public class StandardStatementCreationHelper {
         this.cashflowStandardFieldFormulas.add(stockBasedCompensationString);
         this.cashflowStandardFieldFormulas.add(changeInWorkingCapitalString);
         this.cashflowStandardFieldFormulas.add(accountsReceivablesString);
-        this.cashflowStandardFieldFormulas.add(inventoryString);
+        this.cashflowStandardFieldFormulas.add(inventoryCashflowString);
         this.cashflowStandardFieldFormulas.add(accountsPaymentsString);
         this.cashflowStandardFieldFormulas.add(otherWorkingCapitalString);
         this.cashflowStandardFieldFormulas.add(otherNonCashItemsString);
@@ -199,6 +299,52 @@ public class StandardStatementCreationHelper {
         this.cashflowStandardFieldFormulas.add(netCashUsedForInvestingActivitiesString);
         this.cashflowStandardFieldFormulas.add(debtRepaymentString);
 
+        LOGGER.info("End of list.add");
+    }
+
+    public void createListOfBalanceStrings() {
+        LOGGER.info("Start of list.add");
+        this.balanceStandardFieldFormulas.add(cashAndCashEquivalentsString);
+        this.balanceStandardFieldFormulas.add(shortTermInvestmentsString);
+        this.balanceStandardFieldFormulas.add(cashAndShortTermInvestmentsString);
+        this.balanceStandardFieldFormulas.add(netReceivablesString);
+        this.balanceStandardFieldFormulas.add(inventoryBalanceString);
+        this.balanceStandardFieldFormulas.add(otherCurrentAssetsString);
+        this.balanceStandardFieldFormulas.add(totalCurrentAssetsString);
+        this.balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
+        this.balanceStandardFieldFormulas.add(goodwillString);
+        this.balanceStandardFieldFormulas.add(intangibleAssetsString);
+        this.balanceStandardFieldFormulas.add(goodwillAndIntangibleAssetsString);
+        this.balanceStandardFieldFormulas.add(longTermInvestmetsString);
+        this.balanceStandardFieldFormulas.add(taxAssetsString);
+        this.balanceStandardFieldFormulas.add(otherNonCurrentAssetsString);
+        this.balanceStandardFieldFormulas.add(totalNonCurrentAssetsString);
+        this.balanceStandardFieldFormulas.add(otherAssetsString);
+        this.balanceStandardFieldFormulas.add(totalAssetsString);
+        this.balanceStandardFieldFormulas.add(accountPayablesString);
+        this.balanceStandardFieldFormulas.add(shortTermDebtString);
+        this.balanceStandardFieldFormulas.add(taxPayablesString);
+        this.balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
+        this.balanceStandardFieldFormulas.add(deferredRevenueString);
+        this.balanceStandardFieldFormulas.add(otherCurrentLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(totalCurrentLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(longTermDebtString);
+        this.balanceStandardFieldFormulas.add(deferredRevenueNonCurrentString);
+        this.balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
+        this.balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
+        this.balanceStandardFieldFormulas.add(otherNonCurrentLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(totalNonCurrentLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(otherLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(totalLiabilitiesString);
+        this.balanceStandardFieldFormulas.add(commonStockString);
+        this.balanceStandardFieldFormulas.add(retainedEarningsString);
+        this.balanceStandardFieldFormulas.add(accumulatedOtherComprehensiveIncomeLossString);
+        this.balanceStandardFieldFormulas.add(otherTotalStockholdersEquityString);
+        this.balanceStandardFieldFormulas.add(totalStockholdersEquityString);
+        this.balanceStandardFieldFormulas.add(totalLiabilitiesAndStockHoldersEquityString);
+        this.balanceStandardFieldFormulas.add(totalInvestmentsString);
+        this.balanceStandardFieldFormulas.add(totalDebtString);
+        this.balanceStandardFieldFormulas.add(netDebtString);
         LOGGER.info("End of list.add");
     }
 }
