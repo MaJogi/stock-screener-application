@@ -50,7 +50,13 @@ public class StatementsToDbHelperImpl {
         //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
         for (List<String> dataLine : incomeListAttributesWithData) {
             Attribute attr = new Attribute();
-            attr.setFieldName(dataLine.get(0));
+            // ajutine lahendus, siin eemaldatakse kõik komad ja eemaldatakse ülearused whitespaceid
+            attr.setFieldName(dataLine.get(0).replace(',', ' ')
+                    .replace('(', ' ')
+                    .replace(')', ' ')
+                    .replaceAll("\\s+", " ")
+                    .trim()
+                    );
 
             // Parsing "," to "."
             double valueDouble = parseNumToDouble(dataLine, i);

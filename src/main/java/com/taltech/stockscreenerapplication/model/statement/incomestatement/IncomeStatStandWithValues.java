@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,11 @@ public class IncomeStatStandWithValues {
     private CompanyDimension ticker_id;
      */
 
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn(name = "income_stat_formula_id") // or maybe joincolumn
+    private CompanyIncomeStatFormulaConfig income_stat_formula_id;
+
     @Column(name = "symbol")
     private String symbol;
 
@@ -39,83 +45,84 @@ public class IncomeStatStandWithValues {
     @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
     private String dateOrPeriod;
 
+    //@Value("{#income_stat_formula_id.revenue}") // hetkel tundub, et seda ei ole vaja. Vaja on teha vaheklass, mis parsib string valued ning kasutab õigeid arve ning pistab juba Double value incomestatstandwithvalues objekti.
     @Column(name = "revenue")
-    private double revenue; // #revenue
+    private Double revenue; // #revenue
                                       // #Cost of sales  + any additional costs incurred to generate a sale
     @Column(name = "cost_of_revenue") // #Cost of sales  + #other operating expenes + #staff costs + #other expenses
-    private double costOfRevenue;
+    private Double costOfRevenue;
 
     @Column(name = "gross_profit")    // #this.revenue - this.costOfRevenue
-    private double grossProfit;
+    private Double grossProfit;
 
     @Column(name = "gross_profit_ratio") // #this.gross_profit / #this.netIncome
-    private double grossProfitRatio;
+    private Double grossProfitRatio;
 
     @Column(name = "r_and_d_expenses") // Information missing
-    private double rAndDexpenses;
+    private Double rAndDexpenses;
 
     @Column(name = "general_and_administrative_expenses") //#Other operating expenses
-    private double generalAndAdminExpenses;
+    private Double generalAndAdminExpenses;
 
     @Column(name = "selling_and_marketing_expenses") // Information missing
-    private double sellingAndMarketingExpenses;
+    private Double sellingAndMarketingExpenses;
 
     @Column(name = "other_expenses") // #Other expenses
-    private double otherExpenses;
+    private Double otherExpenses;
 
     @Column(name = "operating_expenses") // #Other operating expenses
-    private double operatingExpenses;
+    private Double operatingExpenses;
 
     @Column(name = "cost_and_expenses") // Missing or how is it calculated?
-    private double costAndExpenses;
+    private Double costAndExpenses;
 
     @Column(name = "interest_expense") // Information missing
-    private double interestExpense;
+    private Double interestExpense;
 
     @Column(name = "deprication_and_amortization") // #Depreciation,   amortisation   and   impairment losses
-    private double depricationAndAmortization;
+    private Double depricationAndAmortization;
 
     @Column(name = "ebitda") // Two possibilities: 1) this.revenue - this.costOfRevenue - rAndDExpenses - this.generalAndAdminExpenses - this.otherExpenses - this.operatingExpenses - this.costAndExpenses
-    private double ebitda;   //                    2) #revenue - other operating incoe - cost of sales - other operating expenes - staff costs - other expneses
+    private Double ebitda;   //                    2) #revenue - other operating incoe - cost of sales - other operating expenes - staff costs - other expneses
 
     @Column(name = "ebitda_ratio") // this.ebitda / this.netIncome
-    private double ebitdaRatio;
+    private Double ebitdaRatio;
 
     @Column(name = "operating_income") // #operating profit
-    private double operatingIncome;
+    private Double operatingIncome;
 
     @Column(name = "operating_income_ratio") // #operating profit / this.netIncome
-    private double operatingIncomeRatio;
+    private Double operatingIncomeRatio;
 
     @Column(name = "total_other_income_expenses_net") // Missing?
-    private double totalOtherIncomeExpensesNet;
+    private Double totalOtherIncomeExpensesNet;
 
     @Column(name = "income_before_tax") // #Profit before tax
-    private double incomeBeforeTax;
+    private Double incomeBeforeTax;
 
     @Column(name = "income_before_tax_ratio") // # (Profit before tax) / revenue * 100
-    private double incomeBeforeTaxRatio;
+    private Double incomeBeforeTaxRatio;
 
     @Column(name = "income_tax_expense") // #income tax expense
-    private double incomeTaxExpense;
+    private Double incomeTaxExpense;
 
     @Column(name = "net_income") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR
-    private double netIncome;
+    private Double netIncome;
 
     @Column(name = "net_income_ratio") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR / #Revenue
-    private double netIncomeRatio;
+    private Double netIncomeRatio;
 
     @Column(name = "eps") // Missing
-    private double eps;
+    private Double eps;
 
     @Column(name = "eps_diluted") // #Basic and diluted earnings per share (euros)
-    private double epsDiluted;
+    private Double epsDiluted;
 
     @Column(name = "weighted_average_shs_out") // Missing
-    private double weightedAverageShsOut;
+    private Double weightedAverageShsOut;
 
     @Column(name = "weighted_average_shs_out_dil") // Missing
-    private double weightedAverageShsOutDil;
+    private Double weightedAverageShsOutDil;
 
     public IncomeStatStandWithValues() {}
 }

@@ -6,6 +6,7 @@ import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalan
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,6 +72,9 @@ public class CompanyDimension {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CompanyCashflowStatFormulaConfig> cashflowConfigurations = new LinkedList<>();
 
+    /* new */
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<IncomeStatStandWithValues> incomeStatements = new LinkedList<>();
 
     public CompanyDimension() { }
 

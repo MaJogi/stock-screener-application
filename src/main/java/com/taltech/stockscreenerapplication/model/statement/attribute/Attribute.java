@@ -31,5 +31,12 @@ public class Attribute {
 
     public Attribute() {}
 
-
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "attr_id=" + attr_id +
+                ", fieldName='" + fieldName + '\'' +
+                ", value=" + value +
+                '}';
+    }
 }
