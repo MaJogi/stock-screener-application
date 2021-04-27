@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,8 +48,31 @@ public class StandardStatementCreationHelper {
     String weightedAverageShsOutString;
     String weightedAverageShsOutDilString;
 
+    List<String> cashflowStandardFieldFormulas;
+
+    String netCashflowIncomeString;
+    String depriciationAndAmortizationString;
+    String stockBasedCompensationString;
+    String changeInWorkingCapitalString;
+    String accountsReceivablesString;
+    String inventoryString;
+    String accountsPaymentsString;
+    String otherWorkingCapitalString;
+    String otherNonCashItemsString;
+    String netCashProvidedByOperatingActivitiesString;
+    String investmentsInPropertyPlantAndEquipmentString;
+    String acquisitionsNetString;
+    String purchasesOfInvestmentsString;
+    String salesMaturitiesOfInvestmentsString;
+    String otherInvestingActivitiesString;
+    String netCashUsedForInvestingActivitiesString;
+    String debtRepaymentString;
+
+
+
     public StandardStatementCreationHelper() {
         incomeStandardFieldFormulas = new LinkedList<>();
+        cashflowStandardFieldFormulas = new LinkedList<>();
 
     }
 
@@ -56,6 +80,16 @@ public class StandardStatementCreationHelper {
                                                            SpelExpressionParser parser,
                                                            StandardEvaluationContext stContext){
         for (String currentFormulaString : incomeStandardFieldFormulas) {
+            LOGGER.info(currentFormulaString);
+            SpelExpression expression = parser.parseRaw(currentFormulaString);
+            expression.getValue(stContext);
+        }
+    }
+
+    public void createValuesForCashflowStatementFromFormulas(List<String> cashflowStandardFieldFormulas,
+                                                           SpelExpressionParser parser,
+                                                           StandardEvaluationContext stContext){
+        for (String currentFormulaString : cashflowStandardFieldFormulas) {
             LOGGER.info(currentFormulaString);
             SpelExpression expression = parser.parseRaw(currentFormulaString);
             expression.getValue(stContext);
@@ -92,6 +126,31 @@ public class StandardStatementCreationHelper {
 
         createListOfIncomeStrings();
     }
+
+    public void createCashflowStrings(CompanyCashflowStatFormulaConfig rightCompanyCashflowConfig) {
+        LOGGER.info("Start of string .format");
+        netCashflowIncomeString = String.format("netIncome=%s", rightCompanyCashflowConfig.getNetIncome());
+        depriciationAndAmortizationString = String.format("depriciationAndAmortization=%s", rightCompanyCashflowConfig.getDepriciationAndAmortization());
+        stockBasedCompensationString = String.format("stockBasedCompensation=%s", rightCompanyCashflowConfig.getStockBasedCompensation());
+        changeInWorkingCapitalString = String.format("changeInWorkingCapital=%s", rightCompanyCashflowConfig.getChangeInWorkingCapital());
+        accountsReceivablesString = String.format("accountsReceivables=%s", rightCompanyCashflowConfig.getAccountsReceivables());
+        inventoryString = String.format("inventory=%s", rightCompanyCashflowConfig.getInventory());
+        accountsPaymentsString = String.format("accountsPayments=%s", rightCompanyCashflowConfig.getAccountsPayments());
+        otherWorkingCapitalString = String.format("otherWorkingCapital=%s", rightCompanyCashflowConfig.getOtherWorkingCapital());
+        otherNonCashItemsString = String.format("otherNonCashItems=%s", rightCompanyCashflowConfig.getOtherNonCashItems());
+        netCashProvidedByOperatingActivitiesString = String.format("netCashProvidedByOperatingActivities=%s", rightCompanyCashflowConfig.getNetCashProvidedByOperatingActivities());
+        investmentsInPropertyPlantAndEquipmentString = String.format("investmentsInPropertyPlantAndEquipment=%s", rightCompanyCashflowConfig.getInvestmentsInPropertyPlantAndEquipment());
+        acquisitionsNetString = String.format("acquisitionsNet=%s", rightCompanyCashflowConfig.getAcquisitionsNet());
+        purchasesOfInvestmentsString = String.format("purchasesOfInvestments=%s", rightCompanyCashflowConfig.getPurchasesOfInvestments());
+        salesMaturitiesOfInvestmentsString = String.format("salesMaturitiesOfInvestments=%s", rightCompanyCashflowConfig.getSalesMaturitiesOfInvestments());
+        otherInvestingActivitiesString = String.format("otherInvestingActivities=%s", rightCompanyCashflowConfig.getOtherInvestingActivities());
+        netCashUsedForInvestingActivitiesString = String.format("netCashUsedForInvestingActivities=%s", rightCompanyCashflowConfig.getNetCashUsedForInvestingActivities());
+        debtRepaymentString = String.format("debtRepayment=%s", rightCompanyCashflowConfig.getDebtRepayment());
+        LOGGER.info("End of string .format");
+
+        createListOfCashflowStrings();
+    }
+
     public void createListOfIncomeStrings(){
         this.incomeStandardFieldFormulas.add(revenueString);
         this.incomeStandardFieldFormulas.add(costOfRevenueString);
@@ -119,5 +178,27 @@ public class StandardStatementCreationHelper {
         this.incomeStandardFieldFormulas.add(epsDilutedeString);
         this.incomeStandardFieldFormulas.add(weightedAverageShsOutString);
         this.incomeStandardFieldFormulas.add(weightedAverageShsOutDilString);
+    }
+    public void createListOfCashflowStrings() {
+        LOGGER.info("Start of list.add");
+        this.cashflowStandardFieldFormulas.add(netCashflowIncomeString);
+        this.cashflowStandardFieldFormulas.add(depriciationAndAmortizationString);
+        this.cashflowStandardFieldFormulas.add(stockBasedCompensationString);
+        this.cashflowStandardFieldFormulas.add(changeInWorkingCapitalString);
+        this.cashflowStandardFieldFormulas.add(accountsReceivablesString);
+        this.cashflowStandardFieldFormulas.add(inventoryString);
+        this.cashflowStandardFieldFormulas.add(accountsPaymentsString);
+        this.cashflowStandardFieldFormulas.add(otherWorkingCapitalString);
+        this.cashflowStandardFieldFormulas.add(otherNonCashItemsString);
+        this.cashflowStandardFieldFormulas.add(netCashProvidedByOperatingActivitiesString);
+        this.cashflowStandardFieldFormulas.add(investmentsInPropertyPlantAndEquipmentString);
+        this.cashflowStandardFieldFormulas.add(acquisitionsNetString);
+        this.cashflowStandardFieldFormulas.add(purchasesOfInvestmentsString);
+        this.cashflowStandardFieldFormulas.add(salesMaturitiesOfInvestmentsString);
+        this.cashflowStandardFieldFormulas.add(otherInvestingActivitiesString);
+        this.cashflowStandardFieldFormulas.add(netCashUsedForInvestingActivitiesString);
+        this.cashflowStandardFieldFormulas.add(debtRepaymentString);
+
+        LOGGER.info("End of list.add");
     }
 }

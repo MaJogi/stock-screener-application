@@ -1,6 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
-import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,12 +17,19 @@ import java.util.Date;
 public class CashflowStatStandWithValues {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_standard_id")
     private Long cashflow_standard_id;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
     private CompanyDimension ticker_id;
+    */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn(name = "cashflow_stat_formula_id") // or maybe joincolumn
+    private CompanyCashflowStatFormulaConfig cashflow_stat_formula_id;
 
     @Column(name = "date_quarter_year")
     private String dateOrQuarterOrYear;
@@ -43,55 +50,55 @@ public class CashflowStatStandWithValues {
     private String period;
 
     @Column(name = "net_income")
-    private double netIncome;
+    private Double netIncome;
 
     @Column(name = "deprication_and_amortization")
-    private double depriciationAndAmortization;
+    private Double depriciationAndAmortization;
 
     @Column(name = "stock_based_compensation")
-    private double stockBasedCompensation;
+    private Double stockBasedCompensation;
 
     @Column(name = "change_in_working_capital")
-    private double changeInWorkingCapital;
+    private Double changeInWorkingCapital;
 
     @Column(name = "accounts_receivables")
-    private double accountsReceivables;
+    private Double accountsReceivables;
 
     @Column(name = "inventory")
-    private double inventory;
+    private Double inventory;
 
     @Column(name = "accounts_payments")
-    private double accountsPayments;
+    private Double accountsPayments;
 
     @Column(name = "other_working_capital")
-    private double otherWorkingCapital;
+    private Double otherWorkingCapital;
 
     @Column(name = "other_non_cash_items")
-    private double otherNonCashItems;
+    private Double otherNonCashItems;
 
     @Column(name = "net_cash_provided_by_operating_activities")
-    private double netCashProvidedByOperatingActivities;
+    private Double netCashProvidedByOperatingActivities;
 
     @Column(name = "investments_in_property_plant_and_equipment")
-    private double investmentsInPropertyPlantAndEquipment;
+    private Double investmentsInPropertyPlantAndEquipment;
 
     @Column(name = "acquisitions_net")
-    private double acquisitionsNet;
+    private Double acquisitionsNet;
 
     @Column(name = "purchases_of_investments")
-    private double purchasesOfInvestments;
+    private Double purchasesOfInvestments;
 
     @Column(name = "sales_maturities_of_investments")
-    private double salesMaturitiesOfInvestments;
+    private Double salesMaturitiesOfInvestments;
 
     @Column(name = "other_investing_activities")
-    private double otherInvestingActivities;
+    private Double otherInvestingActivities;
 
     @Column(name = "net_cash_used_for_investing_activities")
-    private double netCashUsedForInvestingActivities;
+    private Double netCashUsedForInvestingActivities;
 
     @Column(name = "debt_repayment")
-    private double debtRepayment;
+    private Double debtRepayment;
 
     public CashflowStatStandWithValues() {}
 

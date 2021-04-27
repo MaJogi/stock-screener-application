@@ -16,7 +16,7 @@ public class CompanyCashflowStatFormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_stat_formula_id")
-    private Long income_stat_formula_id;
+    private Long cashflow_stat_formula_id;
 
     // Financial administrator can choose a collection of financial configurations
     @Column(name = "company_config_collection_id")
