@@ -1,6 +1,9 @@
 package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
-import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,12 +15,19 @@ import java.util.Date;
 @Table(name = "balance_statement_stand_values")
 public class BalanceStatStandWithValues {
     @Id
-    @Column(name = "balance_stat_stand_with_values")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "balance_stat_standard_id")
     private Long balance_stat_standard_id;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
     private CompanyDimension ticker_id;
+     */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn(name = "balance_stat_formula_id") // or maybe joincolumn
+    private CompanyBalanceStatFormulaConfig balance_stat_formula_id;
 
     @Column(name = "date_quarter_year")
     private String dateOrQuarterOrYear;
@@ -38,120 +48,121 @@ public class BalanceStatStandWithValues {
     private String period;
 
     @Column(name = "cash_and_cash_equivalents")
-    private String cashAndCashEquivalents;
+    private Double cashAndCashEquivalents;
 
     @Column(name = "short_term_investments")
-    private String shortTermInvestments;
+    private Double shortTermInvestments;
 
     @Column(name = "cash_and_short_term_investments")
-    private String cashAndShortTermInvestments;
+    private Double cashAndShortTermInvestments;
 
     @Column(name = "net_receivables")
-    private String netReceivables;
+    private Double netReceivables;
 
     @Column(name = "inventory")
-    private String inventory;
+    private Double inventory;
 
     @Column(name = "other_current_assets")
-    private String otherCurrentAssets;
+    private Double otherCurrentAssets;
 
     @Column(name = "total_current_assets")
-    private String totalCurrentAssets;
+    private Double totalCurrentAssets;
 
     @Column(name = "property_plant_equipment_assets")
-    private String propertyPlantEquipmentAssets;
+    private Double propertyPlantEquipmentAssets;
 
     @Column(name = "goodwill")
-    private String goodwill;
+    private Double goodwill;
 
     @Column(name = "intangible_assets")
-    private String intangibleAssets;
+    private Double intangibleAssets;
 
     @Column(name = "goodwill_and_intangible_assets")
-    private String goodwillAndIntangibleAssets;
+    private Double goodwillAndIntangibleAssets;
 
     @Column(name = "long_term_investments")
-    private String longTermInvestmets;
+    private Double longTermInvestmets;
 
     @Column(name = "tax_assets")
-    private String taxAssets;
+    private Double taxAssets;
 
     @Column(name = "other_non_current_assets")
-    private String otherNonCurrentAssets;
+    private Double otherNonCurrentAssets;
 
     @Column(name = "total_non_current_assets")
-    private String totalNonCurrentAssets;
+    private Double totalNonCurrentAssets;
 
     @Column(name = "other_assets")
-    private String otherAssets;
+    private Double otherAssets;
 
     @Column(name = "total_assets")
-    private String totalAssets;
+    private Double totalAssets;
 
     @Column(name = "account_payables")
-    private String accountPayables;
+    private Double accountPayables;
 
     @Column(name = "short_term_debt")
-    private String shortTermDebt;
+    private Double shortTermDebt;
 
     @Column(name = "tax_payables")
-    private String taxPayables;
+    private Double taxPayables;
 
     @Column(name = "deferred_revenue")
-    private String deferredRevenue;
+    private Double deferredRevenue;
 
     @Column(name = "other_current_liabilities")
-    private String otherCurrentLiabilities;
+    private Double otherCurrentLiabilities;
 
     @Column(name = "total_current_liabilities")
-    private String totalCurrentLiabilities;
+    private Double totalCurrentLiabilities;
 
     @Column(name = "long_term_debt")
-    private String longTermDebt;
+    private Double longTermDebt;
 
     @Column(name = "deferred_revenue_non_current")
-    private String deferredRevenueNonCurrent;
+    private Double deferredRevenueNonCurrent;
 
     @Column(name = "deferred_tax_liabilities_non_current")
-    private String deferredTaxLiabilitiesNonCurrent;
+    private Double deferredTaxLiabilitiesNonCurrent;
 
     @Column(name = "other_non_current_liabilities")
-    private String otherNonCurrentLiabilities;
+    private Double otherNonCurrentLiabilities;
 
     @Column(name = "total_non_current_liabilities")
-    private String totalNonCurrentLiabilities;
+    private Double totalNonCurrentLiabilities;
 
     @Column(name = "other_liabilities")
-    private String otherLiabilities;
+    private Double otherLiabilities;
 
     @Column(name = "total_liabilities")
-    private String totalLiabilities;
+    private Double totalLiabilities;
 
     @Column(name = "common_stock")
-    private String commonStock;
+    private Double commonStock;
 
     @Column(name = "retained_earnings")
-    private String retainedEarnings;
+    private Double retainedEarnings;
 
     @Column(name = "accumulated_other_comprehensive_income_loss")
-    private String accumulatedOtherComprehensiveIncomeLoss;
+    private Double accumulatedOtherComprehensiveIncomeLoss;
 
     @Column(name = "other_total_stockholders_equity")
-    private String otherTotalStockholdersEquity;
+    private Double otherTotalStockholdersEquity;
 
     @Column(name = "total_stockholders_equity")
-    private String totalStockholdersEquity;
+    private Double totalStockholdersEquity;
 
     @Column(name = "total_liabilities_and_stockholders_equity")
-    private String totalLiabilitiesAndStockHoldersEquity;
+    private Double totalLiabilitiesAndStockHoldersEquity;
 
     @Column(name = "total_investments")
-    private String totalInvestments;
+    private Double totalInvestments;
 
     @Column(name = "total_debt")
-    private String totalDebt;
+    private Double totalDebt;
 
     @Column(name = "net_debt")
-    private String netDebt;
+    private Double netDebt;
 
+    public BalanceStatStandWithValues() { }
 }
