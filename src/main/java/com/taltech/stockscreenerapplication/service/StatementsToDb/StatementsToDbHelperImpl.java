@@ -45,7 +45,8 @@ public class StatementsToDbHelperImpl {
         }
     }
 
-    public static void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> incomeListAttributesWithData, List<Attribute> currentPeriodAttributes, int i){
+    public static void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> incomeListAttributesWithData,
+                                                                  List<Attribute> currentPeriodAttributes, int i){
         //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
         for (List<String> dataLine : incomeListAttributesWithData) {
             Attribute attr = new Attribute();

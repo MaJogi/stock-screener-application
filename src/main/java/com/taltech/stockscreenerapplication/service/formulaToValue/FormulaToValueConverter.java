@@ -11,6 +11,7 @@ import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
+// TODO IS THIS CLASS EVEN NEEDED. OR IT WAS USED ONLY TO TEST SPRING EXPR LANGUAGE.
 public class FormulaToValueConverter {
     // Class takes formula input, uses spring expression parsing magic and creates standardvalue objekt and saves it to db (using repo).
 
@@ -20,7 +21,8 @@ public class FormulaToValueConverter {
     private CompanyDimensionRepository companyDimensionRepository;
 
     public void createNecessaryObjects() {
-        this.company = companyDimensionRepository.findById("TKM1T").orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id:"));
+        this.company = companyDimensionRepository.findById("TKM1T")
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id:"));
     }
 
 
@@ -54,7 +56,8 @@ public class FormulaToValueConverter {
         CompanyIncomeStatFormulaConfig incomeStatementFormulas = new CompanyIncomeStatFormulaConfig();
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
 
-        StandardEvaluationContext stContext  = new StandardEvaluationContext(incomeStatement); // sulgudes on see, mis objekti jaoks need # tehakse
+        // sulgudes on see, mis objekti jaoks need # tehakse
+        StandardEvaluationContext stContext  = new StandardEvaluationContext(incomeStatement);
         stContext.setVariable("Revenue", 150);
         stContext.setVariable("Other_revenue", 10);
 

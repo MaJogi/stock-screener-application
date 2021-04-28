@@ -42,7 +42,8 @@ public class CsvProgram {
 
     public static void main(String[] args) throws Exception {
         CsvReaderImpl readerImpl = new CsvReaderImpl();
-        List<List<List<String>>> result = readerImpl.createReaderAndUseReadingMethod("tkm-2017_q2_CSV_modified_by_frontend.csv");
+        List<List<List<String>>> result = readerImpl.createReaderAndUseReadingMethod(
+                "tkm-2017_q2_CSV_modified_by_frontend.csv");
         LOGGER.info("{}", result.get(0));
 
         LOGGER.info("--------------START OF INCOME STATEMENT---------------");

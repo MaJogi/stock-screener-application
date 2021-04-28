@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FormulaObjCreationHelper {
-    public static void setIncomeConfigObjectFields(CompanyIncomeStatFormulaConfig testIncomeConfig, IncomeMappingRequest incomeRequest) {
+    public static void setIncomeConfigObjectFields(CompanyIncomeStatFormulaConfig testIncomeConfig,
+                                                   IncomeMappingRequest incomeRequest) {
         testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());
         testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
         testIncomeConfig.setDateTo(incomeRequest.getDateTo());
@@ -43,7 +44,8 @@ public class FormulaObjCreationHelper {
         testIncomeConfig.setWeightedAverageShsOutDil(incomeRequest.getWeightedAverageShsOutDil());
     }
 
-    public static void setCashflowConfigObjectFields(CompanyCashflowStatFormulaConfig testCashflowConfig, CashflowMappingRequest cashflowRequest) {
+    public static void setCashflowConfigObjectFields(CompanyCashflowStatFormulaConfig testCashflowConfig,
+                                                     CashflowMappingRequest cashflowRequest) {
         testCashflowConfig.setCompany_config_collection_id(cashflowRequest.getCompanyConfigCollectionId());
         testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
         testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
@@ -66,7 +68,8 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setDebtRepayment(cashflowRequest.getDebtRepayment());
     }
 
-    public static void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig, BalanceMappingRequest balanceRequest) {
+    public static void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig,
+                                                    BalanceMappingRequest balanceRequest) {
         testBalanceConfig.setCompany_config_collection_id(balanceRequest.getCompanyConfigCollectionId());
         testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
         testBalanceConfig.setDateTo(balanceRequest.getDateTo());
@@ -112,7 +115,8 @@ public class FormulaObjCreationHelper {
     }
 
     // .asText() can also be used. But instead of null, value be returned as String with text "null"
-    public static void setJsonValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig, JsonNode incomeNode) {
+    public static void setJsonValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig,
+                                                   JsonNode incomeNode) {
         testIncomeConfig.setDateFrom(incomeNode.get("dateFrom").textValue());
         testIncomeConfig.setDateTo(incomeNode.get("dateTo").textValue());
         testIncomeConfig.setRevenue(incomeNode.get("revenue").textValue());
@@ -143,7 +147,8 @@ public class FormulaObjCreationHelper {
         testIncomeConfig.setWeightedAverageShsOutDil(incomeNode.get("weightedAverageShsOutDil").textValue());
     }
 
-    public static void setJsonValuesToCashflowConfig(CompanyCashflowStatFormulaConfig testCashflowConfig, JsonNode cashflowNode) {
+    public static void setJsonValuesToCashflowConfig(CompanyCashflowStatFormulaConfig testCashflowConfig,
+                                                     JsonNode cashflowNode) {
         testCashflowConfig.setDateFrom(cashflowNode.get("dateFrom").textValue());
         testCashflowConfig.setDateTo(cashflowNode.get("dateTo").textValue());
         testCashflowConfig.setNetIncome(cashflowNode.get("netIncome").textValue());
@@ -164,7 +169,8 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setDebtRepayment(cashflowNode.get("debtRepayment").textValue());
     }
 
-    public static void setJsonValuesToBalanceConfig(CompanyBalanceStatFormulaConfig testBalanceConfig, JsonNode balanceNode) {
+    public static void setJsonValuesToBalanceConfig(CompanyBalanceStatFormulaConfig testBalanceConfig,
+                                                    JsonNode balanceNode) {
         testBalanceConfig.setDateFrom(balanceNode.get("dateFrom").textValue());
         testBalanceConfig.setDateTo(balanceNode.get("dateTo").textValue());
         testBalanceConfig.setCashAndCashEquivalents(balanceNode.get("cashAndCashEquivalents").textValue());

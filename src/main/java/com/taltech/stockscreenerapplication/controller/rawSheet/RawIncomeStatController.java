@@ -18,7 +18,6 @@ public class RawIncomeStatController {
 
     @GetMapping
     public Iterable<IncomeStatRaw> getRawIncomeStatements() {
-
         return incomeStatRawRepository.findAll();
     }
 
@@ -26,6 +25,7 @@ public class RawIncomeStatController {
     public IncomeStatRaw getRawIncomeStatement(@PathVariable final Long id) {
 
         return incomeStatRawRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company by id: " + id));
     }
 }

@@ -50,14 +50,8 @@ public class CompanyDimension {
     @PrimaryKeyJoinColumn
     private FinancialsQuarterly financialsQuarterly;
 
-    /*
-        Trial. Maybe will be removed in the future db changes
-        Company can have many of this statements
-    */
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
-
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BalanceStatRaw> balanceRawStatements = new LinkedList<>();
@@ -74,15 +68,12 @@ public class CompanyDimension {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CompanyCashflowStatFormulaConfig> cashflowConfigurations = new LinkedList<>();
 
-    /* new */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatStandWithValues> incomeStatements = new LinkedList<>();
 
-    /* new */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatStandWithValues> cashflowStatements = new LinkedList<>();
 
-    /* new */
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BalanceStatStandWithValues> balanceStatements = new LinkedList<>();
 

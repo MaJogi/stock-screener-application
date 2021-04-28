@@ -25,6 +25,7 @@ public class RawBalanceSheetController {
     public BalanceStatRaw getRawIncomeStatement(@PathVariable final Long id) {
 
         return balanceStatRawRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company by id: " + id));
     }
 }
