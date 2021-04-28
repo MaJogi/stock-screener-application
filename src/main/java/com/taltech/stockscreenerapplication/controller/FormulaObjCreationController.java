@@ -7,6 +7,7 @@ import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalan
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
+import com.taltech.stockscreenerapplication.service.formulaCreation.FormulaObjCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.IncomeMappingRequest;
@@ -97,7 +98,7 @@ public class FormulaObjCreationController {
         long id = 1;
         testIncomeConfig.setCompany_config_collection_id(id);
 
-        setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
+        FormulaObjCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
 
         company.getIncomeConfigurations().add(testIncomeConfig);
 
@@ -122,7 +123,7 @@ public class FormulaObjCreationController {
         long id = 1;
         testCashflowConfig.setCompany_config_collection_id(id);
 
-        setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
+        FormulaObjCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
 
         company.getCashflowConfigurations().add(testCashflowConfig);
 
@@ -147,7 +148,7 @@ public class FormulaObjCreationController {
         long id = 1;
         testBalanceConfig.setCompany_config_collection_id(id);
 
-        setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
+        FormulaObjCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
 
         company.getBalanceConfigurations().add(testBalanceConfig);
 
@@ -177,9 +178,9 @@ public class FormulaObjCreationController {
         JsonNode cashflowNode = json.get("cashflowRequest");
         JsonNode balanceNode = json.get("balanceRequest");
 
-        setJsonValuesToIncomeConfig(testIncomeConfig, incomeNode);
-        setJsonValuesToCashflowConfig(testCashflowConfig, cashflowNode);
-        setJsonValuesToBalanceConfig(testBalanceConfig, balanceNode);
+        FormulaObjCreationHelper.setJsonValuesToIncomeConfig(testIncomeConfig, incomeNode);
+        FormulaObjCreationHelper.setJsonValuesToCashflowConfig(testCashflowConfig, cashflowNode);
+        FormulaObjCreationHelper.setJsonValuesToBalanceConfig(testBalanceConfig, balanceNode);
 
         company.getIncomeConfigurations().add(testIncomeConfig);
         company.getCashflowConfigurations().add(testCashflowConfig);
@@ -193,6 +194,7 @@ public class FormulaObjCreationController {
                         "Mapping created, check if formulas for income, balance, cashflow statements are done"));
     }
 
+    /*
     // .asText() can also be used. But instead of null, value be returned as String with text "null"
     public void setJsonValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig, JsonNode incomeNode) {
         testIncomeConfig.setDateFrom(incomeNode.get("dateFrom").textValue());
@@ -386,4 +388,6 @@ public class FormulaObjCreationController {
         testBalanceConfig.setTotalDebt(balanceRequest.getTotalDebt());
         testBalanceConfig.setNetDebt(balanceRequest.getNetDebt());
     }
+    */
 }
+
