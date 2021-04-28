@@ -118,30 +118,10 @@ public class StandardStatementCreationHelper {
         balanceStandardFieldFormulas = new LinkedList<>();
     }
 
-    public void createValuesForIncomeStatementFromFormulas(List<String> incomeStandardFieldFormulas,
+    public void createValuesForStatementFromFormulas(List<String> statementStandardFieldFormulas,
                                                            SpelExpressionParser parser,
                                                            StandardEvaluationContext stContext){
-        for (String currentFormulaString : incomeStandardFieldFormulas) {
-            LOGGER.info(currentFormulaString);
-            SpelExpression expression = parser.parseRaw(currentFormulaString);
-            expression.getValue(stContext);
-        }
-    }
-
-    public void createValuesForCashflowStatementFromFormulas(List<String> cashflowStandardFieldFormulas,
-                                                           SpelExpressionParser parser,
-                                                           StandardEvaluationContext stContext){
-        for (String currentFormulaString : cashflowStandardFieldFormulas) {
-            LOGGER.info(currentFormulaString);
-            SpelExpression expression = parser.parseRaw(currentFormulaString);
-            expression.getValue(stContext);
-        }
-    }
-
-    public void createValuesForBalanceStatementFromFormulas(List<String> balanceStandardFieldFormulas,
-                                                             SpelExpressionParser parser,
-                                                             StandardEvaluationContext stContext){
-        for (String currentFormulaString : balanceStandardFieldFormulas) {
+        for (String currentFormulaString : statementStandardFieldFormulas) {
             LOGGER.info(currentFormulaString);
             SpelExpression expression = parser.parseRaw(currentFormulaString);
             expression.getValue(stContext);
@@ -252,99 +232,99 @@ public class StandardStatementCreationHelper {
     }
 
     public void createListOfIncomeStrings(){
-        this.incomeStandardFieldFormulas.add(revenueString);
-        this.incomeStandardFieldFormulas.add(costOfRevenueString);
-        this.incomeStandardFieldFormulas.add(grossProfitString);
-        this.incomeStandardFieldFormulas.add(grossProfitRatioString);
-        this.incomeStandardFieldFormulas.add(rAndDexpensesString);
-        this.incomeStandardFieldFormulas.add(generalAndAdminExpensesString);
-        this.incomeStandardFieldFormulas.add(sellingAndMarketingExpensesString);
-        this.incomeStandardFieldFormulas.add(otherExpensesString);
-        this.incomeStandardFieldFormulas.add(operatingExpensesString);
-        this.incomeStandardFieldFormulas.add(costAndExpensesString);
-        this.incomeStandardFieldFormulas.add(interestExpenseString);
-        this.incomeStandardFieldFormulas.add(depricationAndAmortizationString);
-        this.incomeStandardFieldFormulas.add(ebitdaString);
-        this.incomeStandardFieldFormulas.add(ebitdaRatioString);
-        this.incomeStandardFieldFormulas.add(operatingIncomeString);
-        this.incomeStandardFieldFormulas.add(operatingIncomeRatioString);
-        this.incomeStandardFieldFormulas.add(totalOtherIncomeExpensesNetString);
-        this.incomeStandardFieldFormulas.add(incomeBeforeTaxString);
-        this.incomeStandardFieldFormulas.add(incomeBeforeTaxRatioString);
-        this.incomeStandardFieldFormulas.add(incomeTaxExpenseString);
-        this.incomeStandardFieldFormulas.add(netIncomeString);
-        this.incomeStandardFieldFormulas.add(netIncomeRatioString);
-        this.incomeStandardFieldFormulas.add(epsString);
-        this.incomeStandardFieldFormulas.add(epsDilutedeString);
-        this.incomeStandardFieldFormulas.add(weightedAverageShsOutString);
-        this.incomeStandardFieldFormulas.add(weightedAverageShsOutDilString);
+        incomeStandardFieldFormulas.add(revenueString);
+        incomeStandardFieldFormulas.add(costOfRevenueString);
+        incomeStandardFieldFormulas.add(grossProfitString);
+        incomeStandardFieldFormulas.add(grossProfitRatioString);
+        incomeStandardFieldFormulas.add(rAndDexpensesString);
+        incomeStandardFieldFormulas.add(generalAndAdminExpensesString);
+        incomeStandardFieldFormulas.add(sellingAndMarketingExpensesString);
+        incomeStandardFieldFormulas.add(otherExpensesString);
+        incomeStandardFieldFormulas.add(operatingExpensesString);
+        incomeStandardFieldFormulas.add(costAndExpensesString);
+        incomeStandardFieldFormulas.add(interestExpenseString);
+        incomeStandardFieldFormulas.add(depricationAndAmortizationString);
+        incomeStandardFieldFormulas.add(ebitdaString);
+        incomeStandardFieldFormulas.add(ebitdaRatioString);
+        incomeStandardFieldFormulas.add(operatingIncomeString);
+        incomeStandardFieldFormulas.add(operatingIncomeRatioString);
+        incomeStandardFieldFormulas.add(totalOtherIncomeExpensesNetString);
+        incomeStandardFieldFormulas.add(incomeBeforeTaxString);
+        incomeStandardFieldFormulas.add(incomeBeforeTaxRatioString);
+        incomeStandardFieldFormulas.add(incomeTaxExpenseString);
+        incomeStandardFieldFormulas.add(netIncomeString);
+        incomeStandardFieldFormulas.add(netIncomeRatioString);
+        incomeStandardFieldFormulas.add(epsString);
+        incomeStandardFieldFormulas.add(epsDilutedeString);
+        incomeStandardFieldFormulas.add(weightedAverageShsOutString);
+        incomeStandardFieldFormulas.add(weightedAverageShsOutDilString);
     }
     public void createListOfCashflowStrings() {
         LOGGER.info("Start of list.add");
-        this.cashflowStandardFieldFormulas.add(netCashflowIncomeString);
-        this.cashflowStandardFieldFormulas.add(depriciationAndAmortizationString);
-        this.cashflowStandardFieldFormulas.add(stockBasedCompensationString);
-        this.cashflowStandardFieldFormulas.add(changeInWorkingCapitalString);
-        this.cashflowStandardFieldFormulas.add(accountsReceivablesString);
-        this.cashflowStandardFieldFormulas.add(inventoryCashflowString);
-        this.cashflowStandardFieldFormulas.add(accountsPaymentsString);
-        this.cashflowStandardFieldFormulas.add(otherWorkingCapitalString);
-        this.cashflowStandardFieldFormulas.add(otherNonCashItemsString);
-        this.cashflowStandardFieldFormulas.add(netCashProvidedByOperatingActivitiesString);
-        this.cashflowStandardFieldFormulas.add(investmentsInPropertyPlantAndEquipmentString);
-        this.cashflowStandardFieldFormulas.add(acquisitionsNetString);
-        this.cashflowStandardFieldFormulas.add(purchasesOfInvestmentsString);
-        this.cashflowStandardFieldFormulas.add(salesMaturitiesOfInvestmentsString);
-        this.cashflowStandardFieldFormulas.add(otherInvestingActivitiesString);
-        this.cashflowStandardFieldFormulas.add(netCashUsedForInvestingActivitiesString);
-        this.cashflowStandardFieldFormulas.add(debtRepaymentString);
+        cashflowStandardFieldFormulas.add(netCashflowIncomeString);
+        cashflowStandardFieldFormulas.add(depriciationAndAmortizationString);
+        cashflowStandardFieldFormulas.add(stockBasedCompensationString);
+        cashflowStandardFieldFormulas.add(changeInWorkingCapitalString);
+        cashflowStandardFieldFormulas.add(accountsReceivablesString);
+        cashflowStandardFieldFormulas.add(inventoryCashflowString);
+        cashflowStandardFieldFormulas.add(accountsPaymentsString);
+        cashflowStandardFieldFormulas.add(otherWorkingCapitalString);
+        cashflowStandardFieldFormulas.add(otherNonCashItemsString);
+        cashflowStandardFieldFormulas.add(netCashProvidedByOperatingActivitiesString);
+        cashflowStandardFieldFormulas.add(investmentsInPropertyPlantAndEquipmentString);
+        cashflowStandardFieldFormulas.add(acquisitionsNetString);
+        cashflowStandardFieldFormulas.add(purchasesOfInvestmentsString);
+        cashflowStandardFieldFormulas.add(salesMaturitiesOfInvestmentsString);
+        cashflowStandardFieldFormulas.add(otherInvestingActivitiesString);
+        cashflowStandardFieldFormulas.add(netCashUsedForInvestingActivitiesString);
+        cashflowStandardFieldFormulas.add(debtRepaymentString);
 
         LOGGER.info("End of list.add");
     }
 
     public void createListOfBalanceStrings() {
         LOGGER.info("Start of list.add");
-        this.balanceStandardFieldFormulas.add(cashAndCashEquivalentsString);
-        this.balanceStandardFieldFormulas.add(shortTermInvestmentsString);
-        this.balanceStandardFieldFormulas.add(cashAndShortTermInvestmentsString);
-        this.balanceStandardFieldFormulas.add(netReceivablesString);
-        this.balanceStandardFieldFormulas.add(inventoryBalanceString);
-        this.balanceStandardFieldFormulas.add(otherCurrentAssetsString);
-        this.balanceStandardFieldFormulas.add(totalCurrentAssetsString);
-        this.balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
-        this.balanceStandardFieldFormulas.add(goodwillString);
-        this.balanceStandardFieldFormulas.add(intangibleAssetsString);
-        this.balanceStandardFieldFormulas.add(goodwillAndIntangibleAssetsString);
-        this.balanceStandardFieldFormulas.add(longTermInvestmetsString);
-        this.balanceStandardFieldFormulas.add(taxAssetsString);
-        this.balanceStandardFieldFormulas.add(otherNonCurrentAssetsString);
-        this.balanceStandardFieldFormulas.add(totalNonCurrentAssetsString);
-        this.balanceStandardFieldFormulas.add(otherAssetsString);
-        this.balanceStandardFieldFormulas.add(totalAssetsString);
-        this.balanceStandardFieldFormulas.add(accountPayablesString);
-        this.balanceStandardFieldFormulas.add(shortTermDebtString);
-        this.balanceStandardFieldFormulas.add(taxPayablesString);
-        this.balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
-        this.balanceStandardFieldFormulas.add(deferredRevenueString);
-        this.balanceStandardFieldFormulas.add(otherCurrentLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(totalCurrentLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(longTermDebtString);
-        this.balanceStandardFieldFormulas.add(deferredRevenueNonCurrentString);
-        this.balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
-        this.balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
-        this.balanceStandardFieldFormulas.add(otherNonCurrentLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(totalNonCurrentLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(otherLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(totalLiabilitiesString);
-        this.balanceStandardFieldFormulas.add(commonStockString);
-        this.balanceStandardFieldFormulas.add(retainedEarningsString);
-        this.balanceStandardFieldFormulas.add(accumulatedOtherComprehensiveIncomeLossString);
-        this.balanceStandardFieldFormulas.add(otherTotalStockholdersEquityString);
-        this.balanceStandardFieldFormulas.add(totalStockholdersEquityString);
-        this.balanceStandardFieldFormulas.add(totalLiabilitiesAndStockHoldersEquityString);
-        this.balanceStandardFieldFormulas.add(totalInvestmentsString);
-        this.balanceStandardFieldFormulas.add(totalDebtString);
-        this.balanceStandardFieldFormulas.add(netDebtString);
+        balanceStandardFieldFormulas.add(cashAndCashEquivalentsString);
+        balanceStandardFieldFormulas.add(shortTermInvestmentsString);
+        balanceStandardFieldFormulas.add(cashAndShortTermInvestmentsString);
+        balanceStandardFieldFormulas.add(netReceivablesString);
+        balanceStandardFieldFormulas.add(inventoryBalanceString);
+        balanceStandardFieldFormulas.add(otherCurrentAssetsString);
+        balanceStandardFieldFormulas.add(totalCurrentAssetsString);
+        balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
+        balanceStandardFieldFormulas.add(goodwillString);
+        balanceStandardFieldFormulas.add(intangibleAssetsString);
+        balanceStandardFieldFormulas.add(goodwillAndIntangibleAssetsString);
+        balanceStandardFieldFormulas.add(longTermInvestmetsString);
+        balanceStandardFieldFormulas.add(taxAssetsString);
+        balanceStandardFieldFormulas.add(otherNonCurrentAssetsString);
+        balanceStandardFieldFormulas.add(totalNonCurrentAssetsString);
+        balanceStandardFieldFormulas.add(otherAssetsString);
+        balanceStandardFieldFormulas.add(totalAssetsString);
+        balanceStandardFieldFormulas.add(accountPayablesString);
+        balanceStandardFieldFormulas.add(shortTermDebtString);
+        balanceStandardFieldFormulas.add(taxPayablesString);
+        balanceStandardFieldFormulas.add(propertyPlantEquipmentAssetsString);
+        balanceStandardFieldFormulas.add(deferredRevenueString);
+        balanceStandardFieldFormulas.add(otherCurrentLiabilitiesString);
+        balanceStandardFieldFormulas.add(totalCurrentLiabilitiesString);
+        balanceStandardFieldFormulas.add(longTermDebtString);
+        balanceStandardFieldFormulas.add(deferredRevenueNonCurrentString);
+        balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
+        balanceStandardFieldFormulas.add(deferredTaxLiabilitiesNonCurrentString);
+        balanceStandardFieldFormulas.add(otherNonCurrentLiabilitiesString);
+        balanceStandardFieldFormulas.add(totalNonCurrentLiabilitiesString);
+        balanceStandardFieldFormulas.add(otherLiabilitiesString);
+        balanceStandardFieldFormulas.add(totalLiabilitiesString);
+        balanceStandardFieldFormulas.add(commonStockString);
+        balanceStandardFieldFormulas.add(retainedEarningsString);
+        balanceStandardFieldFormulas.add(accumulatedOtherComprehensiveIncomeLossString);
+        balanceStandardFieldFormulas.add(otherTotalStockholdersEquityString);
+        balanceStandardFieldFormulas.add(totalStockholdersEquityString);
+        balanceStandardFieldFormulas.add(totalLiabilitiesAndStockHoldersEquityString);
+        balanceStandardFieldFormulas.add(totalInvestmentsString);
+        balanceStandardFieldFormulas.add(totalDebtString);
+        balanceStandardFieldFormulas.add(netDebtString);
         LOGGER.info("End of list.add");
     }
 }

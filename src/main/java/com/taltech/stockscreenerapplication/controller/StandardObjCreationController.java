@@ -79,7 +79,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createIncomeStrings(rightCompanyIncomeConfig);
 
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForIncomeStatementFromFormulas(incomeStandardFieldFormulas, parser, stContext);
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas, parser, stContext);
 
         /*
         LOGGER.info(revenueString);
@@ -158,7 +158,7 @@ public class StandardObjCreationController {
         LOGGER.info("9");
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
         LOGGER.info("10");
-        standardStatementCreationHelper.createValuesForCashflowStatementFromFormulas(cashflowStandardFieldFormulas, parser, stContext);
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas, parser, stContext);
         LOGGER.info("11");
         /*
         LOGGER.info(revenueString);
@@ -354,7 +354,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
 
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForBalanceStatementFromFormulas(balanceStandardFieldFormulas, parser, stContext);
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas, parser, stContext);
         /*
         LOGGER.info(revenueString);
         SpelExpression expression = parser.parseRaw(revenueString);
