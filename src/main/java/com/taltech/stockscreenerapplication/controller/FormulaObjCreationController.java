@@ -158,7 +158,8 @@ public class FormulaObjCreationController {
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
         CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
 
-        testIncomeConfig.setCompany_config_collection_id(Long.parseLong(json.get("companyConfigCollectionId").textValue()));
+        testIncomeConfig.setCompany_config_collection_id(
+                Long.parseLong(json.get("companyConfigCollectionId").textValue()));
 
         JsonNode incomeNode = json.get("incomeRequest");
         JsonNode cashflowNode = json.get("cashflowRequest");

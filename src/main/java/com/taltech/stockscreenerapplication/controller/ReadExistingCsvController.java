@@ -154,16 +154,6 @@ public class ReadExistingCsvController {
                         "Read Usage guide to know how this controller can be used"));
     }
 
-    /* (DOESN'T WORK)
-    @GetMapping("/error") // default mapping without additional arguments. Right now reading in csv
-    public ResponseEntity<MessageResponse> getErrorPage() {
-        return ResponseEntity
-                .status(404)
-                .body(new MessageResponse("It appears, that page you are searching for doesn't exist. 1. Check if you entered" +
-                        "url correctly. 2. Check if page is accepted by StockScreenerSecuirtyConfig"));
-    }
-     */
-
     /*
     1. Andmed on kindlal kujul csv formaadis.
     1. 1. Index 0: Income, Index 1: cashflow, Index 2: balance
@@ -200,7 +190,9 @@ public class ReadExistingCsvController {
         newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
 
         // we need to find a firm, to upload a csv file to its name.
-        CompanyDimension company = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = companyDimensionRepository
+                .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
 
         newSourceFile.setTicker_id(company);
         sourceCsvFileRepository.save(newSourceFile);
@@ -240,7 +232,9 @@ public class ReadExistingCsvController {
 
         companyDimensionRepository.save(company);
 
-        CompanyDimension com = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
+        CompanyDimension com = companyDimensionRepository
+                .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
         LOGGER.info("Thats how many company have incomestatements now: {} ", com.getIncomeRawStatements().size());
         LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.getCashflowRawStatements().size());
         LOGGER.info("Thats how many company have balancestatements now: {} ", com.getBalanceRawStatements().size());

@@ -36,11 +36,13 @@ public class UserController {
 
     @PostMapping(value = "/{userId}/tickers", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId, @RequestBody final AddTickerRequest addTickerRequest) {
+    public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId,
+                                                      @RequestBody final AddTickerRequest addTickerRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND_MESSAGE + userId));
         CompanyDimension companyDimension = companyDimensionRepository.findById(addTickerRequest.getTickerId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + addTickerRequest.getTickerId()));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company by id: " + addTickerRequest.getTickerId()));
 
         Set<CompanyDimension> tickers = user.getTickers();
         tickers.add(companyDimension);
@@ -53,11 +55,13 @@ public class UserController {
 
     @DeleteMapping(value = "/{userId}/tickers/{tickerId}", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<MessageResponse> deleteTicker(@PathVariable final Long userId, @PathVariable final String tickerId) {
+    public ResponseEntity<MessageResponse> deleteTicker(@PathVariable final Long userId,
+                                                        @PathVariable final String tickerId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND_MESSAGE + userId));
         CompanyDimension companyDimension = companyDimensionRepository.findById(tickerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + tickerId));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company by id: " + tickerId));
 
         Set<CompanyDimension> tickers = user.getTickers();
         if (!tickers.contains(companyDimension)) {

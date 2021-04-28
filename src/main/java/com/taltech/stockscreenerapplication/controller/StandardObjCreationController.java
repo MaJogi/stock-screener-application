@@ -50,7 +50,8 @@ public class StandardObjCreationController {
     @Autowired
     private BalanceStatRawRepository balanceStatRawRepository;
 
-    // See peaks olema tegelikult POST stiilis. GET variant annaks lihtsalt ette vormi mustandi kus saab valida ka vajaliku perioodi et just selle raw andmeid kuvada.
+    // See peaks olema tegelikult POST stiilis. GET variant annaks lihtsalt ette vormi mustandi
+    // kus saab valida ka vajaliku perioodi et just selle raw andmeid kuvada.
     @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
     public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker,
                                                                     @PathVariable String period_or_date) {

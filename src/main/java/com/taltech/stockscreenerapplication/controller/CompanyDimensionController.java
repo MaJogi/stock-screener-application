@@ -47,7 +47,6 @@ public class CompanyDimensionController {
 
     @GetMapping("/{tickerId}")
     public CompanyDimension getCompany(@PathVariable final String tickerId) {
-
         return findCompanyByIdWithExceptionHelper(tickerId);
     }
 
@@ -60,8 +59,10 @@ public class CompanyDimensionController {
     }
 
     @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:8080/companies/TKM1T
-    public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+    public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId,
+                                                              @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters ->" +
+                " tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long incomeStatementIdWithSpecificDate = companyDimensionRepository
                 .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
@@ -79,8 +80,10 @@ public class CompanyDimensionController {
     }
 
     @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:8080/companies/TKM1T/cashflow/{dateOrPeriod}
-    public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+    public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId,
+                                                                @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> " +
+                "tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long cashflowStatementIdWithSpecificDate = companyDimensionRepository
                 .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
@@ -97,8 +100,10 @@ public class CompanyDimensionController {
     }
 
     @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:8080/companies/TKM1T/balance/{dateOrPeriod}
-    public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
+    public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId,
+                                                                @PathVariable final String dateOrPeriod) {
+        LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> " +
+                "tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long balanceStatementIdWithSpecificDate = companyDimensionRepository
                 .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
