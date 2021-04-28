@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.util.payload.request;
+package com.taltech.stockscreenerapplication.util.payload.request.statementMapping;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

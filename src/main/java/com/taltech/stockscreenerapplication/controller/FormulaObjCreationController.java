@@ -7,7 +7,9 @@ import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalan
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
-import com.taltech.stockscreenerapplication.util.payload.request.IncomeMappingRequest;
+import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
+import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
+import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.IncomeMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,35 +97,6 @@ public class FormulaObjCreationController {
         long id = 1;
         testIncomeConfig.setCompany_config_collection_id(id);
 
-//        testIncomeConfig.setDateFrom("2016");
-//        testIncomeConfig.setDateTo(null);
-//        testIncomeConfig.setRevenue("#Revenue + #Other_operating_income");
-//        testIncomeConfig.setCostOfRevenue("#Cost of sales");
-//        testIncomeConfig.setGrossProfit("#Revenue - #Cost_of_sales");
-//        testIncomeConfig.setGrossProfitRatio("(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)");
-//        testIncomeConfig.setRAndDexpenses(null);
-//        testIncomeConfig.setGeneralAndAdminExpenses("#Other_Operating_Expenses + #Staff_costs");
-//        testIncomeConfig.setSellingAndMarketingExpenses(null);
-//        testIncomeConfig.setOtherExpenses("#Other_expenses");
-//        testIncomeConfig.setOperatingExpenses("#Other_Operating_Expenses + #Staff_costs + #Other_expenses + #Depreciation");
-//        testIncomeConfig.setCostAndExpenses("#Cost_of_sales + (#Other_Operating_Expenses + #Staff_costs + #Other_expenses + #Depriciation,_amortization_and_impairment_losses)");
-//        testIncomeConfig.setInterestExpense("#Finance_costs");
-//        testIncomeConfig.setDepricationAndAmortization("#Depriciation,_amortization_and_impairment losses");
-//        testIncomeConfig.setEbitda("#Operating profit + #Depriciation, amortization and impairment losses");
-//        testIncomeConfig.setEbitdaRatio("(#Operating profit + #Depreciation …) / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setOperatingIncome("#Operating profit");
-//        testIncomeConfig.setOperatingIncomeRatio("#Operating profit / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setTotalOtherIncomeExpensesNet(null);
-//        testIncomeConfig.setIncomeBeforeTax("#NET PROFIT FOR THE FINANCIAL YEAR");
-//        testIncomeConfig.setIncomeBeforeTaxRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setIncomeTaxExpense(null);
-//        testIncomeConfig.setNetIncome("#NET PROFIT FOR THE FINANCIAL YEAR");
-//        testIncomeConfig.setNetIncomeRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setEps("#Basic and diluted earnings per share");
-//        testIncomeConfig.setEpsDiluted("#Basic and diluted earnings per share");
-//        testIncomeConfig.setWeightedAverageShsOut(null);
-//        testIncomeConfig.setWeightedAverageShsOutDil(null);
-
         testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
         testIncomeConfig.setDateTo(incomeRequest.getDateTo());
         testIncomeConfig.setRevenue(incomeRequest.getRevenue());
@@ -160,13 +133,121 @@ public class FormulaObjCreationController {
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse(
-                        "Mapping created, check if formulas for income, balance, cashflow statements are done"));
+                        "Mapping created, check if formulas for income statement are done"));
+    }
+
+    @PostMapping(value = "/createMappingFor/{ticker}/cashflow",  produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> singleCashflowStatementMapping(@PathVariable String ticker,
+                                                                          @RequestBody final CashflowMappingRequest cashflowRequest) {
+
+        CompanyDimension company = companyDimensionRepository.findById(ticker)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
+
+        CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
+        //CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
+
+        long id = 1;
+        testCashflowConfig.setCompany_config_collection_id(id);
+
+        testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
+        testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
+        testCashflowConfig.setNetIncome(cashflowRequest.getNetIncome());
+        testCashflowConfig.setDepriciationAndAmortization(cashflowRequest.getDepriciationAndAmortization());
+        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
+        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
+        testCashflowConfig.setChangeInWorkingCapital(cashflowRequest.getChangeInWorkingCapital());
+        testCashflowConfig.setAccountsReceivables(cashflowRequest.getAccountsReceivables());
+        testCashflowConfig.setInventory(cashflowRequest.getInventory());
+        testCashflowConfig.setAccountsPayments(cashflowRequest.getAccountsPayments());
+        testCashflowConfig.setOtherNonCashItems(cashflowRequest.getOtherNonCashItems());
+        testCashflowConfig.setNetCashProvidedByOperatingActivities(cashflowRequest.getNetCashProvidedByOperatingActivities());
+        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(cashflowRequest.getInvestmentsInPropertyPlantAndEquipment());
+        testCashflowConfig.setAcquisitionsNet(cashflowRequest.getAcquisitionsNet());
+        testCashflowConfig.setPurchasesOfInvestments(cashflowRequest.getPurchasesOfInvestments());
+        testCashflowConfig.setSalesMaturitiesOfInvestments(cashflowRequest.getSalesMaturitiesOfInvestments());
+        testCashflowConfig.setOtherInvestingActivities(cashflowRequest.getOtherInvestingActivities());
+        testCashflowConfig.setNetCashUsedForInvestingActivities(cashflowRequest.getNetCashUsedForInvestingActivities());
+        testCashflowConfig.setDebtRepayment(cashflowRequest.getDebtRepayment());
+
+        company.getCashflowConfigurations().add(testCashflowConfig);
+
+        companyDimensionRepository.save(company);
+
+        return ResponseEntity
+                .status(200)
+                .body(new MessageResponse(
+                        "Mapping created, check if formulas cashflow statement are done"));
+    }
+
+    @PostMapping(value = "/createMappingFor/{ticker}/balance",  produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> singleBalanceStatementMapping(@PathVariable String ticker,
+                                                                          @RequestBody final BalanceMappingRequest balanceRequest) {
+
+        CompanyDimension company = companyDimensionRepository.findById(ticker)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
+
+        CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
+
+        long id = 1;
+        testBalanceConfig.setCompany_config_collection_id(id);
+
+        testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
+        testBalanceConfig.setDateTo(balanceRequest.getDateTo());
+        testBalanceConfig.setCashAndCashEquivalents(balanceRequest.getCashAndCashEquivalents());
+        testBalanceConfig.setShortTermInvestments(balanceRequest.getShortTermInvestments());
+        testBalanceConfig.setCashAndShortTermInvestments(balanceRequest.getCashAndShortTermInvestments());
+        testBalanceConfig.setNetReceivables(balanceRequest.getNetReceivables());
+        testBalanceConfig.setInventory(balanceRequest.getInventory());
+        testBalanceConfig.setOtherCurrentAssets(balanceRequest.getOtherCurrentAssets());
+        testBalanceConfig.setTotalCurrentAssets(balanceRequest.getTotalCurrentAssets());
+        testBalanceConfig.setPropertyPlantEquipmentAssets(balanceRequest.getPropertyPlantEquipmentAssets());
+        testBalanceConfig.setGoodwill(balanceRequest.getGoodwill());
+        testBalanceConfig.setIntangibleAssets(balanceRequest.getIntangibleAssets());
+        testBalanceConfig.setGoodwillAndIntangibleAssets(balanceRequest.getGoodwillAndIntangibleAssets());
+        testBalanceConfig.setLongTermInvestmets(balanceRequest.getLongTermInvestmets());
+        testBalanceConfig.setTaxAssets(balanceRequest.getTaxAssets());
+        testBalanceConfig.setOtherNonCurrentAssets(balanceRequest.getOtherNonCurrentAssets());
+        testBalanceConfig.setTotalNonCurrentAssets(balanceRequest.getTotalNonCurrentAssets());
+        testBalanceConfig.setOtherAssets(balanceRequest.getOtherAssets());
+        testBalanceConfig.setTotalAssets(balanceRequest.getTotalAssets());
+        testBalanceConfig.setAccountPayables(balanceRequest.getAccountPayables());
+        testBalanceConfig.setShortTermDebt(balanceRequest.getShortTermDebt());
+        testBalanceConfig.setTaxPayables(balanceRequest.getTaxPayables());
+        testBalanceConfig.setDeferredRevenue(balanceRequest.getDeferredRevenue());
+        testBalanceConfig.setOtherCurrentLiabilities(balanceRequest.getOtherCurrentLiabilities());
+        testBalanceConfig.setTotalCurrentLiabilities(balanceRequest.getTotalCurrentLiabilities());
+        testBalanceConfig.setLongTermDebt(balanceRequest.getLongTermDebt());
+        testBalanceConfig.setDeferredRevenueNonCurrent(balanceRequest.getDeferredRevenueNonCurrent());
+        testBalanceConfig.setDeferredTaxLiabilitiesNonCurrent(balanceRequest.getDeferredTaxLiabilitiesNonCurrent());
+        testBalanceConfig.setOtherNonCurrentLiabilities(balanceRequest.getOtherNonCurrentLiabilities());
+        testBalanceConfig.setTotalNonCurrentLiabilities(balanceRequest.getTotalNonCurrentLiabilities());
+        testBalanceConfig.setOtherLiabilities(balanceRequest.getOtherLiabilities());
+        testBalanceConfig.setTotalLiabilities(balanceRequest.getTotalLiabilities());
+        testBalanceConfig.setCommonStock(balanceRequest.getCommonStock());
+        testBalanceConfig.setRetainedEarnings(balanceRequest.getRetainedEarnings());
+        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(balanceRequest.getAccumulatedOtherComprehensiveIncomeLoss());
+        testBalanceConfig.setOtherTotalStockholdersEquity(balanceRequest.getOtherTotalStockholdersEquity());
+        testBalanceConfig.setTotalStockholdersEquity(balanceRequest.getTotalStockholdersEquity());
+        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(balanceRequest.getTotalLiabilitiesAndStockHoldersEquity());
+        testBalanceConfig.setTotalInvestments(balanceRequest.getTotalInvestments());
+        testBalanceConfig.setTotalDebt(balanceRequest.getTotalDebt());
+        testBalanceConfig.setNetDebt(balanceRequest.getNetDebt());
+
+        company.getBalanceConfigurations().add(testBalanceConfig);
+
+        companyDimensionRepository.save(company);
+
+        return ResponseEntity
+                .status(200)
+                .body(new MessageResponse(
+                        "Mapping created, check if formulas balance statement are done"));
     }
 
     @PostMapping(value = "/createMappingFor/{ticker}",  produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> allStatementsAsOneMapping(@PathVariable String ticker,
                                                                      @RequestBody final ObjectNode json) {
-
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
@@ -181,35 +262,6 @@ public class FormulaObjCreationController {
         JsonNode incomeNode = json.get("incomeRequest");
         JsonNode cashflowNode = json.get("cashflowRequest");
         JsonNode balanceNode = json.get("balanceRequest");
-//        testIncomeConfig.setDateFrom("2016");
-//        testIncomeConfig.setDateTo(null);
-//        testIncomeConfig.setRevenue("#Revenue + #Other_operating_income");
-//        testIncomeConfig.setCostOfRevenue("#Cost of sales");
-//        testIncomeConfig.setGrossProfit("#Revenue - #Cost_of_sales");
-//        testIncomeConfig.setGrossProfitRatio("(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)");
-//        testIncomeConfig.setRAndDexpenses(null);
-//        testIncomeConfig.setGeneralAndAdminExpenses("#Other_Operating_Expenses + #Staff_costs");
-//        testIncomeConfig.setSellingAndMarketingExpenses(null);
-//        testIncomeConfig.setOtherExpenses("#Other_expenses");
-//        testIncomeConfig.setOperatingExpenses("#Other_Operating_Expenses + #Staff_costs + #Other_expenses + #Depreciation");
-//        testIncomeConfig.setCostAndExpenses("#Cost_of_sales + (#Other_Operating_Expenses + #Staff_costs + #Other_expenses + #Depriciation,_amortization_and_impairment_losses)");
-//        testIncomeConfig.setInterestExpense("#Finance_costs");
-//        testIncomeConfig.setDepricationAndAmortization("#Depriciation,_amortization_and_impairment losses");
-//        testIncomeConfig.setEbitda("#Operating profit + #Depriciation, amortization and impairment losses");
-//        testIncomeConfig.setEbitdaRatio("(#Operating profit + #Depreciation …) / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setOperatingIncome("#Operating profit");
-//        testIncomeConfig.setOperatingIncomeRatio("#Operating profit / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setTotalOtherIncomeExpensesNet(null);
-//        testIncomeConfig.setIncomeBeforeTax("#NET PROFIT FOR THE FINANCIAL YEAR");
-//        testIncomeConfig.setIncomeBeforeTaxRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setIncomeTaxExpense(null);
-//        testIncomeConfig.setNetIncome("#NET PROFIT FOR THE FINANCIAL YEAR");
-//        testIncomeConfig.setNetIncomeRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-//        testIncomeConfig.setEps("#Basic and diluted earnings per share");
-//        testIncomeConfig.setEpsDiluted("#Basic and diluted earnings per share");
-//        testIncomeConfig.setWeightedAverageShsOut(null);
-//        testIncomeConfig.setWeightedAverageShsOutDil(null);
-        //LOGGER.info(incomeNode.get("dateFrom").asText());
 
         setValuesToIncomeConfig(testIncomeConfig, incomeNode);
         setValuesToCashflowConfig(testCashflowConfig, cashflowNode);
