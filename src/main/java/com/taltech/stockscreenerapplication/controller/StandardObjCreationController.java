@@ -12,6 +12,7 @@ import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncom
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
+import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
 import com.taltech.stockscreenerapplication.service.formulaToValue.StandardStatementCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
@@ -38,13 +39,23 @@ public class StandardObjCreationController {
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
 
-    @GetMapping("/{ticker}/createIncomeStatementFromFormula")
-    public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker) {
+    @Autowired
+    private IncomeStatRawRepository incometatRawRepository;
+
+    @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}") // See peaks olema tegelikult POST stiilis. GET variant annaks lihtsalt ette vormi mustandi kus saab valida ka vajaliku perioodi et just selle raw andmeid kuvada.
+    public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker, @PathVariable String period_or_date) {
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
-        List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements();
+        // List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements(); //Alternate way to get desiredRawIncome
+
+        Long desiredRawIncomeStatId = companyDimensionRepository
+                .findByDateOrPeriodSpecificCompany(period_or_date, ticker);
+
+        IncomeStatRaw incomeStatementRaw = incometatRawRepository.findById(desiredRawIncomeStatId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Unable to find incomeStatementRaw with id: " + desiredRawIncomeStatId));;
 
         /*  Finding incomeStatement with right date/period  */
         //        Predicate<Client> hasSameNameAsOneUser =
@@ -54,7 +65,7 @@ public class StandardObjCreationController {
         //                .filter(hasSameNameAsOneUser)
         //                .collect(Collectors.toList());
 
-        List<Attribute> attributesWithValues = rawIncomeStatements.get(0).getAttributes();
+        List<Attribute> attributesWithValues = incomeStatementRaw.getAttributes();
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString());
         }
