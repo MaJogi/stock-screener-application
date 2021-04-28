@@ -1,5 +1,5 @@
 Example of usage:
-UPDATED: 22.04.2021 21:25
+UPDATED: 28.04.2021 19:00
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
@@ -87,3 +87,42 @@ Postmanis tuleb valida body -> raw -> JSON ja sisestada andmed kujul:
         "debtRepayment": "#Other expenses"
     }
 }
+
+Nüüd tuleb aruannete valemite confide loomise osa
+Siin on kõik meetodid POSTid. Ehk POSTMANIga saaab saata andmeid nendele endpointidele.
+
+FormulaObjCreationController...
+
+localhost:8080/formulaCreation/...
+1. Valemi confi loomine incomeStatementi jaoks. Ticker on firma, mille jaoks conf luuakse. Income on see aruanne, mille jaoks luuakse.
+@PostMapping(value = "/createMappingFor/{ticker}/income")
+Ex: http://localhost:8080/formulaCreation/createMappingFor/TKM1T/income
+Saata tuleb JSON fail kujul:
+
+{
+    "companyConfigCollectionId": 1,
+    "dateFrom": "2017",
+    "dateTo": null,
+    "revenue": "#Revenue + #Other_operating_income",
+    "costOfRevenue": "#Cost_of_sales",
+    "grossProfitRatio": "(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)",
+    ...
+}
+Peale seda on conf loodud ning selle valemeid saab kasutada standartse kasumiaruande tegemisel.
+
+//////////////////////////
+
+StandardObjCreationController
+localhost:8080/standardStatementCreation/...
+2. Standartse kasumiaruande loomine kindla firma jaoks
+@GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}")
+Ex: http://localhost:8080/standardStatementCreation/TKM1T/createIncomeStatementFromFormula/forPeriod/Q2%202017
+
+Nüüd (hetkel) kasutatakse kõige esimest loodud kasumiaruande konfi, et luua standarne aruanne koos arvutatud väärtustega.
+Hiljem muudan seda nii, et saaks valida, mis konfi kasutad või seon selle perioodiga.
+
+Voilaa http://localhost:8080/companies/TKM1T näitab, et firmal on olemas standartne kasumiaruanne.
+
+
+
+
