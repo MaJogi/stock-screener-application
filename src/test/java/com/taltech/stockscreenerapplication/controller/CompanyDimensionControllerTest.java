@@ -93,7 +93,7 @@ class CompanyDimensionControllerTest {
     void getCompanySpecificTimeRawCashflowStat() {
         CashflowStatRaw cashflowStatRaw = restTemplate
                 .getForObject(getRootUrl() + "companies/TAL1T/TKM1T/cashflow/Q2%202016", CashflowStatRaw.class);
-        assertNotNull(cashflowStatRaw.getCashflow_raw_id(),
+        assertNotNull(cashflowStatRaw.getCashflow_stat_raw_id(),
                 "The request does not return cashflow statement by id.");
     }
 

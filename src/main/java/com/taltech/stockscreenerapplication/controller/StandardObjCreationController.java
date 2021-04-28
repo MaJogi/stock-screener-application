@@ -11,6 +11,8 @@ import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashf
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
+import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
+import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
 import com.taltech.stockscreenerapplication.service.formulaToValue.StandardStatementCreationHelper;
@@ -42,8 +44,16 @@ public class StandardObjCreationController {
     @Autowired
     private IncomeStatRawRepository incometatRawRepository;
 
-    @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}") // See peaks olema tegelikult POST stiilis. GET variant annaks lihtsalt ette vormi mustandi kus saab valida ka vajaliku perioodi et just selle raw andmeid kuvada.
-    public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker, @PathVariable String period_or_date) {
+    @Autowired
+    private CashflowStatRawRepository cashflowStatRawRepository;
+
+    @Autowired
+    private BalanceStatRawRepository balanceStatRawRepository;
+
+    // See peaks olema tegelikult POST stiilis. GET variant annaks lihtsalt ette vormi mustandi kus saab valida ka vajaliku perioodi et just selle raw andmeid kuvada.
+    @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
+    public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker,
+                                                                    @PathVariable String period_or_date) {
         SpelExpressionParser parser = new SpelExpressionParser();
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
@@ -51,10 +61,11 @@ public class StandardObjCreationController {
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
-        // List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements(); //Alternate way to get desiredRawIncome
+        // Alternate way to get desiredRawIncome
+        // List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements();
 
         Long desiredRawIncomeStatId = companyDimensionRepository
-                .findByDateOrPeriodSpecificCompany(period_or_date, ticker);
+                .findIncomeRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
 
         IncomeStatRaw incomeStatementRaw = incometatRawRepository.findById(desiredRawIncomeStatId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -65,11 +76,10 @@ public class StandardObjCreationController {
             LOGGER.info(attr.toString());
         }
 
-        // sulgudes on see, mis objekti jaoks need # tehakse
+        // sulgudes on see, mis objekti jaoks need valemid tehakse
         StandardEvaluationContext stContext  = new StandardEvaluationContext(incomeStatement);
 
         // stContext.setVariable("Revenue", 150);
-        // stContext.setVariable("Other_revenue", 10);
         for (Attribute attr : attributesWithValues) {
             stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
         }
@@ -83,7 +93,8 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createIncomeStrings(rightCompanyIncomeConfig);
 
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas, parser, stContext);
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
+                parser, stContext);
 
         company.getIncomeStatements().add(incomeStatement);
         companyDimensionRepository.save(company);
@@ -94,16 +105,28 @@ public class StandardObjCreationController {
                         "GET method (income) returned. Check if result is correct"));
     }
 
-    @GetMapping("/{ticker}/createCashflowStatementFromFormula")
-    public ResponseEntity<MessageResponse> cashflowMappingFromFormula(@PathVariable String ticker) {
+    @GetMapping("/{ticker}/createCashflowStatementFromFormula/forPeriod/{period_or_date}/")
+    public ResponseEntity<MessageResponse> cashflowMappingFromFormula(@PathVariable String ticker,
+                                                                      @PathVariable String period_or_date) {
         SpelExpressionParser parser = new SpelExpressionParser();
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         CashflowStatStandWithValues cashflowStatement = new CashflowStatStandWithValues();
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
-        List<CashflowStatRaw> rawCashflowStatements = company.getCashflowRawStatements();
+        CompanyDimension company = companyDimensionRepository.findById(ticker)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
+        // Alternate way to get desiredRawCashflow
+        //List<CashflowStatRaw> rawCashflowStatements = company.getCashflowRawStatements();
 
-        List<Attribute> attributesWithValues = rawCashflowStatements.get(0).getAttributes();
+        // Miks läbi companyDimensionRepository? Sest seal olen juba kord realiseerinud selle findByDate... meetodi :D
+        Long desiredRawCashflowStatId = companyDimensionRepository
+                .findIncomeRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
+
+        CashflowStatRaw cashflowStatementRaw = cashflowStatRawRepository.findById(desiredRawCashflowStatId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find cashflowStatementRaw with id: " + desiredRawCashflowStatId));
+
+        List<Attribute> attributesWithValues = cashflowStatementRaw.getAttributes();
 
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString());
@@ -123,11 +146,10 @@ public class StandardObjCreationController {
 
         CompanyCashflowStatFormulaConfig rightCompanyCashflowConfig = company.getCashflowConfigurations().get(0);
 
-
-
         standardStatementCreationHelper.createCashflowStrings(rightCompanyCashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas, parser, stContext);
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
+                parser, stContext);
 
         company.getCashflowStatements().add(cashflowStatement);
         companyDimensionRepository.save(company);
@@ -138,25 +160,32 @@ public class StandardObjCreationController {
                         "GET method (cashflow) returned. Check if result is correct"));
     }
 
-    @GetMapping("/{ticker}/createBalanceStatementFromFormula")
-    public ResponseEntity<MessageResponse> balanceMappingFromFormula(@PathVariable String ticker) {
+    @GetMapping("/{ticker}/createBalanceStatementFromFormula/forPeriod/{period_or_date}/") // without ending "/" it is losing part of date!
+    public ResponseEntity<MessageResponse> balanceMappingFromFormula(@PathVariable String ticker,
+                                                                     @PathVariable String period_or_date) {
+        SpelExpressionParser parser = new SpelExpressionParser();
+        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
 
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
 
-        List<BalanceStatRaw> rawBalanceStatements = company.getBilanceRawStatements();
+        //List<BalanceStatRaw> rawBalanceStatements = company.getBalanceRawStatements();
+        LOGGER.info("2");
+        LOGGER.info("{}", period_or_date);
+        Long desiredRawBalanceStatId = companyDimensionRepository
+                .findBalanceRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
+        LOGGER.info("{}", desiredRawBalanceStatId);
+        LOGGER.info("3");
+        BalanceStatRaw balanceStatementRaw = balanceStatRawRepository.findById(desiredRawBalanceStatId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find balanceStatementRaw with id: " + desiredRawBalanceStatId));
+        LOGGER.info("{}", balanceStatementRaw);
+        LOGGER.info("4");
+        List<Attribute> attributesWithValues = balanceStatementRaw.getAttributes();
 
-        /*  Finding incomeStatement with right date/period  */
-        //        Predicate<Client> hasSameNameAsOneUser =
-        //                c -> users.stream().anyMatch(u -> u.getName().equals(c.getName()));
-        //
-        //        return clients.stream()
-        //                .filter(hasSameNameAsOneUser)
-        //                .collect(Collectors.toList());
-
-        List<Attribute> attributesWithValues = rawBalanceStatements.get(0).getAttributes();
+        LOGGER.info("5");
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString());
         }
@@ -168,26 +197,25 @@ public class StandardObjCreationController {
         for (Attribute attr : attributesWithValues) {
             stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
         }
-
+        LOGGER.info("6");
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString().replaceAll("\\s+", "_"));
         }
 
         CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = company.getBalanceConfigurations().get(0);
-        SpelExpressionParser parser = new SpelExpressionParser();
-
-        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
+        LOGGER.info("7");
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
-
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas, parser, stContext);
-
+        standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
+                parser, stContext);
+        LOGGER.info("8");
         company.getBalanceStatements().add(balanceStatement);
+        LOGGER.info("9");
         companyDimensionRepository.save(company);
 
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse(
-                        "GET method (cashflow) returned. Check if result is correct"));
+                        "GET method (balance) returned. Check if result is correct"));
     }
 }

@@ -60,7 +60,7 @@ public class CompanyDimension {
 
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BalanceStatRaw> bilanceRawStatements = new LinkedList<>();
+    private List<BalanceStatRaw> balanceRawStatements = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();

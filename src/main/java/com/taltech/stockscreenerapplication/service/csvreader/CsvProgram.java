@@ -57,10 +57,10 @@ public class CsvProgram {
         }
         LOGGER.info("--------------END OF CASHFLOW STATEMENT---------------");
 
-        LOGGER.info("--------------START OF BILANCE STATEMENT---------------");
+        LOGGER.info("--------------START OF BALANCE STATEMENT---------------");
         for (List<String> row : result.get(2)) {
             System.out.println(row);
         }
-        LOGGER.info("--------------END OF BILANCE STATEMENT---------------");
+        LOGGER.info("--------------END OF BALANCE STATEMENT---------------");
     }
 }

@@ -24,7 +24,7 @@ Example json result:
 "financialsDaily": {}, // 18 items
 "financialsQuarterly": {}, // 27 items
 "incomeRawStatements": [], // 4 items
-"bilanceRawStatements": [], // 2 items
+"balanceRawStatements": [], // 2 items
 "cashflowRawStatements": [] // 2 items
 }
 
@@ -115,7 +115,7 @@ Peale seda on conf loodud ning selle valemeid saab kasutada standartse kasumiaru
 StandardObjCreationController
 localhost:8080/standardStatementCreation/...
 2. Standartse kasumiaruande loomine kindla firma jaoks
-@GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}")
+@GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
 Ex: http://localhost:8080/standardStatementCreation/TKM1T/createIncomeStatementFromFormula/forPeriod/Q2%202017
 
 Nüüd (hetkel) kasutatakse kõige esimest loodud kasumiaruande konfi, et luua standarne aruanne koos arvutatud väärtustega.

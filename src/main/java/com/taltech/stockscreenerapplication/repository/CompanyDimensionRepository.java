@@ -10,7 +10,21 @@ public interface CompanyDimensionRepository extends JpaRepository<CompanyDimensi
             "ON income_statement_as_imported.income_stat_raw_id = company_dimension_income_raw_statements.income_raw_statements_income_stat_raw_id\n" +
             "WHERE date_or_period = ?1\n" +
             "AND company_dimension_ticker_id = ?2", nativeQuery = true)
-    Long findByDateOrPeriodSpecificCompany(String dateOrPeriod, String companyTicker);
+    Long findIncomeRawIdByDateOrPeriodSpecificCompany(String dateOrPeriod, String companyTicker);
+
+    @Query(value = "SELECT cashflow_stat_raw_id from cash_flow_statement_as_imported\n" +
+            "LEFT JOIN company_dimension_cashflow_raw_statements\n" +
+            "ON cash_flow_statement_as_imported.cashflow_stat_raw_id = company_dimension_cashflow_raw_statements.cashflow_raw_statements_cashflow_stat_raw_id\n" +
+            "WHERE date_or_period = ?1\n" +
+            "AND company_dimension_ticker_id = ?2", nativeQuery = true)
+    Long findCashflowRawIdByDateOrPeriodSpecificCompany(String dateOrPeriod, String companyTicker);
+
+    @Query(value = "SELECT balance_stat_raw_id from balance_statement_as_imported\n" +
+            "LEFT JOIN company_dimension_balance_raw_statements\n" +
+            "ON balance_statement_as_imported.balance_stat_raw_id = company_dimension_balance_raw_statements.balance_raw_statements_balance_stat_raw_id\n" +
+            "WHERE date_or_period = ?1\n" +
+            "AND company_dimension_ticker_id = ?2", nativeQuery = true)
+    Long findBalanceRawIdByDateOrPeriodSpecificCompany(String dateOrPeriod, String companyTicker);
 
     //income_stat_raw_id, date_or_period, company_dimension_ticker_id
 }

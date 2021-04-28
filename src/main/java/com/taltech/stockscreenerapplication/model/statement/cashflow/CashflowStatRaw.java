@@ -17,7 +17,7 @@ public class CashflowStatRaw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_stat_raw_id")
-    private Long cashflow_raw_id;
+    private Long cashflow_stat_raw_id;
 
     @Column(name = "date_or_period") // I mean quarter, year or specific date
     private String dateOrPeriod; // Q1 2017, 2018 etc
@@ -40,5 +40,12 @@ public class CashflowStatRaw {
 
     public CashflowStatRaw() {}
 
-
+    @Override
+    public String toString() {
+        return "CashflowStatRaw{" +
+                "cashflow_stat_raw_id=" + cashflow_stat_raw_id +
+                ", dateOrPeriod='" + dateOrPeriod + '\'' +
+                ", attributes=" + attributes +
+                '}';
+    }
 }

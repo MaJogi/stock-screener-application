@@ -63,7 +63,7 @@ public class CompanyDimensionController {
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long incomeStatementIdWithSpecificDate = companyDimensionRepository
-                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+                .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -82,7 +82,7 @@ public class CompanyDimensionController {
     public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long cashflowStatementIdWithSpecificDate = companyDimensionRepository
-                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+                .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return cashflowStatRawRepository.findById(cashflowStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -93,14 +93,14 @@ public class CompanyDimensionController {
     public List<BalanceStatRaw> getCompanyRawBalanceStats(@PathVariable final String tickerId) {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
-        return company.getBilanceRawStatements();
+        return company.getBalanceRawStatements();
     }
 
     @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:8080/companies/TKM1T/balance/{dateOrPeriod}
     public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId, @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long balanceStatementIdWithSpecificDate = companyDimensionRepository
-                .findByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
+                .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
 
         return balanceStatRawRepository.findById(balanceStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND

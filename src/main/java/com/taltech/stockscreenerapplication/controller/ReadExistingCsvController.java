@@ -72,7 +72,7 @@ public class ReadExistingCsvController {
 //        // now we want to save every statement and their period data to database.
 //        /*
 //        1. Andmed on kindlal kujul csv formaadis.
-//        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: bilance
+//        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: balance
 //        2. Luuakse uus SourceCsvFile üksus
 //        3. Luuakse incomeStatRaw objekt
 //        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk)
@@ -140,7 +140,7 @@ public class ReadExistingCsvController {
 //
 //
 //        List<List<String>> cashflowList = result.get(1);
-//        List<List<String>> bilanceList = result.get(2);
+//        List<List<String>> balanceList = result.get(2);
 //
 //
 //        return null;
@@ -166,7 +166,7 @@ public class ReadExistingCsvController {
 
     /*
     1. Andmed on kindlal kujul csv formaadis.
-    1. 1. Index 0: Income, Index 1: cashflow, Index 2: bilance
+    1. 1. Index 0: Income, Index 1: cashflow, Index 2: balance
     2. Luuakse uus SourceCsvFile üksus
     3. Luuakse incomeStatRaw objekt
     4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk) ja lisatakse sellele.
@@ -209,41 +209,41 @@ public class ReadExistingCsvController {
         // Example nr 1 (readme)
         List<List<String>> incomeList = result.get(0);
         List<List<String>> cashFlowList = result.get(1);
-        List<List<String>> bilanceList = result.get(2);
+        List<List<String>> balanceList = result.get(2);
 
         // first rows of all income statements (header)
         // Ex: [Date_information (note: Note), Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
 
         List<String> firstIncomeStatRow = incomeList.get(0);
         List<String> firstCashflowRow = cashFlowList.get(0);
-        List<String> firstBilanceRow = bilanceList.get(0);
+        List<String> firstBalanceRow = balanceList.get(0);
         LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
         LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
-        LOGGER.info("Size of the list is {} <-----------", firstBilanceRow.size());
+        LOGGER.info("Size of the list is {} <-----------", firstBalanceRow.size());
 
         // Pure date lists of specific financial statements
         // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         List<String> incomeListDateEntries = firstIncomeStatRow.subList(1, firstIncomeStatRow.size());
         List<String> cashflowListDateEntries = firstCashflowRow.subList(1, firstCashflowRow.size());
-        List<String> bilanceListDateEntries = firstBilanceRow.subList(1, firstBilanceRow.size());
+        List<String> balanceListDateEntries = firstBalanceRow.subList(1, firstBalanceRow.size());
 
         // Specific financial statement list of attributes with data
         // Ex: [Revenue (note: 16), 164,645, 150,534, 315,333, 287,384],
         //     [Other operating income, 259, 684, 741, 951] ...
         List<List<String>> incomeListAttributesWithData = incomeList.subList(1, incomeList.size());
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
-        List<List<String>> bilanceListAttributesWithData = bilanceList.subList(1, bilanceList.size());
+        List<List<String>> balanceListAttributesWithData = balanceList.subList(1, balanceList.size());
 
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries, incomeListAttributesWithData, company);
         statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries, cashflowListAttributesWithData, company);
-        statementsToDbHelper.createNewBilanceFinStatementForSpecPeriod(bilanceListDateEntries, bilanceListAttributesWithData, company);
+        statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries, balanceListAttributesWithData, company);
 
         companyDimensionRepository.save(company);
 
         CompanyDimension com = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
         LOGGER.info("Thats how many company have incomestatements now: {} ", com.getIncomeRawStatements().size());
         LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.getCashflowRawStatements().size());
-        LOGGER.info("Thats how many company have bilancestatements now: {} ", com.getBilanceRawStatements().size());
+        LOGGER.info("Thats how many company have balancestatements now: {} ", com.getBalanceRawStatements().size());
 
         return ResponseEntity
                 .status(200)

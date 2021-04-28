@@ -128,13 +128,13 @@ public class StatementsToDbHelperImpl {
          */
     }
 
-    public void createNewBilanceFinStatementForSpecPeriod(List<String> bilanceListDateEntries,
-                                                          List<List<String>> bilanceListAttributesWithData,
+    public void createNewBalanceFinStatementForSpecPeriod(List<String> balanceListDateEntries,
+                                                          List<List<String>> balanceListAttributesWithData,
                                                           CompanyDimension company) {
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-        for (String dateEntry : bilanceListDateEntries) {
+        for (String dateEntry : balanceListDateEntries) {
             // Creating raw balance statement object for specific period (Q2 2017)
             BalanceStatRaw newBalanceStatRaw = new BalanceStatRaw();
 
@@ -143,11 +143,11 @@ public class StatementsToDbHelperImpl {
             newBalanceStatRaw.setDateOrPeriod(dateEntry);
 
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            iterateDataLinesAndCreateFinStatementAttrs(bilanceListAttributesWithData, currentPeriodAttributes, i);
+            iterateDataLinesAndCreateFinStatementAttrs(balanceListAttributesWithData, currentPeriodAttributes, i);
             newBalanceStatRaw.setAttributes(currentPeriodAttributes);
 
             balanceStatRawRepository.save(newBalanceStatRaw);
-            company.getBilanceRawStatements().add(newBalanceStatRaw);
+            company.getBalanceRawStatements().add(newBalanceStatRaw);
             i++;
         }
     }
