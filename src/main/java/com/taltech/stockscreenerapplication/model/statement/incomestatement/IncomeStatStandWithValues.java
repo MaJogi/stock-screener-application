@@ -25,7 +25,6 @@ public class IncomeStatStandWithValues {
     private CompanyDimension ticker_id;
      */
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "income_stat_formula_id") // or maybe joincolumn
     private CompanyIncomeStatFormulaConfig income_stat_formula_id;

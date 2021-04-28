@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.controller;
+package com.taltech.stockscreenerapplication.controller.rawSheet;
 
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
@@ -18,7 +18,6 @@ public class RawBalanceSheetController {
 
     @GetMapping
     public Iterable<BalanceStatRaw> getRawBalanceSheets() {
-
         return balanceStatRawRepository.findAll();
     }
 
