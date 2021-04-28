@@ -11,6 +11,13 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class IncomeMappingRequest {
 
+    /* Custom */
+
+    @NotBlank
+    private Long companyConfigCollectionId;
+
+    /* Custom Ending */
+
     @NotBlank
     private String dateFrom;
 

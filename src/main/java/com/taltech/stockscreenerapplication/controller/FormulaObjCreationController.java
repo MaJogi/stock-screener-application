@@ -83,8 +83,6 @@ public class FormulaObjCreationController {
 
     @PostMapping(value = "/createMappingFor/{ticker}/income",  produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> singleIncomeStatementMapping(@PathVariable String ticker,
-//                                                           @RequestBody final BalanceMappingRequest balanceRequest,
-//                                                           @RequestBody final CashflowMappingRequest cashflowRequest,
                                                                         @RequestBody final IncomeMappingRequest incomeRequest) {
 
         CompanyDimension company = companyDimensionRepository.findById(ticker)
@@ -92,11 +90,6 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
-        //CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
-        //CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
-
-        long id = 1;
-        testIncomeConfig.setCompany_config_collection_id(id);
 
         FormulaObjCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
 
@@ -120,9 +113,6 @@ public class FormulaObjCreationController {
 
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
 
-        long id = 1;
-        testCashflowConfig.setCompany_config_collection_id(id);
-
         FormulaObjCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
 
         company.getCashflowConfigurations().add(testCashflowConfig);
@@ -144,9 +134,6 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
-
-        long id = 1;
-        testBalanceConfig.setCompany_config_collection_id(id);
 
         FormulaObjCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
 

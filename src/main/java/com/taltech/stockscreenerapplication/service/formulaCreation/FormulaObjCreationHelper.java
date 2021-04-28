@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FormulaObjCreationHelper {
     public static void setIncomeConfigObjectFields(CompanyIncomeStatFormulaConfig testIncomeConfig, IncomeMappingRequest incomeRequest) {
+        testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());
         testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
         testIncomeConfig.setDateTo(incomeRequest.getDateTo());
         testIncomeConfig.setRevenue(incomeRequest.getRevenue());
@@ -43,6 +44,7 @@ public class FormulaObjCreationHelper {
     }
 
     public static void setCashflowConfigObjectFields(CompanyCashflowStatFormulaConfig testCashflowConfig, CashflowMappingRequest cashflowRequest) {
+        testCashflowConfig.setCompany_config_collection_id(cashflowRequest.getCompanyConfigCollectionId());
         testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
         testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
         testCashflowConfig.setNetIncome(cashflowRequest.getNetIncome());
@@ -65,6 +67,7 @@ public class FormulaObjCreationHelper {
     }
 
     public static void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig, BalanceMappingRequest balanceRequest) {
+        testBalanceConfig.setCompany_config_collection_id(balanceRequest.getCompanyConfigCollectionId());
         testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
         testBalanceConfig.setDateTo(balanceRequest.getDateTo());
         testBalanceConfig.setCashAndCashEquivalents(balanceRequest.getCashAndCashEquivalents());
