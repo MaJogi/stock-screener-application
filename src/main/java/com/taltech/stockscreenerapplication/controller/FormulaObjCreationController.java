@@ -97,34 +97,7 @@ public class FormulaObjCreationController {
         long id = 1;
         testIncomeConfig.setCompany_config_collection_id(id);
 
-        testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
-        testIncomeConfig.setDateTo(incomeRequest.getDateTo());
-        testIncomeConfig.setRevenue(incomeRequest.getRevenue());
-        testIncomeConfig.setCostOfRevenue(incomeRequest.getCostOfRevenue());
-        testIncomeConfig.setGrossProfit(incomeRequest.getGrossProfit());
-        testIncomeConfig.setGrossProfitRatio(incomeRequest.getGrossProfitRatio());
-        testIncomeConfig.setRAndDexpenses(incomeRequest.getRAndDexpenses());
-        testIncomeConfig.setGeneralAndAdminExpenses(incomeRequest.getGeneralAndAdminExpenses());
-        testIncomeConfig.setSellingAndMarketingExpenses(incomeRequest.getSellingAndMarketingExpenses());
-        testIncomeConfig.setOtherExpenses(incomeRequest.getOtherExpenses());
-        testIncomeConfig.setOperatingExpenses(incomeRequest.getOperatingExpenses());
-        testIncomeConfig.setCostAndExpenses(incomeRequest.getCostAndExpenses());
-        testIncomeConfig.setInterestExpense(incomeRequest.getInterestExpense());
-        testIncomeConfig.setDepricationAndAmortization(incomeRequest.getDepricationAndAmortization());
-        testIncomeConfig.setEbitda(incomeRequest.getEbitda());
-        testIncomeConfig.setEbitdaRatio(incomeRequest.getEbitdaRatio());
-        testIncomeConfig.setOperatingIncome(incomeRequest.getOperatingIncome());
-        testIncomeConfig.setOperatingIncomeRatio(incomeRequest.getOperatingIncomeRatio());
-        testIncomeConfig.setTotalOtherIncomeExpensesNet(incomeRequest.getTotalOtherIncomeExpensesNet());
-        testIncomeConfig.setIncomeBeforeTax(incomeRequest.getIncomeBeforeTax());
-        testIncomeConfig.setIncomeBeforeTaxRatio(incomeRequest.getIncomeBeforeTaxRatio());
-        testIncomeConfig.setIncomeTaxExpense(incomeRequest.getIncomeTaxExpense());
-        testIncomeConfig.setNetIncome(incomeRequest.getNetIncome());
-        testIncomeConfig.setNetIncomeRatio(incomeRequest.getNetIncomeRatio());
-        testIncomeConfig.setEps(incomeRequest.getEps());
-        testIncomeConfig.setEpsDiluted(incomeRequest.getEpsDiluted());
-        testIncomeConfig.setWeightedAverageShsOut(incomeRequest.getWeightedAverageShsOut());
-        testIncomeConfig.setWeightedAverageShsOutDil(incomeRequest.getWeightedAverageShsOutDil());
+        setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
 
         company.getIncomeConfigurations().add(testIncomeConfig);
 
@@ -145,30 +118,11 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
-        //CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
 
         long id = 1;
         testCashflowConfig.setCompany_config_collection_id(id);
 
-        testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
-        testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
-        testCashflowConfig.setNetIncome(cashflowRequest.getNetIncome());
-        testCashflowConfig.setDepriciationAndAmortization(cashflowRequest.getDepriciationAndAmortization());
-        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
-        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
-        testCashflowConfig.setChangeInWorkingCapital(cashflowRequest.getChangeInWorkingCapital());
-        testCashflowConfig.setAccountsReceivables(cashflowRequest.getAccountsReceivables());
-        testCashflowConfig.setInventory(cashflowRequest.getInventory());
-        testCashflowConfig.setAccountsPayments(cashflowRequest.getAccountsPayments());
-        testCashflowConfig.setOtherNonCashItems(cashflowRequest.getOtherNonCashItems());
-        testCashflowConfig.setNetCashProvidedByOperatingActivities(cashflowRequest.getNetCashProvidedByOperatingActivities());
-        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(cashflowRequest.getInvestmentsInPropertyPlantAndEquipment());
-        testCashflowConfig.setAcquisitionsNet(cashflowRequest.getAcquisitionsNet());
-        testCashflowConfig.setPurchasesOfInvestments(cashflowRequest.getPurchasesOfInvestments());
-        testCashflowConfig.setSalesMaturitiesOfInvestments(cashflowRequest.getSalesMaturitiesOfInvestments());
-        testCashflowConfig.setOtherInvestingActivities(cashflowRequest.getOtherInvestingActivities());
-        testCashflowConfig.setNetCashUsedForInvestingActivities(cashflowRequest.getNetCashUsedForInvestingActivities());
-        testCashflowConfig.setDebtRepayment(cashflowRequest.getDebtRepayment());
+        setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
 
         company.getCashflowConfigurations().add(testCashflowConfig);
 
@@ -193,47 +147,7 @@ public class FormulaObjCreationController {
         long id = 1;
         testBalanceConfig.setCompany_config_collection_id(id);
 
-        testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
-        testBalanceConfig.setDateTo(balanceRequest.getDateTo());
-        testBalanceConfig.setCashAndCashEquivalents(balanceRequest.getCashAndCashEquivalents());
-        testBalanceConfig.setShortTermInvestments(balanceRequest.getShortTermInvestments());
-        testBalanceConfig.setCashAndShortTermInvestments(balanceRequest.getCashAndShortTermInvestments());
-        testBalanceConfig.setNetReceivables(balanceRequest.getNetReceivables());
-        testBalanceConfig.setInventory(balanceRequest.getInventory());
-        testBalanceConfig.setOtherCurrentAssets(balanceRequest.getOtherCurrentAssets());
-        testBalanceConfig.setTotalCurrentAssets(balanceRequest.getTotalCurrentAssets());
-        testBalanceConfig.setPropertyPlantEquipmentAssets(balanceRequest.getPropertyPlantEquipmentAssets());
-        testBalanceConfig.setGoodwill(balanceRequest.getGoodwill());
-        testBalanceConfig.setIntangibleAssets(balanceRequest.getIntangibleAssets());
-        testBalanceConfig.setGoodwillAndIntangibleAssets(balanceRequest.getGoodwillAndIntangibleAssets());
-        testBalanceConfig.setLongTermInvestmets(balanceRequest.getLongTermInvestmets());
-        testBalanceConfig.setTaxAssets(balanceRequest.getTaxAssets());
-        testBalanceConfig.setOtherNonCurrentAssets(balanceRequest.getOtherNonCurrentAssets());
-        testBalanceConfig.setTotalNonCurrentAssets(balanceRequest.getTotalNonCurrentAssets());
-        testBalanceConfig.setOtherAssets(balanceRequest.getOtherAssets());
-        testBalanceConfig.setTotalAssets(balanceRequest.getTotalAssets());
-        testBalanceConfig.setAccountPayables(balanceRequest.getAccountPayables());
-        testBalanceConfig.setShortTermDebt(balanceRequest.getShortTermDebt());
-        testBalanceConfig.setTaxPayables(balanceRequest.getTaxPayables());
-        testBalanceConfig.setDeferredRevenue(balanceRequest.getDeferredRevenue());
-        testBalanceConfig.setOtherCurrentLiabilities(balanceRequest.getOtherCurrentLiabilities());
-        testBalanceConfig.setTotalCurrentLiabilities(balanceRequest.getTotalCurrentLiabilities());
-        testBalanceConfig.setLongTermDebt(balanceRequest.getLongTermDebt());
-        testBalanceConfig.setDeferredRevenueNonCurrent(balanceRequest.getDeferredRevenueNonCurrent());
-        testBalanceConfig.setDeferredTaxLiabilitiesNonCurrent(balanceRequest.getDeferredTaxLiabilitiesNonCurrent());
-        testBalanceConfig.setOtherNonCurrentLiabilities(balanceRequest.getOtherNonCurrentLiabilities());
-        testBalanceConfig.setTotalNonCurrentLiabilities(balanceRequest.getTotalNonCurrentLiabilities());
-        testBalanceConfig.setOtherLiabilities(balanceRequest.getOtherLiabilities());
-        testBalanceConfig.setTotalLiabilities(balanceRequest.getTotalLiabilities());
-        testBalanceConfig.setCommonStock(balanceRequest.getCommonStock());
-        testBalanceConfig.setRetainedEarnings(balanceRequest.getRetainedEarnings());
-        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(balanceRequest.getAccumulatedOtherComprehensiveIncomeLoss());
-        testBalanceConfig.setOtherTotalStockholdersEquity(balanceRequest.getOtherTotalStockholdersEquity());
-        testBalanceConfig.setTotalStockholdersEquity(balanceRequest.getTotalStockholdersEquity());
-        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(balanceRequest.getTotalLiabilitiesAndStockHoldersEquity());
-        testBalanceConfig.setTotalInvestments(balanceRequest.getTotalInvestments());
-        testBalanceConfig.setTotalDebt(balanceRequest.getTotalDebt());
-        testBalanceConfig.setNetDebt(balanceRequest.getNetDebt());
+        setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
 
         company.getBalanceConfigurations().add(testBalanceConfig);
 
@@ -263,9 +177,9 @@ public class FormulaObjCreationController {
         JsonNode cashflowNode = json.get("cashflowRequest");
         JsonNode balanceNode = json.get("balanceRequest");
 
-        setValuesToIncomeConfig(testIncomeConfig, incomeNode);
-        setValuesToCashflowConfig(testCashflowConfig, cashflowNode);
-        setValuesToBalanceConfig(testBalanceConfig, balanceNode);
+        setJsonValuesToIncomeConfig(testIncomeConfig, incomeNode);
+        setJsonValuesToCashflowConfig(testCashflowConfig, cashflowNode);
+        setJsonValuesToBalanceConfig(testBalanceConfig, balanceNode);
 
         company.getIncomeConfigurations().add(testIncomeConfig);
         company.getCashflowConfigurations().add(testCashflowConfig);
@@ -280,7 +194,7 @@ public class FormulaObjCreationController {
     }
 
     // .asText() can also be used. But instead of null, value be returned as String with text "null"
-    public void setValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig, JsonNode incomeNode) {
+    public void setJsonValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig, JsonNode incomeNode) {
         testIncomeConfig.setDateFrom(incomeNode.get("dateFrom").textValue());
         testIncomeConfig.setDateTo(incomeNode.get("dateTo").textValue());
         testIncomeConfig.setRevenue(incomeNode.get("revenue").textValue());
@@ -311,7 +225,7 @@ public class FormulaObjCreationController {
         testIncomeConfig.setWeightedAverageShsOutDil(incomeNode.get("weightedAverageShsOutDil").textValue());
     }
 
-    public void setValuesToCashflowConfig(CompanyCashflowStatFormulaConfig testCashflowConfig, JsonNode cashflowNode) {
+    public void setJsonValuesToCashflowConfig(CompanyCashflowStatFormulaConfig testCashflowConfig, JsonNode cashflowNode) {
         testCashflowConfig.setDateFrom(cashflowNode.get("dateFrom").textValue());
         testCashflowConfig.setDateTo(cashflowNode.get("dateTo").textValue());
         testCashflowConfig.setNetIncome(cashflowNode.get("netIncome").textValue());
@@ -332,7 +246,7 @@ public class FormulaObjCreationController {
         testCashflowConfig.setDebtRepayment(cashflowNode.get("debtRepayment").textValue());
     }
 
-    public void setValuesToBalanceConfig(CompanyBalanceStatFormulaConfig testBalanceConfig, JsonNode balanceNode) {
+    public void setJsonValuesToBalanceConfig(CompanyBalanceStatFormulaConfig testBalanceConfig, JsonNode balanceNode) {
         testBalanceConfig.setDateFrom(balanceNode.get("dateFrom").textValue());
         testBalanceConfig.setDateTo(balanceNode.get("dateTo").textValue());
         testBalanceConfig.setCashAndCashEquivalents(balanceNode.get("cashAndCashEquivalents").textValue());
@@ -374,5 +288,102 @@ public class FormulaObjCreationController {
         testBalanceConfig.setTotalInvestments(balanceNode.get("totalInvestments").textValue());
         testBalanceConfig.setTotalDebt(balanceNode.get("totalDebt").textValue());
         testBalanceConfig.setNetDebt(balanceNode.get("netDebt").textValue());
+    }
+
+    public void setIncomeConfigObjectFields(CompanyIncomeStatFormulaConfig testIncomeConfig, IncomeMappingRequest incomeRequest) {
+        testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
+        testIncomeConfig.setDateTo(incomeRequest.getDateTo());
+        testIncomeConfig.setRevenue(incomeRequest.getRevenue());
+        testIncomeConfig.setCostOfRevenue(incomeRequest.getCostOfRevenue());
+        testIncomeConfig.setGrossProfit(incomeRequest.getGrossProfit());
+        testIncomeConfig.setGrossProfitRatio(incomeRequest.getGrossProfitRatio());
+        testIncomeConfig.setRAndDexpenses(incomeRequest.getRAndDexpenses());
+        testIncomeConfig.setGeneralAndAdminExpenses(incomeRequest.getGeneralAndAdminExpenses());
+        testIncomeConfig.setSellingAndMarketingExpenses(incomeRequest.getSellingAndMarketingExpenses());
+        testIncomeConfig.setOtherExpenses(incomeRequest.getOtherExpenses());
+        testIncomeConfig.setOperatingExpenses(incomeRequest.getOperatingExpenses());
+        testIncomeConfig.setCostAndExpenses(incomeRequest.getCostAndExpenses());
+        testIncomeConfig.setInterestExpense(incomeRequest.getInterestExpense());
+        testIncomeConfig.setDepricationAndAmortization(incomeRequest.getDepricationAndAmortization());
+        testIncomeConfig.setEbitda(incomeRequest.getEbitda());
+        testIncomeConfig.setEbitdaRatio(incomeRequest.getEbitdaRatio());
+        testIncomeConfig.setOperatingIncome(incomeRequest.getOperatingIncome());
+        testIncomeConfig.setOperatingIncomeRatio(incomeRequest.getOperatingIncomeRatio());
+        testIncomeConfig.setTotalOtherIncomeExpensesNet(incomeRequest.getTotalOtherIncomeExpensesNet());
+        testIncomeConfig.setIncomeBeforeTax(incomeRequest.getIncomeBeforeTax());
+        testIncomeConfig.setIncomeBeforeTaxRatio(incomeRequest.getIncomeBeforeTaxRatio());
+        testIncomeConfig.setIncomeTaxExpense(incomeRequest.getIncomeTaxExpense());
+        testIncomeConfig.setNetIncome(incomeRequest.getNetIncome());
+        testIncomeConfig.setNetIncomeRatio(incomeRequest.getNetIncomeRatio());
+        testIncomeConfig.setEps(incomeRequest.getEps());
+        testIncomeConfig.setEpsDiluted(incomeRequest.getEpsDiluted());
+        testIncomeConfig.setWeightedAverageShsOut(incomeRequest.getWeightedAverageShsOut());
+        testIncomeConfig.setWeightedAverageShsOutDil(incomeRequest.getWeightedAverageShsOutDil());
+    }
+
+    public void setCashflowConfigObjectFields(CompanyCashflowStatFormulaConfig testCashflowConfig, CashflowMappingRequest cashflowRequest) {
+        testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
+        testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
+        testCashflowConfig.setNetIncome(cashflowRequest.getNetIncome());
+        testCashflowConfig.setDepriciationAndAmortization(cashflowRequest.getDepriciationAndAmortization());
+        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
+        testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
+        testCashflowConfig.setChangeInWorkingCapital(cashflowRequest.getChangeInWorkingCapital());
+        testCashflowConfig.setAccountsReceivables(cashflowRequest.getAccountsReceivables());
+        testCashflowConfig.setInventory(cashflowRequest.getInventory());
+        testCashflowConfig.setAccountsPayments(cashflowRequest.getAccountsPayments());
+        testCashflowConfig.setOtherNonCashItems(cashflowRequest.getOtherNonCashItems());
+        testCashflowConfig.setNetCashProvidedByOperatingActivities(cashflowRequest.getNetCashProvidedByOperatingActivities());
+        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(cashflowRequest.getInvestmentsInPropertyPlantAndEquipment());
+        testCashflowConfig.setAcquisitionsNet(cashflowRequest.getAcquisitionsNet());
+        testCashflowConfig.setPurchasesOfInvestments(cashflowRequest.getPurchasesOfInvestments());
+        testCashflowConfig.setSalesMaturitiesOfInvestments(cashflowRequest.getSalesMaturitiesOfInvestments());
+        testCashflowConfig.setOtherInvestingActivities(cashflowRequest.getOtherInvestingActivities());
+        testCashflowConfig.setNetCashUsedForInvestingActivities(cashflowRequest.getNetCashUsedForInvestingActivities());
+        testCashflowConfig.setDebtRepayment(cashflowRequest.getDebtRepayment());
+    }
+
+    public void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig, BalanceMappingRequest balanceRequest) {
+        testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
+        testBalanceConfig.setDateTo(balanceRequest.getDateTo());
+        testBalanceConfig.setCashAndCashEquivalents(balanceRequest.getCashAndCashEquivalents());
+        testBalanceConfig.setShortTermInvestments(balanceRequest.getShortTermInvestments());
+        testBalanceConfig.setCashAndShortTermInvestments(balanceRequest.getCashAndShortTermInvestments());
+        testBalanceConfig.setNetReceivables(balanceRequest.getNetReceivables());
+        testBalanceConfig.setInventory(balanceRequest.getInventory());
+        testBalanceConfig.setOtherCurrentAssets(balanceRequest.getOtherCurrentAssets());
+        testBalanceConfig.setTotalCurrentAssets(balanceRequest.getTotalCurrentAssets());
+        testBalanceConfig.setPropertyPlantEquipmentAssets(balanceRequest.getPropertyPlantEquipmentAssets());
+        testBalanceConfig.setGoodwill(balanceRequest.getGoodwill());
+        testBalanceConfig.setIntangibleAssets(balanceRequest.getIntangibleAssets());
+        testBalanceConfig.setGoodwillAndIntangibleAssets(balanceRequest.getGoodwillAndIntangibleAssets());
+        testBalanceConfig.setLongTermInvestmets(balanceRequest.getLongTermInvestmets());
+        testBalanceConfig.setTaxAssets(balanceRequest.getTaxAssets());
+        testBalanceConfig.setOtherNonCurrentAssets(balanceRequest.getOtherNonCurrentAssets());
+        testBalanceConfig.setTotalNonCurrentAssets(balanceRequest.getTotalNonCurrentAssets());
+        testBalanceConfig.setOtherAssets(balanceRequest.getOtherAssets());
+        testBalanceConfig.setTotalAssets(balanceRequest.getTotalAssets());
+        testBalanceConfig.setAccountPayables(balanceRequest.getAccountPayables());
+        testBalanceConfig.setShortTermDebt(balanceRequest.getShortTermDebt());
+        testBalanceConfig.setTaxPayables(balanceRequest.getTaxPayables());
+        testBalanceConfig.setDeferredRevenue(balanceRequest.getDeferredRevenue());
+        testBalanceConfig.setOtherCurrentLiabilities(balanceRequest.getOtherCurrentLiabilities());
+        testBalanceConfig.setTotalCurrentLiabilities(balanceRequest.getTotalCurrentLiabilities());
+        testBalanceConfig.setLongTermDebt(balanceRequest.getLongTermDebt());
+        testBalanceConfig.setDeferredRevenueNonCurrent(balanceRequest.getDeferredRevenueNonCurrent());
+        testBalanceConfig.setDeferredTaxLiabilitiesNonCurrent(balanceRequest.getDeferredTaxLiabilitiesNonCurrent());
+        testBalanceConfig.setOtherNonCurrentLiabilities(balanceRequest.getOtherNonCurrentLiabilities());
+        testBalanceConfig.setTotalNonCurrentLiabilities(balanceRequest.getTotalNonCurrentLiabilities());
+        testBalanceConfig.setOtherLiabilities(balanceRequest.getOtherLiabilities());
+        testBalanceConfig.setTotalLiabilities(balanceRequest.getTotalLiabilities());
+        testBalanceConfig.setCommonStock(balanceRequest.getCommonStock());
+        testBalanceConfig.setRetainedEarnings(balanceRequest.getRetainedEarnings());
+        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(balanceRequest.getAccumulatedOtherComprehensiveIncomeLoss());
+        testBalanceConfig.setOtherTotalStockholdersEquity(balanceRequest.getOtherTotalStockholdersEquity());
+        testBalanceConfig.setTotalStockholdersEquity(balanceRequest.getTotalStockholdersEquity());
+        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(balanceRequest.getTotalLiabilitiesAndStockHoldersEquity());
+        testBalanceConfig.setTotalInvestments(balanceRequest.getTotalInvestments());
+        testBalanceConfig.setTotalDebt(balanceRequest.getTotalDebt());
+        testBalanceConfig.setNetDebt(balanceRequest.getNetDebt());
     }
 }
