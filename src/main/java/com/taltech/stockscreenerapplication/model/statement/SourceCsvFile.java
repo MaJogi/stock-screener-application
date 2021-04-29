@@ -35,6 +35,8 @@ public class SourceCsvFile {
     private CompanyDimension ticker_id;
      */
 
+    private String ticker_id;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
 

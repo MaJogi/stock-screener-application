@@ -232,10 +232,7 @@ public class ReadLocalCsvController {
 
         companyDimensionRepository.save(company);
 
-
-        // TODO: Currently deacitvated
-        //newSourceFile.setTicker_id(company);
-
+        newSourceFile.setTicker_id(ticker);
         sourceCsvFileRepository.save(newSourceFile);
 
         CompanyDimension com = companyDimensionRepository
