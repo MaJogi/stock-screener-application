@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SourceCsvFileRepository extends JpaRepository<SourceCsvFile, Long> {
 
+    Boolean existsBySourceFileName(String fileName);
+
     /*
     @Transactional
     @Modifying
@@ -23,9 +25,5 @@ public interface SourceCsvFileRepository extends JpaRepository<SourceCsvFile, Lo
     @Query(value = "UPDATE financials_daily SET div_yield = :divYield WHERE ticker_id = :tickerId", nativeQuery = true)
     void updateDividendYield(@Param("divYield") Double divYield, @Param("tickerId") String tickerId);
     */
-
-
-
-
 }
 

@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-// TODO
+// TODO (nice to have)
 // REMOVE THIS AND ADD THOSE VALUES TO ALLOWEDDATEANDPERIODVALUES TABLE WITH INSERT INTO METHOD
 // in data.sql file
 
 public class AllowedDateAndPeriodValues {
     public static List<String> allowedBalanceDateValues = new LinkedList<>(
-            Arrays.asList("") // + custom value dd-mm-yyyy, yyyy
+            Arrays.asList("") // + custom value dd.mm.yyyy, yyyy
     );
     public static List<String> allowedCashflowDateValues = new LinkedList<>(
             Arrays.asList("Q1 xxxx", "Q2 xxxx", "Q3 xxxx", "Q4 xxxx",

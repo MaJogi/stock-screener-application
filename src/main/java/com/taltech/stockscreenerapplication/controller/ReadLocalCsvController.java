@@ -167,6 +167,17 @@ public class ReadLocalCsvController {
     // TKM1T
     @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
+        boolean fileAlreadyExits = sourceCsvFileRepository
+                .existsBySourceFileName("src/main/resources/csv/" + fileName + ".csv");
+
+        if (fileAlreadyExits){
+            LOGGER.error("File is already read in database");
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse(
+                            "File is already read in database"));
+        }
+
         LOGGER.info("Starting reading in csv file");
         CsvReaderAndProcessImpl readerImpl = new CsvReaderAndProcessImpl();
         List<List<List<String>>> result = null;
