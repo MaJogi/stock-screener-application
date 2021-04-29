@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.controller;
+package com.taltech.stockscreenerapplication.controller.user;
 
 import com.taltech.stockscreenerapplication.model.ERole;
 import com.taltech.stockscreenerapplication.model.User;
