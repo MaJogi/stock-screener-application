@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SourceCsvFileRepository extends JpaRepository<SourceCsvFile, String> {
+public interface SourceCsvFileRepository extends JpaRepository<SourceCsvFile, Long> {
 
     /*
     @Transactional

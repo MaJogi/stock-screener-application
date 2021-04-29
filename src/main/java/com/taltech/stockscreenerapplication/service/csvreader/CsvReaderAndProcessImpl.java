@@ -25,8 +25,8 @@ import java.util.List;
  */
 
 @Service
-public class CsvReaderImpl implements IReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
+public class CsvReaderAndProcessImpl implements IReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
 
     CSVParser parser;
     CSVReader csvReader;
@@ -34,7 +34,7 @@ public class CsvReaderImpl implements IReader {
     List<List<String>> cashflowList;
     List<List<String>> incomeList;
 
-    public CsvReaderImpl() {
+    public CsvReaderAndProcessImpl() {
         LOGGER.info("Default CsvReaderImpl constructor called");
         createCsvParser();
     }

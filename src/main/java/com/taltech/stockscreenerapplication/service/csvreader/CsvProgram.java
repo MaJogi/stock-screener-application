@@ -41,7 +41,7 @@ public class CsvProgram {
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvProgram.class);
 
     public static void main(String[] args) throws Exception {
-        CsvReaderImpl readerImpl = new CsvReaderImpl();
+        CsvReaderAndProcessImpl readerImpl = new CsvReaderAndProcessImpl();
         List<List<List<String>>> result = readerImpl.createReaderAndUseReadingMethod(
                 "tkm-2017_q2_CSV_modified_by_frontend.csv");
         LOGGER.info("{}", result.get(0));

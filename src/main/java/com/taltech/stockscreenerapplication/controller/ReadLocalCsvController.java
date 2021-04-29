@@ -5,7 +5,7 @@ import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
 import com.taltech.stockscreenerapplication.service.StatementsToDb.StatementsToDbHelperImpl;
-import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderImpl;
+import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/readCsv")
 public class ReadLocalCsvController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
 
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
@@ -168,7 +168,7 @@ public class ReadLocalCsvController {
     @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         LOGGER.info("Starting reading in csv file");
-        CsvReaderImpl readerImpl = new CsvReaderImpl();
+        CsvReaderAndProcessImpl readerImpl = new CsvReaderAndProcessImpl();
         List<List<List<String>>> result = null;
         try {
             result = readerImpl.createReaderAndUseReadingMethod(fileName);
@@ -184,18 +184,10 @@ public class ReadLocalCsvController {
                     .body(new MessageResponse("Something went wrong with reading in values from CSV file"));
         }
 
-        // 2. Luuakse uus SourceCsvFile üksus
-
-        SourceCsvFile newSourceFile = new SourceCsvFile();
-        newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
-
         // we need to find a firm, to upload a csv file to its name.
         CompanyDimension company = companyDimensionRepository
                 .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
-
-        newSourceFile.setTicker_id(company);
-        sourceCsvFileRepository.save(newSourceFile);
 
         // get lists for all statements rows of particular file
         // Example nr 1 (readme)
@@ -226,11 +218,25 @@ public class ReadLocalCsvController {
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
         List<List<String>> balanceListAttributesWithData = balanceList.subList(1, balanceList.size());
 
-        statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries, incomeListAttributesWithData, company);
-        statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries, cashflowListAttributesWithData, company);
-        statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries, balanceListAttributesWithData, company);
+        // 2. Luuakse uus SourceCsvFile üksus
+
+        SourceCsvFile newSourceFile = new SourceCsvFile();
+        newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
+
+        statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
+                incomeListAttributesWithData, company, newSourceFile);
+        statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries,
+                cashflowListAttributesWithData, company, newSourceFile);
+        statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries,
+                balanceListAttributesWithData, company, newSourceFile);
 
         companyDimensionRepository.save(company);
+
+
+        // TODO: Currently deacitvated
+        //newSourceFile.setTicker_id(company);
+
+        sourceCsvFileRepository.save(newSourceFile);
 
         CompanyDimension com = companyDimensionRepository
                 .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

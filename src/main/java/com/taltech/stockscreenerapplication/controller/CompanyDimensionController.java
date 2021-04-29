@@ -8,7 +8,7 @@ import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
-import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderImpl;
+import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyDimensionController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
 
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;

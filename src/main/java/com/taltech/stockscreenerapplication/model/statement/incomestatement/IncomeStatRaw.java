@@ -36,11 +36,10 @@ public class IncomeStatRaw {
     /*
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    //@PrimaryKeyJoinColumn
     private SourceCsvFile sourceCsvFile;
-    /*
-
      */
+
 
     /* Seems like its not necessary
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

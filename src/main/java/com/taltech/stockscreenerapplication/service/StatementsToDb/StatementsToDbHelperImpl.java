@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.service.StatementsToDb;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
@@ -70,7 +71,8 @@ public class StatementsToDbHelperImpl {
 
     public void createNewCashflowFinStatementForSpecPeriod(List<String> cashflowListDateEntries,
                                                            List<List<String>> cashflowListAttributesWithData,
-                                                           CompanyDimension company) {
+                                                           CompanyDimension company,
+                                                           SourceCsvFile newSourceFile) {
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -88,6 +90,9 @@ public class StatementsToDbHelperImpl {
 
             cashflowStatRawRepository.save(newCashflowStatRaw);
             company.getCashflowRawStatements().add(newCashflowStatRaw);
+
+            newSourceFile.getCashflowRawStatements().add(newCashflowStatRaw);
+
             i++;
         }
     }
@@ -131,7 +136,8 @@ public class StatementsToDbHelperImpl {
 
     public void createNewBalanceFinStatementForSpecPeriod(List<String> balanceListDateEntries,
                                                           List<List<String>> balanceListAttributesWithData,
-                                                          CompanyDimension company) {
+                                                          CompanyDimension company,
+                                                          SourceCsvFile newSourceFile) {
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -149,13 +155,17 @@ public class StatementsToDbHelperImpl {
 
             balanceStatRawRepository.save(newBalanceStatRaw);
             company.getBalanceRawStatements().add(newBalanceStatRaw);
+
+            newSourceFile.getBalanceRawStatements().add(newBalanceStatRaw);
+
             i++;
         }
     }
 
     public void createNewIncomeFinStatementForSpecPeriod(List<String> incomeListDateEntries,
                                                          List<List<String>> incomeListAttributesWithData,
-                                                         CompanyDimension company) {
+                                                         CompanyDimension company,
+                                                         SourceCsvFile newSourceFile) {
         int i = 1;
         for (String dateEntry : incomeListDateEntries) {
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
@@ -170,6 +180,9 @@ public class StatementsToDbHelperImpl {
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
             incomeStatRawRepository.save(newIncomeStatRaw);
             company.getIncomeRawStatements().add(newIncomeStatRaw);
+
+            newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
+
             i++;
         }
     }
