@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.repository;
+package com.taltech.stockscreenerapplication.repository.user;
 
 import com.taltech.stockscreenerapplication.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

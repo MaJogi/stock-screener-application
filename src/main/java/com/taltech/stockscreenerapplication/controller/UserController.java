@@ -5,7 +5,7 @@ import com.taltech.stockscreenerapplication.model.User;
 import com.taltech.stockscreenerapplication.util.payload.request.AddTickerRequest;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
-import com.taltech.stockscreenerapplication.repository.UserRepository;
+import com.taltech.stockscreenerapplication.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

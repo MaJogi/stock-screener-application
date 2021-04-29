@@ -1,7 +1,7 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.User;
-import com.taltech.stockscreenerapplication.repository.UserRepository;
+import com.taltech.stockscreenerapplication.repository.user.UserRepository;
 import com.taltech.stockscreenerapplication.util.payload.request.AddTickerRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.LoginRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.SignupRequest;

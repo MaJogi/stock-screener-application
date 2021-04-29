@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.repository;
+package com.taltech.stockscreenerapplication.repository.formulaConfig;
 
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -3,7 +3,7 @@ package com.taltech.stockscreenerapplication.service.consumer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
 import com.taltech.stockscreenerapplication.model.FinancialsDaily;
-import com.taltech.stockscreenerapplication.repository.FinancialsDailyRepository;
+import com.taltech.stockscreenerapplication.repository.financials.FinancialsDailyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;

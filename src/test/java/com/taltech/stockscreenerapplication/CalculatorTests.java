@@ -1,7 +1,7 @@
 package com.taltech.stockscreenerapplication;
 
 import com.taltech.stockscreenerapplication.model.FinancialsDaily;
-import com.taltech.stockscreenerapplication.repository.FinancialsDailyRepository;
+import com.taltech.stockscreenerapplication.repository.financials.FinancialsDailyRepository;
 import com.taltech.stockscreenerapplication.service.calculator.Calculator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

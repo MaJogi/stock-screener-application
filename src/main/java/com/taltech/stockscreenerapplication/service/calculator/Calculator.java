@@ -2,8 +2,8 @@ package com.taltech.stockscreenerapplication.service.calculator;
 
 import com.taltech.stockscreenerapplication.model.FinancialsDaily;
 import com.taltech.stockscreenerapplication.model.FinancialsQuarterly;
-import com.taltech.stockscreenerapplication.repository.FinancialsDailyRepository;
-import com.taltech.stockscreenerapplication.repository.FinancialsQuarterlyRepository;
+import com.taltech.stockscreenerapplication.repository.financials.FinancialsDailyRepository;
+import com.taltech.stockscreenerapplication.repository.financials.FinancialsQuarterlyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;

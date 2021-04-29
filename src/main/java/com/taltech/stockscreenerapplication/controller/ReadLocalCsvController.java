@@ -22,7 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/readCsv")
-public class ReadExistingCsvController {
+public class ReadLocalCsvController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
 

@@ -1,7 +1,7 @@
 package com.taltech.stockscreenerapplication.security.services;
 
 import com.taltech.stockscreenerapplication.model.User;
-import com.taltech.stockscreenerapplication.repository.UserRepository;
+import com.taltech.stockscreenerapplication.repository.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

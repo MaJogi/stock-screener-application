@@ -89,6 +89,7 @@ public class StandardObjCreationController {
             LOGGER.info(attr.toString().replaceAll("\\s+", "_"));
         }
 
+        // TODO: See on see koht, kus PEAKS PROGRAMM JUBA TEADMA, mis confi kasutada, mis perioodi puhul.
         CompanyIncomeStatFormulaConfig rightCompanyIncomeConfig = company.getIncomeConfigurations().get(0);
 
         standardStatementCreationHelper.createIncomeStrings(rightCompanyIncomeConfig);
