@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -240,6 +243,44 @@ public class ReadLocalCsvController {
                 cashflowListAttributesWithData, company, newSourceFile);
         statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries,
                 balanceListAttributesWithData, company, newSourceFile);
+
+        // new
+        // length of largest collection of statements
+        List<Integer> listInts = new LinkedList<>();
+        listInts.add(statementsToDbHelper.currentCsvIncomeRawList.size()); // 4
+        listInts.add(statementsToDbHelper.currentCsvCashflowRawList.size()); // 2
+        listInts.add(statementsToDbHelper.currentCsvBalanceRawList.size()); // 2
+        int maxLength = Collections.max(listInts);
+        LOGGER.info("MaxLength: {}", maxLength);
+
+        // Creating GroupsOfStatements
+        for (int i = 0; i < maxLength; i++) {
+            GroupOfStatements groupOfStatements = new GroupOfStatements();
+            try {
+                groupOfStatements.setIncomeStatRaw(statementsToDbHelper.currentCsvIncomeRawList.get(i));
+            }
+            catch (Exception ignored) { }
+            try {
+                groupOfStatements.setCashflowStatRaw(statementsToDbHelper.currentCsvCashflowRawList.get(i));
+            }
+            catch (Exception ignored) { }
+            try {
+                groupOfStatements.setBalanceStatRaw(statementsToDbHelper.currentCsvBalanceRawList.get(i));
+            }
+            catch (Exception ignored) { }
+
+            /*
+            groupOfStatements.setIncomeStatRaw(statementsToDbHelper.tempIncomeRawList.get(i));
+            groupOfStatements.setCashflowStatRaw(statementsToDbHelper.tempCashflowRawList.get(i));
+            groupOfStatements.setBalanceStatRaw(statementsToDbHelper.tempBalanceRawList.get(i));
+             */
+
+            company.getGroupOfStatements().add(groupOfStatements);
+        }
+
+
+
+        // End creating GroupsOfStatements
 
         companyDimensionRepository.save(company);
 

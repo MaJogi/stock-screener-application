@@ -34,6 +34,11 @@ public class StatementsToDbHelperImpl {
     @Autowired
     private IncomeStatRawRepository incomeStatRawRepository;
 
+    public List<IncomeStatRaw> currentCsvIncomeRawList = new LinkedList<>();
+    public List<CashflowStatRaw> currentCsvCashflowRawList = new LinkedList<>();
+    public List<BalanceStatRaw> currentCsvBalanceRawList = new LinkedList<>();
+
+
     public static double parseNumToDouble(List<String> dataLine, int j) {
         try {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
@@ -89,6 +94,11 @@ public class StatementsToDbHelperImpl {
             newCashflowStatRaw.setAttributes(currentPeriodAttributes);
 
             cashflowStatRawRepository.save(newCashflowStatRaw);
+
+            // new
+            currentCsvCashflowRawList.add(newCashflowStatRaw);
+            // end new
+
             company.getCashflowRawStatements().add(newCashflowStatRaw);
 
             newSourceFile.getCashflowRawStatements().add(newCashflowStatRaw);
@@ -154,6 +164,12 @@ public class StatementsToDbHelperImpl {
             newBalanceStatRaw.setAttributes(currentPeriodAttributes);
 
             balanceStatRawRepository.save(newBalanceStatRaw);
+
+            // new
+            currentCsvBalanceRawList.add(newBalanceStatRaw);
+            // end new
+
+
             company.getBalanceRawStatements().add(newBalanceStatRaw);
 
             newSourceFile.getBalanceRawStatements().add(newBalanceStatRaw);
@@ -179,6 +195,11 @@ public class StatementsToDbHelperImpl {
 
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
             incomeStatRawRepository.save(newIncomeStatRaw);
+
+            // new
+            currentCsvIncomeRawList.add(newIncomeStatRaw);
+            // end new
+
             company.getIncomeRawStatements().add(newIncomeStatRaw);
 
             newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
