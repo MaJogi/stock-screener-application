@@ -1,8 +1,11 @@
 package com.taltech.stockscreenerapplication.repository;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface CompanyDimensionRepository extends JpaRepository<CompanyDimension, String> {
     @Query(value = "SELECT income_stat_raw_id from income_statement_as_imported\n" +
@@ -25,6 +28,35 @@ public interface CompanyDimensionRepository extends JpaRepository<CompanyDimensi
             "WHERE date_or_period = ?1\n" +
             "AND company_dimension_ticker_id = ?2", nativeQuery = true)
     Long findBalanceRawIdByDateOrPeriodSpecificCompany(String dateOrPeriod, String companyTicker);
+
+
+
+    @Query(value = "SELECT group_of_stats_id from group_of_statements\n" +
+            "LEFT JOIN company_dimension_group_of_statements\n" +
+            "ON group_of_statements.group_of_stats_id = company_dimension_group_of_statements.group_of_statements_group_of_stats_id\n" +
+            "WHERE income_stat_raw_income_stat_raw_id IS NOT NULL\n" +
+            "AND cashflow_stat_raw_cashflow_stat_raw_id IS NOT NULL\n" +
+            "AND balance_stat_raw_balance_stat_raw_id IS NOT NULL\n" +
+            "AND company_dimension_ticker_id = ?1", nativeQuery = true)
+    List<Long> findAllCompanyGroupOfStatementsWhereAllStatementsPresent(String companyTicker);
+
+    @Query(value = "SELECT * from group_of_statements\n" +
+            "WHERE income_stat_raw_income_stat_raw_id IN ?1", nativeQuery = true)
+    List<GroupOfStatements> findAllCompanyGroupOfStatements(List<Long> ids);
+
+    /*
+    @Query(value = "SELECT group_of_stats_id from group_of_statements\n" +
+            "LEFT JOIN company_dimension_group_of_statements\n" +
+            "ON group_of_statements.group_of_stats_id = company_dimension_group_of_statements.group_of_statements_group_of_stats_id\n" +
+            "WHERE group_of_statements.incomeStatRaw IS NOT NULL\n" +
+            "AND group_of_statements.cashflowStatRaw IS NOT NULL\n" +
+            "AND group_of_statements.balanceStatRaw IS NOT NULL\n" +
+            "AND company_dimension_ticker_id = ?1", nativeQuery = true)
+    List<Long> findCompanyGroupOfStatementsWhereAllStatementsPresentIds(String companyTicker);
+
+     */
+
+
 
     //income_stat_raw_id, date_or_period, company_dimension_ticker_id
 }

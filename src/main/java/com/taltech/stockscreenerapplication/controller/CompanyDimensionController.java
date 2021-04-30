@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
+import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
@@ -116,5 +117,19 @@ public class CompanyDimensionController {
         return companyDimensionRepository.findById(tickerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with tickerId: " + tickerId));
+    }
+
+    @GetMapping("/{tickerId}/getFullCombinationsIds")
+    public List<Long> getFullCombinationOfStatementsIds(@PathVariable final String tickerId) {
+        return companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
+    }
+
+    @GetMapping("/{tickerId}/getFullCombinations")
+    public List<GroupOfStatements> getFullCombinationOfStatements(@PathVariable final String tickerId) {
+
+        List<Long> listOfIds = companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
+        //List<GroupOfStatements> allCompanyGroupOfStatements =
+        List<GroupOfStatements> searchedCompanyGroupOfStatements = companyDimensionRepository.findAllCompanyGroupOfStatements(listOfIds);
+        return searchedCompanyGroupOfStatements;
     }
 }
