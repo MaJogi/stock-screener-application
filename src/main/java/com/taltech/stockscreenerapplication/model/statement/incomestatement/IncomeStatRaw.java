@@ -1,5 +1,7 @@
 package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +10,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
+@JsonSerialize
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Getter
 @Setter

@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "cash_flow_statement_as_imported")
 public class CashflowStatRaw {
     @Id

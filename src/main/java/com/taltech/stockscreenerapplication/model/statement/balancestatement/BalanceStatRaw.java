@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Data
 //@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @Table(name = "balance_statement_as_imported")
 public class BalanceStatRaw {

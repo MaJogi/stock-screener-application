@@ -4,6 +4,7 @@ import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
+import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
 import com.taltech.stockscreenerapplication.service.StatementsToDb.StatementsToDbHelperImpl;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
@@ -37,6 +38,9 @@ public class ReadLocalCsvController {
 
     @Autowired
     private StatementsToDbHelperImpl statementsToDbHelper;
+
+    @Autowired
+    private GroupOfStatementsRepository groupOfStatementsRepository;
 
     /* Advanced request example:
     @PostMapping(value = "/{userId}/tickers", produces = "application/json")
@@ -275,7 +279,10 @@ public class ReadLocalCsvController {
             groupOfStatements.setBalanceStatRaw(statementsToDbHelper.tempBalanceRawList.get(i));
              */
 
-            company.getGroupOfStatements().add(groupOfStatements);
+            //company.getGroupOfStatements().add(groupOfStatements);
+            groupOfStatements.setCompanyDimension(company);
+            groupOfStatementsRepository.save(groupOfStatements);
+
         }
 
 

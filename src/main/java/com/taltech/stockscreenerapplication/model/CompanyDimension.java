@@ -1,6 +1,6 @@
 package com.taltech.stockscreenerapplication.model;
 
-import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
@@ -22,6 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "company_dimension")
 public class CompanyDimension {
 
@@ -79,9 +80,10 @@ public class CompanyDimension {
     private List<BalanceStatStandWithValues> balanceStatements = new LinkedList<>();
 
     // This can start causing trouble
+    /*
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // kui firma kustutatakse, siis kõik selle statemendid kaovad.
     private List<GroupOfStatements> groupOfStatements = new LinkedList<>();
-
+     */
 
     public CompanyDimension() { }
 
