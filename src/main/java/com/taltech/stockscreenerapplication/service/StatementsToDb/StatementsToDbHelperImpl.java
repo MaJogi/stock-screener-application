@@ -171,7 +171,6 @@ public class StatementsToDbHelperImpl {
             currentCsvBalanceRawList.add(newBalanceStatRaw);
             // end new
 
-
             company.getBalanceRawStatements().add(newBalanceStatRaw);
 
             newSourceFile.getBalanceRawStatements().add(newBalanceStatRaw);
@@ -184,30 +183,42 @@ public class StatementsToDbHelperImpl {
                                                          List<List<String>> incomeListAttributesWithData,
                                                          CompanyDimension company,
                                                          SourceCsvFile newSourceFile) {
+
+        // Making sure object used as singleton is clean and nothing from previous csv file is present this time.
+        // Must be done!
+        currentCsvIncomeRawList = new LinkedList<>();
+        currentCsvCashflowRawList = new LinkedList<>();
+        currentCsvBalanceRawList = new LinkedList<>();
+
         int i = 1;
         for (String dateEntry : incomeListDateEntries) {
             IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
 
-            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
+            LOGGER.info("Working with date/period: {} <---------", dateEntry);
             newIncomeStatRaw.setDateOrPeriod(dateEntry);
-            LOGGER.info("here1");
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            LOGGER.info("here2");
             iterateDataLinesAndCreateFinStatementAttrs(incomeListAttributesWithData, currentPeriodAttributes, i);
-            LOGGER.info("here3");
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
-            LOGGER.info("here3.2");
             incomeStatRawRepository.save(newIncomeStatRaw);
-            LOGGER.info("here4");
             // new
             currentCsvIncomeRawList.add(newIncomeStatRaw);
             // end new
-            LOGGER.info("here5");
             company.getIncomeRawStatements().add(newIncomeStatRaw);
-            LOGGER.info("here6");
             newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
 
             i++;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "StatementsToDbHelperImpl{" +
+                "cashflowStatRawRepository=" + cashflowStatRawRepository +
+                ", balanceStatRawRepository=" + balanceStatRawRepository +
+                ", incomeStatRawRepository=" + incomeStatRawRepository +
+                ", currentCsvIncomeRawList=" + currentCsvIncomeRawList +
+                ", currentCsvCashflowRawList=" + currentCsvCashflowRawList +
+                ", currentCsvBalanceRawList=" + currentCsvBalanceRawList +
+                '}';
     }
 }

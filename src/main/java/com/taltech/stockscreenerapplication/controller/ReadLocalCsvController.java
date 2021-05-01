@@ -37,8 +37,7 @@ public class ReadLocalCsvController {
     private SourceCsvFileRepository sourceCsvFileRepository;
 
     /*
-    @Autowired // creates a singleton. I don't need a singleton.
-    private StatementsToDbHelperImpl statementsToDbHelper;
+    @Autowired // creates a singleton. Do i even need a singleton?
      */
     @Autowired
     public StatementsToDbHelperImpl statementsToDbHelper;
@@ -50,112 +49,10 @@ public class ReadLocalCsvController {
     @PostMapping(value = "/{userId}/tickers", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId, @RequestBody final AddTickerRequest addTickerRequest) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, USER_NOT_FOUND_MESSAGE + userId));
-        CompanyDimension companyDimension = companyDimensionRepository.findById(addTickerRequest.getTickerId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company by id: " + addTickerRequest.getTickerId()));
-
-        Set<CompanyDimension> tickers = user.getTickers();
-        tickers.add(companyDimension);
-        userRepository.save(user);
-
-        return ResponseEntity
-                .status(201)
-                .body(new MessageResponse("Ticker added successfully!"));
+        ...
     }
      */
 
-
-//    // This will accept CSV file that was inserted with React frontend as Json string or pure csv and return json result.
-//    // It will be in unclean format!
-//    @PostMapping(value="csvUpload", consumes = "application/json", produces = "application/json")
-//    public ResponseEntity<MessageResponse> saveFormDataToDb(@PathVariable final String ticker, @RequestBody final String csvFile) {
-//        CsvReaderImpl readerImpl = new CsvReaderImpl();
-//        List<List<List<String>>> result = null;
-//        try {
-//            // Nr n source file, which contains 1 up to 3 statements
-//            result = readerImpl.createReaderAndUseReadingMethod("tkm-2017_q2_CSV_modified_by_frontend.csv");
-//        }
-//        catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//        }
-//
-//        // now we want to save every statement and their period data to database.
-//        /*
-//        1. Andmed on kindlal kujul csv formaadis.
-//        1. 1. Index 0 on alati: Income, Index 1: cashflow, Index 2: balance
-//        2. Luuakse uus SourceCsvFile üksus
-//        3. Luuakse incomeStatRaw objekt
-//        4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk)
-//        5. Need incomeStatRaw atribuudid on võimalik kätte saada läbi getAttributesMap'i
-//        5.1 või alternatiivina luuakse repositooriumis eraldi getAttributes meetod, mille abil saadakse kätte
-//        5.1 atribuutide id'd, mis kuuluvad kindla firma esitatud aruandele ning millel on kindla perioodi väärtus
-//        6. (Tehakse kõik sama läbi teiste finantsaruannetega)
-//        7.
-//
-//        */
-//
-//        if (result == null) {
-//            LOGGER.error("Result entity contains null, which should actually be a list of three different lists");
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(new MessageResponse("Something went wrong with reading in values from CSV file"));
-//        }
-//
-//
-//        // 2. Luuakse uus SourceCsvFile üksus
-//
-//        SourceCsvFile newSourceFile = new SourceCsvFile();
-//        newSourceFile.setSourceFileName(Constants.FILENAME);
-//        //String insertNewFileQuery = String.format("insert into source_csv_file (source_file_name) values %s", Constants.FILENAME);
-//        sourceCsvFileRepository.save(newSourceFile);
-//
-//        // 3. Luuakse balanceStatRaw objekt
-//
-//        // get all incomeList rows of particular file
-//        // first row will always contain dates for second column.
-//        List<List<String>> incomeList = result.get(0);
-//        List<String> firstRow = incomeList.get(0);
-//        LOGGER.info("Size of the list is {} <-----------", firstRow.size());
-//        List<String> incomeListDateEntries = firstRow.subList(1, firstRow.size() - 1);
-//        List<List<String>> incomeListAttributesWithData = incomeList.subList(1, incomeList.size());
-//
-//        int i = 1; // starting from first value column
-//        for (String dateEntry : incomeListDateEntries) {
-//            // Creating raw income statement object for specific period (Q2 2017)
-//            IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
-//            // setting source file
-//            //newIncomeStatRaw.setSourceCsvFile(newSourceFile);
-//
-//            // Setting current period for raw income statement
-//            newIncomeStatRaw.setDateOrPeriod(dateEntry);
-//
-//            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-//            for (List<String> dataLine : incomeListAttributesWithData) {
-//                //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-//                //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-//
-//                Attribute attr = new Attribute();
-//                attr.setFieldName(dataLine.get(0));
-//                LOGGER.info("This might break something <- Parsing to Double instead of double");
-//                attr.setValue(Double.parseDouble(dataLine.get(i)));
-//
-//                // saving newly created attribute to db
-//                currentPeriodAttributes.add(attr);
-//                //attributeRepository.save(attr);
-//            }
-//            newIncomeStatRaw.setAttributes(currentPeriodAttributes);
-//            incomeStatRawRepository.save(newIncomeStatRaw);
-//            i++;
-//        }
-//
-//
-//        List<List<String>> cashflowList = result.get(1);
-//        List<List<String>> balanceList = result.get(2);
-//
-//
-//        return null;
-//    }
 
     @GetMapping("/") // default mapping without additional arguments. Right now reading in csv
     public ResponseEntity<MessageResponse> getDefaultPage() {
@@ -172,7 +69,8 @@ public class ReadLocalCsvController {
     3. Luuakse incomeStatRaw objekt
     4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk) ja lisatakse sellele.
     6. (Tehakse kõik sama läbi teiste finantsaruannetega)
-    7. Salvestatakse company uuendatud aruannetega
+    7. Salvestatakse company uuendatud aruanneteg
+    KINDLASTI TÄIENDADA
     */
 
     // TKM1T
@@ -246,9 +144,6 @@ public class ReadLocalCsvController {
 
         SourceCsvFile newSourceFile = new SourceCsvFile();
         newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
-
-        //statementsToDbHelper = new StatementsToDbHelperImpl();
-
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile);
         statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries,
@@ -292,8 +187,6 @@ public class ReadLocalCsvController {
             groupOfStatementsRepository.save(groupOfStatements);
 
         }
-
-
 
         // End creating GroupsOfStatements
 
