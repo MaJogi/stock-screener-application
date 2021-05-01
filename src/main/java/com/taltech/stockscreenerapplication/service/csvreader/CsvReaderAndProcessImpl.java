@@ -227,7 +227,7 @@ public class CsvReaderAndProcessImpl implements IReader {
     public List<List<List<String>>> createReaderAndUseReadingMethod(String fileName) throws Exception {
         LOGGER.info("Starting using reader");
 
-        String stringPath = String.format("src/main/resources/csv/%s.csv", fileName);
+        String stringPath = String.format("src/main/resources/upload/files/%s.csv", fileName);
         Path myPath = Paths.get(stringPath);
         LOGGER.info("Path at which csv is found {}", myPath);
 
