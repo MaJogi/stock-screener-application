@@ -1,7 +1,6 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
@@ -124,6 +123,8 @@ public class CompanyDimensionController {
         return companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
     }
 
+    /* This functionality is done in GroupOfStatementsController */
+    /*
     @GetMapping("/{tickerId}/getFullCombinations")
     public List<GroupOfStatements> getFullCombinationOfStatements(@PathVariable final String tickerId) {
 
@@ -132,4 +133,5 @@ public class CompanyDimensionController {
         List<GroupOfStatements> searchedCompanyGroupOfStatements = companyDimensionRepository.findAllCompanyGroupOfStatements(listOfIds);
         return searchedCompanyGroupOfStatements;
     }
+     */
 }
