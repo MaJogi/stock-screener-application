@@ -36,8 +36,12 @@ public class ReadLocalCsvController {
     @Autowired
     private SourceCsvFileRepository sourceCsvFileRepository;
 
-    @Autowired
+    /*
+    @Autowired // creates a singleton. I don't need a singleton.
     private StatementsToDbHelperImpl statementsToDbHelper;
+     */
+    @Autowired
+    public StatementsToDbHelperImpl statementsToDbHelper;
 
     @Autowired
     private GroupOfStatementsRepository groupOfStatementsRepository;
@@ -207,6 +211,8 @@ public class ReadLocalCsvController {
                 .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
 
+        LOGGER.info("Company name:::::::::::. {}", company.getName());
+
         // get lists for all statements rows of particular file
         // Example nr 1 (readme)
         List<List<String>> incomeList = result.get(0);
@@ -240,6 +246,8 @@ public class ReadLocalCsvController {
 
         SourceCsvFile newSourceFile = new SourceCsvFile();
         newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
+
+        //statementsToDbHelper = new StatementsToDbHelperImpl();
 
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile);

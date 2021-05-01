@@ -34,10 +34,15 @@ public class StatementsToDbHelperImpl {
     @Autowired
     private IncomeStatRawRepository incomeStatRawRepository;
 
-    public List<IncomeStatRaw> currentCsvIncomeRawList = new LinkedList<>();
-    public List<CashflowStatRaw> currentCsvCashflowRawList = new LinkedList<>();
-    public List<BalanceStatRaw> currentCsvBalanceRawList = new LinkedList<>();
+    public List<IncomeStatRaw> currentCsvIncomeRawList;
+    public List<CashflowStatRaw> currentCsvCashflowRawList;
+    public List<BalanceStatRaw> currentCsvBalanceRawList;
 
+    public StatementsToDbHelperImpl() {
+        currentCsvIncomeRawList = new LinkedList<>();
+        currentCsvCashflowRawList = new LinkedList<>();
+        currentCsvBalanceRawList = new LinkedList<>();
+    }
 
     public static double parseNumToDouble(List<String> dataLine, int j) {
         try {
@@ -92,13 +97,10 @@ public class StatementsToDbHelperImpl {
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
             iterateDataLinesAndCreateFinStatementAttrs(cashflowListAttributesWithData, currentPeriodAttributes, i);
             newCashflowStatRaw.setAttributes(currentPeriodAttributes);
-
             cashflowStatRawRepository.save(newCashflowStatRaw);
-
             // new
             currentCsvCashflowRawList.add(newCashflowStatRaw);
             // end new
-
             company.getCashflowRawStatements().add(newCashflowStatRaw);
 
             newSourceFile.getCashflowRawStatements().add(newCashflowStatRaw);
@@ -188,20 +190,21 @@ public class StatementsToDbHelperImpl {
 
             LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
             newIncomeStatRaw.setDateOrPeriod(dateEntry);
-
+            LOGGER.info("here1");
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
-
+            LOGGER.info("here2");
             iterateDataLinesAndCreateFinStatementAttrs(incomeListAttributesWithData, currentPeriodAttributes, i);
-
+            LOGGER.info("here3");
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
+            LOGGER.info("here3.2");
             incomeStatRawRepository.save(newIncomeStatRaw);
-
+            LOGGER.info("here4");
             // new
             currentCsvIncomeRawList.add(newIncomeStatRaw);
             // end new
-
+            LOGGER.info("here5");
             company.getIncomeRawStatements().add(newIncomeStatRaw);
-
+            LOGGER.info("here6");
             newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
 
             i++;
