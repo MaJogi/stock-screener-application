@@ -174,20 +174,13 @@ public class StandardObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         //List<BalanceStatRaw> rawBalanceStatements = company.getBalanceRawStatements();
-        LOGGER.info("2");
-        LOGGER.info("{}", period_or_date);
         Long desiredRawBalanceStatId = companyDimensionRepository
                 .findBalanceRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
-        LOGGER.info("{}", desiredRawBalanceStatId);
-        LOGGER.info("3");
         BalanceStatRaw balanceStatementRaw = balanceStatRawRepository.findById(desiredRawBalanceStatId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find balanceStatementRaw with id: " + desiredRawBalanceStatId));
-        LOGGER.info("{}", balanceStatementRaw);
-        LOGGER.info("4");
         List<Attribute> attributesWithValues = balanceStatementRaw.getAttributes();
 
-        LOGGER.info("5");
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString());
         }
@@ -199,20 +192,19 @@ public class StandardObjCreationController {
         for (Attribute attr : attributesWithValues) {
             stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
         }
-        LOGGER.info("6");
         for (Attribute attr : attributesWithValues) {
             LOGGER.info(attr.toString().replaceAll("\\s+", "_"));
         }
 
         CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = company.getBalanceConfigurations().get(0);
-        LOGGER.info("7");
+
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 parser, stContext);
-        LOGGER.info("8");
+
         company.getBalanceStatements().add(balanceStatement);
-        LOGGER.info("9");
+
         companyDimensionRepository.save(company);
 
         return ResponseEntity

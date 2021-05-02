@@ -36,9 +36,6 @@ public class FormulaObjCreationController {
         CompanyDimension company = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
-        CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
-        CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
-
         long firstEvenConfigurationId = 1;
         testIncomeConfig.setCompany_config_collection_id(firstEvenConfigurationId);
 
@@ -90,9 +87,7 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
-
         FormulaObjCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
-
         company.getIncomeConfigurations().add(testIncomeConfig);
 
         companyDimensionRepository.save(company);
@@ -112,9 +107,7 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
-
         FormulaObjCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
-
         company.getCashflowConfigurations().add(testCashflowConfig);
 
         companyDimensionRepository.save(company);
@@ -134,9 +127,7 @@ public class FormulaObjCreationController {
                         "Unable to find company with ticker: " + ticker));
 
         CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
-
         FormulaObjCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
-
         company.getBalanceConfigurations().add(testBalanceConfig);
 
         companyDimensionRepository.save(company);
@@ -150,6 +141,7 @@ public class FormulaObjCreationController {
     @PostMapping(value = "/createMappingFor/{ticker}",  produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> allStatementsAsOneMapping(@PathVariable String ticker,
                                                                      @RequestBody final ObjectNode json) {
+
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));

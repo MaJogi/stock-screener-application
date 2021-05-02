@@ -26,8 +26,6 @@ public class GroupOfStatementsController {
         return groupOfStatementsRepository.findAll();
     }
 
-
-
     @GetMapping("/{id}")
     public GroupOfStatements getGroupOfStatement(@PathVariable final Long id) {
         return groupOfStatementsRepository.findById(id)

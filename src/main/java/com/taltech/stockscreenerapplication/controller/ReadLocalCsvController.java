@@ -144,6 +144,7 @@ public class ReadLocalCsvController {
 
         SourceCsvFile newSourceFile = new SourceCsvFile();
         newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
+
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile);
         statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries,
