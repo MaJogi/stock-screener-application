@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
 import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
@@ -399,6 +400,16 @@ public class StandardStatementCreationHelper {
             }
         }
         return null;
+    }
+
+    public void createAttributeWithValuesContext(List<Attribute> statementAttributesWithValues,
+                                                 StandardEvaluationContext stContext) {
+        for (Attribute attr : statementAttributesWithValues) {
+            stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
+        }
+        for (Attribute attr : statementAttributesWithValues) {
+            LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
+        }
     }
 }
 

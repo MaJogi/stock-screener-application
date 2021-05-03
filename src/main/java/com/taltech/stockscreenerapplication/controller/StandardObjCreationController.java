@@ -317,26 +317,9 @@ public class StandardObjCreationController {
 
         // Atribuutide lisamine konteksti, et neid saaks hiljem muutujatena kasutada arvutustes
         // stContext.setVariable("Revenue", 150);
-        for (Attribute attr : balanceAttributesWithValues) {
-            stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-        for (Attribute attr : balanceAttributesWithValues) {
-            LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
-        }
-
-        for (Attribute attr : cashflowAttributesWithValues) {
-            stContext2.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-        for (Attribute attr : cashflowAttributesWithValues) {
-            LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
-        }
-
-        for (Attribute attr : incomeAttributesWithValues) {
-            stContext3.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-        for (Attribute attr : incomeAttributesWithValues) {
-            LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
-        }
+        standardStatementCreationHelper.createAttributeWithValuesContext(balanceAttributesWithValues, stContext);
+        standardStatementCreationHelper.createAttributeWithValuesContext(cashflowAttributesWithValues, stContext2);
+        standardStatementCreationHelper.createAttributeWithValuesContext(incomeAttributesWithValues, stContext3);
 
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
         // Hetkel on periodOrDate nt "30.06.2017"
@@ -365,7 +348,6 @@ public class StandardObjCreationController {
         // Seotud selle konfiguratsiooni grupiga, et hiljem saaks seda kolmikut koos kasutada.
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
-
         // Siin leitakse üles veel 2 aruande konfiguratsiooni, mis kuuluvad samasse kollektsiooni, kuhu kuulub eelmine
         // balance konfiguratsioon
         List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs = company.getCashflowConfigurations();
@@ -373,7 +355,6 @@ public class StandardObjCreationController {
 
         CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
                 .findRightCashflowConfig(companyCashflowStatFormulaConfigs, companyConfigCollectionId);
-        //CompanyIncomeStatFormulaConfig incomeConfig = null;
         CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
                 .findRightIncomeConfig(companyIncomeStatFormulaConfigs, companyConfigCollectionId);
 
@@ -405,15 +386,12 @@ public class StandardObjCreationController {
         cashflowStatement.setDateOrPeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
         incomeStatement.setDateOrPeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
 
-
         //This is now the place to create new GroupOfStandardStatements
-        GroupOfStatementsStandard groupOfStandardStatements = new GroupOfStatementsStandard();
-        groupOfStandardStatements.setBalanceStat(balanceStatement);
-        groupOfStandardStatements.setCashflowStat(cashflowStatement);
-        groupOfStandardStatements.setIncomeStat(incomeStatement);
-        groupOfStandardStatements.setCompanyDimension(company);
-        groupOfStandardStatementsRepository.save(groupOfStandardStatements);
 
+        GroupOfStatementsStandard groupOfStandardStatements =
+                createGroupUsingPreviouslyFoundData(balanceStatement, cashflowStatement, incomeStatement, company);
+
+        groupOfStandardStatementsRepository.save(groupOfStandardStatements);
         companyDimensionRepository.save(company);
 
         return ResponseEntity
@@ -422,10 +400,15 @@ public class StandardObjCreationController {
                         "GET method (balance) returned. Check if result is correct"));
     }
 
-//    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(GroupOfStatementsStandard groupOfStandardStatements) {
-//        groupOfStandardStatements.setBalanceStat(balanceStatement);
-//        groupOfStandardStatements.setCashflowStat(cashflowStatement);
-//        groupOfStandardStatements.setIncomeStat(incomeStatement);
-//        groupOfStandardStatements.setCompanyDimension(company);
-//    }
+    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandWithValues balanceStatement,
+                                                                         CashflowStatStandWithValues cashflowStatement,
+                                                                         IncomeStatStandWithValues incomeStatement,
+                                                                         CompanyDimension company) {
+        GroupOfStatementsStandard groupOfStandardStatements = new GroupOfStatementsStandard();
+        groupOfStandardStatements.setBalanceStat(balanceStatement);
+        groupOfStandardStatements.setCashflowStat(cashflowStatement);
+        groupOfStandardStatements.setIncomeStat(incomeStatement);
+        groupOfStandardStatements.setCompanyDimension(company);
+        return groupOfStandardStatements;
+    }
 }
