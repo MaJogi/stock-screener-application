@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
+import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
@@ -11,11 +12,16 @@ import org.springframework.expression.spel.standard.SpelExpression;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @Getter
 @Setter
+//@Service
 public class StandardStatementCreationHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardStatementCreationHelper.class);
@@ -327,4 +333,72 @@ public class StandardStatementCreationHelper {
         balanceStandardFieldFormulas.add(netDebtString);
         LOGGER.info("End of list.add");
     }
+
+    public static GroupOfStatements findRightGroupOfStatements(List<GroupOfStatements> companyFullRawGroupOfStatements,
+                                                               String balance_date) {
+        for (GroupOfStatements rawGroupOfStatements : companyFullRawGroupOfStatements) {
+            if (rawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod().equals(balance_date)) {
+                LOGGER.info("Found right raw GroupOfStatements: -> {} ", rawGroupOfStatements.getGroup_of_stats_id()
+                        .toString());
+                return rawGroupOfStatements;
+            }
+        }
+        return null;
+    }
+
+    // Right config according to date.
+    public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
+            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs, String balance_date) {
+        Date dateObject = new Date();
+        try {
+            dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(balance_date);
+            System.out.println(balance_date +"\t" + dateObject );
+        }
+        catch (ParseException e) {
+            LOGGER.info("ParseExceiption!");
+        }
+
+        for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
+            try {
+                Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateFrom());
+                Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateTo());
+
+                // convert date to calendar
+                Calendar c = Calendar.getInstance();
+                c.setTime(dateTo);
+                c.add(Calendar.HOUR, 24);
+
+                // convert calendar to date
+                Date dateToOne = c.getTime();
+
+                if (dateObject.after(dateFrom) && dateObject.before(dateToOne) ) {
+                    LOGGER.info("Right company balanceConfig id is: {}", currentConfig);
+                    return currentConfig;
+                }
+            }
+            catch (ParseException e) {
+                LOGGER.info("ParseException!");
+            }
+        }
+        return null;
+    }
+
+    public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs, Long companyConfigCollectionId) {
+        for (CompanyCashflowStatFormulaConfig config : companyCashflowStatFormulaConfigs) {
+            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
+                return config;
+            }
+        }
+        return null;
+    }
+
+    public static CompanyIncomeStatFormulaConfig findRightIncomeConfig(List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs, Long companyConfigCollectionId) {
+        for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
+            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
+                return config;
+            }
+        }
+        return null;
+    }
 }
+

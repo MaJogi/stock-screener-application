@@ -281,31 +281,19 @@ public class StandardObjCreationController {
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with ticker: " + ticker));
-
+        LOGGER.info("FOUND COMPANY: {}", company);
 
         // Nüüd oleks vaja leida statementGroup, mille bilansi objekti date on {balance_date}
         List<GroupOfStatements> companyFullRawGroupOfStatements = groupOfStatementsRepository
                 .findGroupOfStatementsByIncomeStatRawNotNullAndCashflowStatRawIsNotNullAndBalanceStatRawIsNotNullAndCompanyDimensionIs(company);
-        GroupOfStatements rightRawGroupOfStatements = null;
-        for (GroupOfStatements rawGroupOfStatements : companyFullRawGroupOfStatements) {
-            if (rawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod().equals(balance_date)) {
-                rightRawGroupOfStatements = rawGroupOfStatements;
-                break;
-            }
-        }
+
+        GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
+                .findRightGroupOfStatements(companyFullRawGroupOfStatements, balance_date);
 
         // nüüd on vaja teha leida as is aruanded, mida hiljem kasutatakse.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
         CashflowStatRaw cashflowStatementRaw = rightRawGroupOfStatements.getCashflowStatRaw();
         IncomeStatRaw incomeStatementRaw = rightRawGroupOfStatements.getIncomeStatRaw();
-
-        /*
-        Long desiredRawBalanceStatId = companyDimensionRepository
-                .findBalanceRawIdByDateOrPeriodSpecificCompany(balance_date, ticker);
-        BalanceStatRaw balanceStatementRaw = balanceStatRawRepository.findById(desiredRawBalanceStatId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find balanceStatementRaw with id: " + desiredRawBalanceStatId));
-         */
 
         // saadakse kätte as is aruannete kirjed koos kindla perioodi väärtusega.
         List<Attribute> balanceAttributesWithValues = balanceStatementRaw.getAttributes();
@@ -350,48 +338,14 @@ public class StandardObjCreationController {
             LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
         }
 
-
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
         // Hetkel on periodOrDate nt "30.06.2017"
         // On olemas 31.12.2015 kuni 31.12.2016 ja teine conf 01.01.2017 - 31.12.2019
-
         // Nüüd tuleb vastavalt bilansi ajale leida korrektne configuratsioon, mida kasutada standartse bilansiaruande
         // tegemise jaoks
-        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = null; // This can be some default value also
 
-        Date dateObject = new Date();
-        try {
-            dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(balance_date);
-            System.out.println(balance_date +"\t" + dateObject );
-        }
-        catch (ParseException e) {
-            LOGGER.info("ParseExceiption!");
-        }
-
-        for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
-            try {
-                Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateFrom());
-                Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateTo());
-
-                // convert date to calendar
-                Calendar c = Calendar.getInstance();
-                c.setTime(dateTo);
-                c.add(Calendar.HOUR, 24);
-
-                // convert calendar to date
-                Date dateToOne = c.getTime();
-
-                if (dateObject.after(dateFrom) && dateObject.before(dateToOne) ) {
-                    rightCompanyBalanceConfig = currentConfig;
-                    LOGGER.info("Right company balanceConfig id is: {}", rightCompanyBalanceConfig);
-                    break;
-                }
-            }
-            catch (ParseException e) {
-                LOGGER.info("ParseException!");
-            }
-
-        }
+        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = StandardStatementCreationHelper
+                .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
         // Luuakse dünaamiliselt valemid, mille läbi saadakse hiljem standartsele bilansi aruandele väärtused
         // Lisatakse need vajalikku listi
@@ -417,21 +371,11 @@ public class StandardObjCreationController {
         List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs = company.getCashflowConfigurations();
         List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs = company.getIncomeConfigurations();
 
-        CompanyCashflowStatFormulaConfig cashflowConfig = null;
-        CompanyIncomeStatFormulaConfig incomeConfig = null;
-        for (CompanyCashflowStatFormulaConfig config : companyCashflowStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
-                cashflowConfig = config;
-            }
-            break;
-        }
-
-        for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
-                incomeConfig = config;
-            }
-            break;
-        }
+        CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
+                .findRightCashflowConfig(companyCashflowStatFormulaConfigs, companyConfigCollectionId);
+        //CompanyIncomeStatFormulaConfig incomeConfig = null;
+        CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
+                .findRightIncomeConfig(companyIncomeStatFormulaConfigs, companyConfigCollectionId);
 
         // Siin hakkab pihta kõik sama tegevus, mis ennegi juba teiste aruannetega.
 
@@ -477,4 +421,11 @@ public class StandardObjCreationController {
                 .body(new MessageResponse(
                         "GET method (balance) returned. Check if result is correct"));
     }
+
+//    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(GroupOfStatementsStandard groupOfStandardStatements) {
+//        groupOfStandardStatements.setBalanceStat(balanceStatement);
+//        groupOfStandardStatements.setCashflowStat(cashflowStatement);
+//        groupOfStandardStatements.setIncomeStat(incomeStatement);
+//        groupOfStandardStatements.setCompanyDimension(company);
+//    }
 }
