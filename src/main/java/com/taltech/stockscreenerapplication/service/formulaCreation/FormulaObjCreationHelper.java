@@ -16,6 +16,8 @@ public class FormulaObjCreationHelper {
         testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());
         testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
         testIncomeConfig.setDateTo(incomeRequest.getDateTo());
+        testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
+        testIncomeConfig.setDateTo(incomeRequest.getDateTo());
         testIncomeConfig.setRevenue(incomeRequest.getRevenue());
         testIncomeConfig.setCostOfRevenue(incomeRequest.getCostOfRevenue());
         testIncomeConfig.setGrossProfit(incomeRequest.getGrossProfit());
@@ -49,6 +51,8 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setCompany_config_collection_id(cashflowRequest.getCompanyConfigCollectionId());
         testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
         testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
+        testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
+        testCashflowConfig.setDateTo(cashflowRequest.getDateTo());
         testCashflowConfig.setNetIncome(cashflowRequest.getNetIncome());
         testCashflowConfig.setDepriciationAndAmortization(cashflowRequest.getDepriciationAndAmortization());
         testCashflowConfig.setStockBasedCompensation(cashflowRequest.getStockBasedCompensation());
@@ -71,6 +75,8 @@ public class FormulaObjCreationHelper {
     public static void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig,
                                                     BalanceMappingRequest balanceRequest) {
         testBalanceConfig.setCompany_config_collection_id(balanceRequest.getCompanyConfigCollectionId());
+        testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
+        testBalanceConfig.setDateTo(balanceRequest.getDateTo());
         testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
         testBalanceConfig.setDateTo(balanceRequest.getDateTo());
         testBalanceConfig.setCashAndCashEquivalents(balanceRequest.getCashAndCashEquivalents());

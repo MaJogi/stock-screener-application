@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.model.statement.formula;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "firm_cashflow_statement_formula")
 public class CompanyCashflowStatFormulaConfig {
     @Id
@@ -23,11 +25,11 @@ public class CompanyCashflowStatFormulaConfig {
     private Long company_config_collection_id;
     
     @Column(name = "date_from") // For example 2014-
-    private String DateFrom;
+    private String dateFrom;
 
     @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
     // because company changed statement writing policy
-    private String DateTo;
+    private String dateTo;
 
     @Column(name = "net_income")
     private String netIncome;
@@ -79,6 +81,33 @@ public class CompanyCashflowStatFormulaConfig {
 
     @Column(name = "debt_repayment")
     private String debtRepayment;
+
+    @Override
+    public String toString() {
+        return "CompanyCashflowStatFormulaConfig{" +
+                "cashflow_stat_formula_id=" + cashflow_stat_formula_id +
+                ", company_config_collection_id=" + company_config_collection_id +
+                ", dateFrom='" + dateFrom + '\'' +
+                ", dateTo='" + dateTo + '\'' +
+                ", netIncome='" + netIncome + '\'' +
+                ", depriciationAndAmortization='" + depriciationAndAmortization + '\'' +
+                ", stockBasedCompensation='" + stockBasedCompensation + '\'' +
+                ", ChangeInWorkingCapital='" + ChangeInWorkingCapital + '\'' +
+                ", accountsReceivables='" + accountsReceivables + '\'' +
+                ", inventory='" + inventory + '\'' +
+                ", accountsPayments='" + accountsPayments + '\'' +
+                ", otherWorkingCapital='" + otherWorkingCapital + '\'' +
+                ", otherNonCashItems='" + otherNonCashItems + '\'' +
+                ", netCashProvidedByOperatingActivities='" + netCashProvidedByOperatingActivities + '\'' +
+                ", investmentsInPropertyPlantAndEquipment='" + investmentsInPropertyPlantAndEquipment + '\'' +
+                ", acquisitionsNet='" + acquisitionsNet + '\'' +
+                ", purchasesOfInvestments='" + purchasesOfInvestments + '\'' +
+                ", salesMaturitiesOfInvestments='" + salesMaturitiesOfInvestments + '\'' +
+                ", otherInvestingActivities='" + otherInvestingActivities + '\'' +
+                ", netCashUsedForInvestingActivities='" + netCashUsedForInvestingActivities + '\'' +
+                ", debtRepayment='" + debtRepayment + '\'' +
+                '}';
+    }
 
     public CompanyCashflowStatFormulaConfig() {}
 

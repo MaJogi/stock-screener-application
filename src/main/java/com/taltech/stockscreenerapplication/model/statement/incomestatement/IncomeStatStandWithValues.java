@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "income_statement_stand_with_values")
 public class IncomeStatStandWithValues {
     @Id
@@ -32,7 +34,7 @@ public class IncomeStatStandWithValues {
     @Column(name = "symbol")
     private String symbol;
 
-    @Column(name = "reported_currency") // Always euro (määrad spring expression confis)
+    @Column(name = "reported_currency")
     private String reportedCurrency;
 
     @Column(name = "filling_date") // Date.today()
@@ -44,7 +46,6 @@ public class IncomeStatStandWithValues {
     @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
     private String dateOrPeriod;
 
-    //@Value("{#income_stat_formula_id.revenue}") // hetkel tundub, et seda ei ole vaja. Vaja on teha vaheklass, mis parsib string valued ning kasutab õigeid arve ning pistab juba Double value incomestatstandwithvalues objekti.
     @Column(name = "revenue")
     private Double revenue; // #revenue
                                       // #Cost of sales  + any additional costs incurred to generate a sale

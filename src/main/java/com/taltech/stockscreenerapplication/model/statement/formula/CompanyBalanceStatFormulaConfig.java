@@ -1,6 +1,7 @@
 package com.taltech.stockscreenerapplication.model.statement.formula;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "firm_balance_statement_formula")
 public class CompanyBalanceStatFormulaConfig {
     @Id
@@ -27,14 +29,12 @@ public class CompanyBalanceStatFormulaConfig {
     private String symbol;
      */
 
-    // NB: Maybe we should manually choose which formula configuration file should be used on each financial statement
-
     @Column(name = "date_from") // For example 2014-
-    private String DateFrom;
+    private String dateFrom;
 
     @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
     // because company changed statement writing policy
-    private String DateTo;
+    private String dateTo;
 
     @Column(name = "cash_and_cash_equivalents")
     private String cashAndCashEquivalents;
@@ -152,6 +152,55 @@ public class CompanyBalanceStatFormulaConfig {
 
     @Column(name = "net_debt")
     private String netDebt;
+
+    @Override
+    public String toString() {
+        return "CompanyBalanceStatFormulaConfig{" +
+                "income_stat_formula_id=" + income_stat_formula_id +
+                ", company_config_collection_id=" + company_config_collection_id +
+                ", dateFrom='" + dateFrom + '\'' +
+                ", dateTo='" + dateTo + '\'' +
+                ", cashAndCashEquivalents='" + cashAndCashEquivalents + '\'' +
+                ", shortTermInvestments='" + shortTermInvestments + '\'' +
+                ", cashAndShortTermInvestments='" + cashAndShortTermInvestments + '\'' +
+                ", netReceivables='" + netReceivables + '\'' +
+                ", inventory='" + inventory + '\'' +
+                ", otherCurrentAssets='" + otherCurrentAssets + '\'' +
+                ", totalCurrentAssets='" + totalCurrentAssets + '\'' +
+                ", propertyPlantEquipmentAssets='" + propertyPlantEquipmentAssets + '\'' +
+                ", goodwill='" + goodwill + '\'' +
+                ", intangibleAssets='" + intangibleAssets + '\'' +
+                ", goodwillAndIntangibleAssets='" + goodwillAndIntangibleAssets + '\'' +
+                ", longTermInvestmets='" + longTermInvestmets + '\'' +
+                ", taxAssets='" + taxAssets + '\'' +
+                ", otherNonCurrentAssets='" + otherNonCurrentAssets + '\'' +
+                ", totalNonCurrentAssets='" + totalNonCurrentAssets + '\'' +
+                ", otherAssets='" + otherAssets + '\'' +
+                ", totalAssets='" + totalAssets + '\'' +
+                ", accountPayables='" + accountPayables + '\'' +
+                ", shortTermDebt='" + shortTermDebt + '\'' +
+                ", taxPayables='" + taxPayables + '\'' +
+                ", deferredRevenue='" + deferredRevenue + '\'' +
+                ", otherCurrentLiabilities='" + otherCurrentLiabilities + '\'' +
+                ", totalCurrentLiabilities='" + totalCurrentLiabilities + '\'' +
+                ", longTermDebt='" + longTermDebt + '\'' +
+                ", deferredRevenueNonCurrent='" + deferredRevenueNonCurrent + '\'' +
+                ", deferredTaxLiabilitiesNonCurrent='" + deferredTaxLiabilitiesNonCurrent + '\'' +
+                ", otherNonCurrentLiabilities='" + otherNonCurrentLiabilities + '\'' +
+                ", totalNonCurrentLiabilities='" + totalNonCurrentLiabilities + '\'' +
+                ", otherLiabilities='" + otherLiabilities + '\'' +
+                ", totalLiabilities='" + totalLiabilities + '\'' +
+                ", commonStock='" + commonStock + '\'' +
+                ", retainedEarnings='" + retainedEarnings + '\'' +
+                ", accumulatedOtherComprehensiveIncomeLoss='" + accumulatedOtherComprehensiveIncomeLoss + '\'' +
+                ", otherTotalStockholdersEquity='" + otherTotalStockholdersEquity + '\'' +
+                ", totalStockholdersEquity='" + totalStockholdersEquity + '\'' +
+                ", totalLiabilitiesAndStockHoldersEquity='" + totalLiabilitiesAndStockHoldersEquity + '\'' +
+                ", totalInvestments='" + totalInvestments + '\'' +
+                ", totalDebt='" + totalDebt + '\'' +
+                ", netDebt='" + netDebt + '\'' +
+                '}';
+    }
 
     public CompanyBalanceStatFormulaConfig() {}
 

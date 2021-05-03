@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.formula;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "firm_income_statement_formula")
 public class CompanyIncomeStatFormulaConfig {
     @Id
@@ -26,14 +28,12 @@ public class CompanyIncomeStatFormulaConfig {
     private String symbol;
      */
 
-    // NB: Maybe we should manually choose which formula configuration file should be used on each financial statement
-
     @Column(name = "date_from") // For example 2014-
-    private String DateFrom;
+    private String dateFrom;
 
     @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
                                // because company changed statement writing policy
-    private String DateTo;
+    private String dateTo;
 
     @Column(name = "revenue")
     private String revenue; // #revenue

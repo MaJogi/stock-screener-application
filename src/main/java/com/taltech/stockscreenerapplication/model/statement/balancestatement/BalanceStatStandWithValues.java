@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "balance_statement_stand_values")
 public class BalanceStatStandWithValues {
     @Id
@@ -44,8 +46,8 @@ public class BalanceStatStandWithValues {
     @Column(name = "accepted_date")
     private Date acceptedDate;
 
-    @Column(name = "period")
-    private String period;
+    @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
+    private String dateOrPeriod;
 
     @Column(name = "cash_and_cash_equivalents")
     private Double cashAndCashEquivalents;

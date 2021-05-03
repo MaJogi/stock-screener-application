@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "cash_flow_statement_stand_values")
 public class CashflowStatStandWithValues {
 
@@ -31,9 +33,6 @@ public class CashflowStatStandWithValues {
     @PrimaryKeyJoinColumn(name = "cashflow_stat_formula_id") // or maybe joincolumn
     private CompanyCashflowStatFormulaConfig cashflow_stat_formula_id;
 
-    @Column(name = "date_quarter_year")
-    private String dateOrQuarterOrYear;
-
     @Column(name = "symbol")
     private String symbol; // we need to check if they are identical
 
@@ -46,8 +45,8 @@ public class CashflowStatStandWithValues {
     @Column(name = "accepted_date")
     private Date acceptedDate;
 
-    @Column(name = "period")
-    private String period;
+    @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
+    private String dateOrPeriod;
 
     @Column(name = "net_income")
     private Double netIncome;
