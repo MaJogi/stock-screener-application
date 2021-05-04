@@ -79,7 +79,6 @@ public class CompanyDimension {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BalanceStatStandWithValues> balanceStatements = new LinkedList<>();
 
-    // This can start causing trouble
     /*
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // kui firma kustutatakse, siis kõik selle statemendid kaovad.
     private List<GroupOfStatements> groupOfStatements = new LinkedList<>();

@@ -43,85 +43,85 @@ public class IncomeStatStandWithValues {
     @Column(name = "accepted_date")
     private Date acceptedDate;
 
-    @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
+    @Column(name = "date_or_period")
     private String dateOrPeriod;
 
     @Column(name = "revenue")
-    private Double revenue; // #revenue
-                                      // #Cost of sales  + any additional costs incurred to generate a sale
-    @Column(name = "cost_of_revenue") // #Cost of sales  + #other operating expenes + #staff costs + #other expenses
+    private Double revenue;
+
+    @Column(name = "cost_of_revenue")
     private Double costOfRevenue;
 
-    @Column(name = "gross_profit")    // #this.revenue - this.costOfRevenue
+    @Column(name = "gross_profit")
     private Double grossProfit;
 
-    @Column(name = "gross_profit_ratio") // #this.gross_profit / #this.netIncome
+    @Column(name = "gross_profit_ratio")
     private Double grossProfitRatio;
 
-    @Column(name = "r_and_d_expenses") // Information missing
+    @Column(name = "r_and_d_expenses")
     private Double rAndDexpenses;
 
-    @Column(name = "general_and_administrative_expenses") //#Other operating expenses
+    @Column(name = "general_and_administrative_expenses")
     private Double generalAndAdminExpenses;
 
-    @Column(name = "selling_and_marketing_expenses") // Information missing
+    @Column(name = "selling_and_marketing_expenses")
     private Double sellingAndMarketingExpenses;
 
-    @Column(name = "other_expenses") // #Other expenses
+    @Column(name = "other_expenses")
     private Double otherExpenses;
 
-    @Column(name = "operating_expenses") // #Other operating expenses
+    @Column(name = "operating_expenses")
     private Double operatingExpenses;
 
-    @Column(name = "cost_and_expenses") // Missing or how is it calculated?
+    @Column(name = "cost_and_expenses")
     private Double costAndExpenses;
 
-    @Column(name = "interest_expense") // Information missing
+    @Column(name = "interest_expense")
     private Double interestExpense;
 
-    @Column(name = "deprication_and_amortization") // #Depreciation,   amortisation   and   impairment losses
+    @Column(name = "deprication_and_amortization")
     private Double depricationAndAmortization;
 
-    @Column(name = "ebitda") // Two possibilities: 1) this.revenue - this.costOfRevenue - rAndDExpenses - this.generalAndAdminExpenses - this.otherExpenses - this.operatingExpenses - this.costAndExpenses
-    private Double ebitda;   //                    2) #revenue - other operating incoe - cost of sales - other operating expenes - staff costs - other expneses
+    @Column(name = "ebitda")
+    private Double ebitda;
 
-    @Column(name = "ebitda_ratio") // this.ebitda / this.netIncome
+    @Column(name = "ebitda_ratio")
     private Double ebitdaRatio;
 
-    @Column(name = "operating_income") // #operating profit
+    @Column(name = "operating_income")
     private Double operatingIncome;
 
-    @Column(name = "operating_income_ratio") // #operating profit / this.netIncome
+    @Column(name = "operating_income_ratio")
     private Double operatingIncomeRatio;
 
-    @Column(name = "total_other_income_expenses_net") // Missing?
+    @Column(name = "total_other_income_expenses_net")
     private Double totalOtherIncomeExpensesNet;
 
-    @Column(name = "income_before_tax") // #Profit before tax
+    @Column(name = "income_before_tax")
     private Double incomeBeforeTax;
 
-    @Column(name = "income_before_tax_ratio") // # (Profit before tax) / revenue * 100
+    @Column(name = "income_before_tax_ratio")
     private Double incomeBeforeTaxRatio;
 
-    @Column(name = "income_tax_expense") // #income tax expense
+    @Column(name = "income_tax_expense")
     private Double incomeTaxExpense;
 
-    @Column(name = "net_income") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR
+    @Column(name = "net_income")
     private Double netIncome;
 
-    @Column(name = "net_income_ratio") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR / #Revenue
+    @Column(name = "net_income_ratio")
     private Double netIncomeRatio;
 
-    @Column(name = "eps") // Missing
+    @Column(name = "eps")
     private Double eps;
 
-    @Column(name = "eps_diluted") // #Basic and diluted earnings per share (euros)
+    @Column(name = "eps_diluted")
     private Double epsDiluted;
 
-    @Column(name = "weighted_average_shs_out") // Missing
+    @Column(name = "weighted_average_shs_out")
     private Double weightedAverageShsOut;
 
-    @Column(name = "weighted_average_shs_out_dil") // Missing
+    @Column(name = "weighted_average_shs_out_dil")
     private Double weightedAverageShsOutDil;
 
     public IncomeStatStandWithValues() {}

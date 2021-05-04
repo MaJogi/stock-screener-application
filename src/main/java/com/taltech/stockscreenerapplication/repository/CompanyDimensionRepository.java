@@ -60,26 +60,9 @@ public interface CompanyDimensionRepository extends JpaRepository<CompanyDimensi
 
      */
 
-
-
-    //income_stat_raw_id, date_or_period, company_dimension_ticker_id
 }
 
 
-    /*
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE financials_daily SET price = ?1 WHERE ticker_id = ?2", nativeQuery = true)
-    void updatePrice(Double price, String tickerId);
-    */
-
-    /*
-    @Transactional
-    @Modifying
-    @Query(value = "UPDATE financials_daily SET p_e = :pe WHERE ticker_id = :tickerId", nativeQuery = true)
-    void updatePE(@Param("pe") Double pe, @Param("tickerId") String tickerId);
-
-     */
 /*
     SELECT income_stat_raw_id, date_or_period, company_dimension_ticker_id from income_statement_as_imported
     LEFT JOIN company_dimension_income_raw_statements

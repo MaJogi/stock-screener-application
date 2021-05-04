@@ -25,10 +25,7 @@ public class SourceCsvFile {
     @Column(name = "source_file_name")
     private String sourceFileName;
 
-
-    /* This has to work */
     // company this source file belong to
-
     /*
     @ManyToOne(fetch = FetchType.LAZY)
     //@PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn

@@ -31,7 +31,7 @@ public class GroupOfStatements {
     private IncomeStatRaw incomeStatRaw;
 
     @OneToOne(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL) // When GriuoIfStatements is removed, CashflowStatRaw will be removed also.
+            cascade = CascadeType.ALL) // When GroupOfStatements is removed, CashflowStatRaw will be removed also.
     //@JoinColumn(name = "cashflow_stat_raw_id") // or maybe joincolumn
     private CashflowStatRaw cashflowStatRaw;
 
