@@ -1,6 +1,6 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
-import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;

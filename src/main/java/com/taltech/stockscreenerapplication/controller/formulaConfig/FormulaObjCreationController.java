@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.controller;
+package com.taltech.stockscreenerapplication.controller.formulaConfig;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

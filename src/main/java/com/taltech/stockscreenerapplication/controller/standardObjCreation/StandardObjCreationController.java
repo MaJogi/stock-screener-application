@@ -1,8 +1,8 @@
-package com.taltech.stockscreenerapplication.controller;
+package com.taltech.stockscreenerapplication.controller.standardObjCreation;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
-import com.taltech.stockscreenerapplication.model.statement.GroupOfStatementsStandard;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
@@ -338,25 +338,19 @@ public class StandardObjCreationController {
         // Luuakse dünaamiliselt valemid, mille läbi saadakse hiljem standartsele bilansi aruandele väärtused
         // Lisatakse need vajalikku listi
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
-
         // Nüüd saadakse kätte dünaamiliselt tehtud valemid
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-
         // Ettevalmistus on tehtud. Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextBalance());
 
 
-
-
         // Siin hakkab pihta kõik sama tegevus, mis ennegi juba teiste aruannetega.
-
         // cashflow
         standardStatementCreationHelper.createCashflowStrings(cashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextCashflow());
-
         //income
         standardStatementCreationHelper.createIncomeStrings(incomeConfig);
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();

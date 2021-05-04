@@ -39,7 +39,6 @@ public class CompanyDimensionController {
     @Autowired
     private BalanceStatRawRepository balanceStatRawRepository;
 
-
     @GetMapping
     public Iterable<CompanyDimension> getCompanies() {
         return companyDimensionRepository.findAll();
@@ -122,16 +121,4 @@ public class CompanyDimensionController {
     public List<Long> getFullCombinationOfStatementsIds(@PathVariable final String tickerId) {
         return companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
     }
-
-    /* This functionality is done in GroupOfStatementsController */
-    /*
-    @GetMapping("/{tickerId}/getFullCombinations")
-    public List<GroupOfStatements> getFullCombinationOfStatements(@PathVariable final String tickerId) {
-
-        List<Long> listOfIds = companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
-        //List<GroupOfStatements> allCompanyGroupOfStatements =
-        List<GroupOfStatements> searchedCompanyGroupOfStatements = companyDimensionRepository.findAllCompanyGroupOfStatements(listOfIds);
-        return searchedCompanyGroupOfStatements;
-    }
-     */
 }
