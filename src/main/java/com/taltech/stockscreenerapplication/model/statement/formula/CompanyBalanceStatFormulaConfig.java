@@ -20,7 +20,7 @@ public class CompanyBalanceStatFormulaConfig {
     @Column(name = "balance_stat_formula_id")
     private Long income_stat_formula_id;
 
-    // Financial administrator can choose a collection of financial configurations
+    // Administrator can create a collection of statement configurations, for specific date. For example: 31.06.2017
     @Column(name = "company_config_collection_id")
     private Long company_config_collection_id;
 

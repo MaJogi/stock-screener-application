@@ -78,9 +78,10 @@ public class FormulaObjCreationController {
                         "Mapping created, check if formulas for income, balance, cashflow statements are done"));
     }
 
-    @PostMapping(value = "/createMappingFor/{ticker}/income",  produces = "application/json", consumes = "application/json")
-    public ResponseEntity<MessageResponse> singleIncomeStatementMapping(@PathVariable String ticker,
-                                                                        @RequestBody final IncomeMappingRequest incomeRequest) {
+    @PostMapping(value = "/createMappingFor/{ticker}/income",
+            produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> singleIncomeStatementMapping(
+            @PathVariable String ticker, @RequestBody final IncomeMappingRequest incomeRequest) {
 
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -98,9 +99,10 @@ public class FormulaObjCreationController {
                         "Mapping created, check if formulas for income statement are done"));
     }
 
-    @PostMapping(value = "/createMappingFor/{ticker}/cashflow",  produces = "application/json", consumes = "application/json")
-    public ResponseEntity<MessageResponse> singleCashflowStatementMapping(@PathVariable String ticker,
-                                                                          @RequestBody final CashflowMappingRequest cashflowRequest) {
+    @PostMapping(value = "/createMappingFor/{ticker}/cashflow",
+            produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> singleCashflowStatementMapping(
+            @PathVariable String ticker, @RequestBody final CashflowMappingRequest cashflowRequest) {
 
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -118,9 +120,10 @@ public class FormulaObjCreationController {
                         "Mapping created, check if formulas cashflow statement are done"));
     }
 
-    @PostMapping(value = "/createMappingFor/{ticker}/balance",  produces = "application/json", consumes = "application/json")
-    public ResponseEntity<MessageResponse> singleBalanceStatementMapping(@PathVariable String ticker,
-                                                                          @RequestBody final BalanceMappingRequest balanceRequest) {
+    @PostMapping(value = "/createMappingFor/{ticker}/balance",
+            produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> singleBalanceStatementMapping(
+            @PathVariable String ticker, @RequestBody final BalanceMappingRequest balanceRequest) {
 
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,

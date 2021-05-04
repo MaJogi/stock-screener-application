@@ -34,7 +34,7 @@ public class CashflowStatStandWithValues {
     private CompanyCashflowStatFormulaConfig cashflow_stat_formula_id;
 
     @Column(name = "symbol")
-    private String symbol; // we need to check if they are identical
+    private String symbol;
 
     @Column(name = "reported_currency")
     private String reportedCurrency;
@@ -45,7 +45,7 @@ public class CashflowStatStandWithValues {
     @Column(name = "accepted_date")
     private Date acceptedDate;
 
-    @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
+    @Column(name = "date_or_period")
     private String dateOrPeriod;
 
     @Column(name = "net_income")

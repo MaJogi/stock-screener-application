@@ -20,15 +20,13 @@ public class CompanyCashflowStatFormulaConfig {
     @Column(name = "cashflow_stat_formula_id")
     private Long cashflow_stat_formula_id;
 
-    // Financial administrator can choose a collection of financial configurations
     @Column(name = "company_config_collection_id")
     private Long company_config_collection_id;
     
-    @Column(name = "date_from") // For example 2014-
+    @Column(name = "date_from")
     private String dateFrom;
 
-    @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
-    // because company changed statement writing policy
+    @Column(name = "date_to")
     private String dateTo;
 
     @Column(name = "net_income")

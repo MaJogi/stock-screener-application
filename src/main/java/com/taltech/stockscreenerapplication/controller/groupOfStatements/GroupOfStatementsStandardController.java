@@ -39,29 +39,14 @@ public class GroupOfStatementsStandardController {
     }
 
     @GetMapping("/for/{ticker_id}")
-    public Iterable<GroupOfStatementsStandard> getGroupsOfStandardStatementsForCompany(@PathVariable final String ticker_id) {
+    public Iterable<GroupOfStatementsStandard> getGroupsOfStandardStatementsForCompany(
+            @PathVariable final String ticker_id) {
 
         CompanyDimension company = companyDimensionRepository.findById(ticker_id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with id: " + ticker_id));;
 
-        return groupOfStandardStatementsRepository.findAllByCompanyDimensionIs(company); // where...
+        return groupOfStandardStatementsRepository.findAllByCompanyDimensionIs(company);
     }
-
-    /*
-    // When you have created config files and created standard objects from them
-    // you can now create groupOfStandardStatements
-    @GetMapping("/createGroupOfStandardStatementsFor/{ticker_id}/basedOnRawGroup/{raw_group_id}")
-    public GroupOfStatementsStandard createGroupOfStandardStatements(@PathVariable final Long raw_group_id) {
-
-        GroupOfStatements groupOfStatementsRaw = groupOfStatementsRepository.findById(raw_group_id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find rawGroupOfStatement with id: " + raw_group_id));
-
-
-        return null;
-    }
-
-     */
 }
 

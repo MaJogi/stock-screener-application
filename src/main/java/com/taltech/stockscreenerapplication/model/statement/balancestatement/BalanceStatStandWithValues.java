@@ -35,7 +35,7 @@ public class BalanceStatStandWithValues {
     private String dateOrQuarterOrYear;
 
     @Column(name = "symbol")
-    private String symbol; // we need to check if they are identical
+    private String symbol;
 
     @Column(name = "reported_currency")
     private String reportedCurrency;

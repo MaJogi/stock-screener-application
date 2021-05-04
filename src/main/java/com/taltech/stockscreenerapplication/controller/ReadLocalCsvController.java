@@ -1,8 +1,8 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
@@ -45,13 +45,15 @@ public class ReadLocalCsvController {
     @Autowired
     private GroupOfStatementsRepository groupOfStatementsRepository;
 
-    /* Advanced request example:
+    //Advanced request example:
+    /*
     @PostMapping(value = "/{userId}/tickers", produces = "application/json")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId, @RequestBody final AddTickerRequest addTickerRequest) {
+    public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId,
+                                                      @RequestBody final AddTickerRequest addTickerRequest) {
         ...
     }
-     */
+    */
 
 
     @GetMapping("/") // default mapping without additional arguments. Right now reading in csv

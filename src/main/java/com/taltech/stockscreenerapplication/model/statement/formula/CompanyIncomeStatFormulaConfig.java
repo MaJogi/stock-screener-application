@@ -19,7 +19,6 @@ public class CompanyIncomeStatFormulaConfig {
     @Column(name = "income_stat_formula_id")
     private Long income_stat_formula_id;
 
-    // Financial administrator can choose a collection of financial configurations
     @Column(name = "company_config_collection_id")
     private Long company_config_collection_id;
 
@@ -28,89 +27,89 @@ public class CompanyIncomeStatFormulaConfig {
     private String symbol;
      */
 
-    @Column(name = "date_from") // For example 2014-
+    @Column(name = "date_from")
     private String dateFrom;
 
-    @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
-                               // because company changed statement writing policy
+    @Column(name = "date_to")
     private String dateTo;
 
     @Column(name = "revenue")
-    private String revenue; // #revenue
-    // #Cost of sales  + any additional costs incurred to generate a sale
-    @Column(name = "cost_of_revenue") // #Cost of sales  + #other operating expenes + #staff costs + #other expenses
+    private String revenue; // #Revenue
+    // Later on in config file it can be: #Cost of sales + any additional costs incurred to generate a sale
+
+    @Column(name = "cost_of_revenue") // #Cost of sales + #other operating expenes + #staff costs + #other expenses
     private String costOfRevenue;
 
-    @Column(name = "gross_profit")    // #this.revenue - this.costOfRevenue
+    @Column(name = "gross_profit")
     private String grossProfit;
 
-    @Column(name = "gross_profit_ratio") // #this.gross_profit / #this.netIncome
+    @Column(name = "gross_profit_ratio")
     private String grossProfitRatio;
 
-    @Column(name = "r_and_d_expenses") // Information missing
+    @Column(name = "r_and_d_expenses")
     private String rAndDexpenses;
 
-    @Column(name = "general_and_administrative_expenses") //#Other operating expenses
+    @Column(name = "general_and_administrative_expenses")
     private String generalAndAdminExpenses;
 
-    @Column(name = "selling_and_marketing_expenses") // Information missing
+    @Column(name = "selling_and_marketing_expenses")
     private String sellingAndMarketingExpenses;
 
-    @Column(name = "other_expenses") // #Other expenses
+    @Column(name = "other_expenses")
     private String otherExpenses;
 
-    @Column(name = "operating_expenses") // #Other operating expenses
+    @Column(name = "operating_expenses")
     private String operatingExpenses;
 
-    @Column(name = "cost_and_expenses") // Missing or how is it calculated?
+    @Column(name = "cost_and_expenses")
     private String costAndExpenses;
 
-    @Column(name = "interest_expense") // Information missing
+    @Column(name = "interest_expense")
     private String interestExpense;
 
-    @Column(name = "deprication_and_amortization") // #Depreciation,   amortisation   and   impairment losses
+    @Column(name = "deprication_and_amortization")
     private String depricationAndAmortization;
 
-    @Column(name = "ebitda") // Two possibilities: 1) this.revenue - this.costOfRevenue - rAndDExpenses - this.generalAndAdminExpenses - this.otherExpenses - this.operatingExpenses - this.costAndExpenses
-    private String ebitda;   //                    2) #revenue - other operating incoe - cost of sales - other operating expenes - staff costs - other expneses
+    @Column(name = "ebitda")
+    private String ebitda;
 
-    @Column(name = "ebitda_ratio") // this.ebitda / this.netIncome
+    @Column(name = "ebitda_ratio")
     private String ebitdaRatio;
 
-    @Column(name = "operating_income") // #operating profit
+    @Column(name = "operating_income")
     private String operatingIncome;
 
-    @Column(name = "operating_income_ratio") // #operating profit / this.netIncome
+    @Column(name = "operating_income_ratio")
     private String operatingIncomeRatio;
 
-    @Column(name = "total_other_income_expenses_net") // Missing?
+    @Column(name = "total_other_income_expenses_net")
     private String totalOtherIncomeExpensesNet;
 
-    @Column(name = "income_before_tax") // #Profit before tax
+    @Column(name = "income_before_tax")
     private String incomeBeforeTax;
 
-    @Column(name = "income_before_tax_ratio") // # (Profit before tax) / revenue * 100
+    @Column(name = "income_before_tax_ratio")
     private String incomeBeforeTaxRatio;
 
-    @Column(name = "income_tax_expense") // #income tax expense
+    @Column(name = "income_tax_expense")
     private String incomeTaxExpense;
 
-    @Column(name = "net_income") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR
+    @Column(name = "net_income")
     private String netIncome;
 
-    @Column(name = "net_income_ratio") // Missing or #NET PROFIT FOR THE FINANCIAL YEAR / #Revenue
+    @Column(name = "net_income_ratio")
     private String netIncomeRatio;
 
-    @Column(name = "eps") // Missing
+    @Column(name = "eps")
     private String eps;
 
-    @Column(name = "eps_diluted") // #Basic and diluted earnings per share (euros)
+    @Column(name = "eps_diluted")
     private String epsDiluted;
 
-    @Column(name = "weighted_average_shs_out") // Missing
+    @Column(name = "weighted_average_shs_out")
     private String weightedAverageShsOut;
 
-    @Column(name = "weighted_average_shs_out_dil") // Missing
+    @Column(name = "weighted_average_shs_out_dil")
     private String weightedAverageShsOutDil;
 
     public CompanyIncomeStatFormulaConfig() {}

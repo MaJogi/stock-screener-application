@@ -264,7 +264,8 @@ public class StandardObjCreationController {
                         "GET method (balance) returned. Check if result is correct"));
     }
 
-    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") // without ending "/" it is losing part of date!
+    // without ending "/" it is losing part of date!
+    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/")
     public ResponseEntity<MessageResponse> standardGroupMappingFromFormulaConfigurations(@PathVariable String ticker,
                                                                      @PathVariable String balance_date) {
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
@@ -340,7 +341,8 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
         // Nüüd saadakse kätte dünaamiliselt tehtud valemid
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        // Ettevalmistus on tehtud. Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
+        // Ettevalmistus on tehtud.
+        // Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextBalance());
 
