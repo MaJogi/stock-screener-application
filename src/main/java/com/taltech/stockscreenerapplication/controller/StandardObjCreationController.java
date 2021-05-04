@@ -277,11 +277,11 @@ public class StandardObjCreationController {
         CompanyDimension company = findCompanyWithExceptionHandler(ticker);
 
         // Nüüd oleks vaja leida statementGroup, mille bilansi objekti date on {balance_date}
-        List<GroupOfStatements> companyFullRawGroupOfStatements = groupOfStatementsRepository
+        List<GroupOfStatements> allOfcompanyRawGroupOfStatements = groupOfStatementsRepository
                 .findGroupOfStatementsByIncomeStatRawNotNullAndCashflowStatRawIsNotNullAndBalanceStatRawIsNotNullAndCompanyDimensionIs(company);
 
         GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
-                .findRightGroupOfStatements(companyFullRawGroupOfStatements, balance_date);
+                .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
         // nüüd on vaja teha leida as is aruanded, mida hiljem kasutatakse.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
@@ -303,12 +303,18 @@ public class StandardObjCreationController {
             LOGGER.info(attr.toString());
         }
 
+
         standardStatementCreationHelper.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
 
         standardStatementCreationHelper.populateContextesWithValues(balanceAttributesWithValues,
                 cashflowAttributesWithValues, incomeAttributesWithValues);
 
+
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
+        List<CompanyCashflowStatFormulaConfig> companyCashflowConfigs = company.getCashflowConfigurations();
+        List<CompanyIncomeStatFormulaConfig> companyIncomeConfigs = company.getIncomeConfigurations();
+
+
         // Hetkel on periodOrDate nt "30.06.2017"
         // On olemas 31.12.2015 kuni 31.12.2016 ja teine conf 01.01.2017 - 31.12.2019
         // Nüüd tuleb vastavalt bilansi ajale leida korrektne configuratsioon, mida kasutada standartse bilansiaruande
@@ -328,22 +334,23 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextBalance());
 
-        // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
-        company.getBalanceStatements().add(balanceStatement);
-
         // Vaatan, mis on selle ettevõtte bilansi konfiguratsiooni id, et leida veel kaks aruannet, mis on
         // Seotud selle konfiguratsiooni grupiga, et hiljem saaks seda kolmikut koos kasutada.
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
+
+
+
+
+
+
         // Siin leitakse üles veel 2 aruande konfiguratsiooni, mis kuuluvad samasse kollektsiooni, kuhu kuulub eelmine
         // balance konfiguratsioon
-        List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs = company.getCashflowConfigurations();
-        List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs = company.getIncomeConfigurations();
 
         CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
-                .findRightCashflowConfig(companyCashflowStatFormulaConfigs, companyConfigCollectionId);
+                .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
         CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
-                .findRightIncomeConfig(companyIncomeStatFormulaConfigs, companyConfigCollectionId);
+                .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
 
         // Siin hakkab pihta kõik sama tegevus, mis ennegi juba teiste aruannetega.
 
@@ -353,15 +360,18 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextCashflow());
 
-        company.getCashflowStatements().add(cashflowStatement);
-
         //income
         standardStatementCreationHelper.createIncomeStrings(incomeConfig);
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextIncome());
 
-        company.getIncomeStatements().add(incomeStatement);
+
+
+
+
+
+
 
         // Setting dependency so I can get later on information, which config was used.
         balanceStatement.setBalance_stat_formula_id(rightCompanyBalanceConfig);
@@ -372,6 +382,11 @@ public class StandardObjCreationController {
         balanceStatement.setDateOrPeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
         cashflowStatement.setDateOrPeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
         incomeStatement.setDateOrPeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
+
+        // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
+        company.getBalanceStatements().add(balanceStatement);
+        company.getCashflowStatements().add(cashflowStatement);
+        company.getIncomeStatements().add(incomeStatement);
 
         //This is now the place to create new GroupOfStandardStatements
 

@@ -361,12 +361,13 @@ public class StandardStatementCreationHelper {
                 return rawGroupOfStatements;
             }
         }
-        return null;
+        throw new NullPointerException("There is no right rawGroupOfStatement found. " +
+                "Check if there are even added csv files to company");
     }
 
     // Right config according to date.
     public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
-            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs, String balance_date) {
+            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs, String balance_date) throws NullPointerException {
         Date dateObject = new Date();
         try {
             dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(balance_date);
@@ -398,7 +399,7 @@ public class StandardStatementCreationHelper {
                 LOGGER.info("ParseException!");
             }
         }
-        return null;
+        throw new NullPointerException("Balance config not found. Please create one before.");
     }
 
     public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs, Long companyConfigCollectionId) {
