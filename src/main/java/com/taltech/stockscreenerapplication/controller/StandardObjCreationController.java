@@ -303,16 +303,10 @@ public class StandardObjCreationController {
             LOGGER.info(attr.toString());
         }
 
-        // Spring expression language'i spetsiifiline context, tänu millele saab kasutada selle valemite mootorit.
-        StandardEvaluationContext stContext  = new StandardEvaluationContext(balanceStatement);
-        StandardEvaluationContext stContext2  = new StandardEvaluationContext(cashflowStatement);
-        StandardEvaluationContext stContext3  = new StandardEvaluationContext(incomeStatement);
+        standardStatementCreationHelper.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
 
-        // Atribuutide lisamine konteksti, et neid saaks hiljem muutujatena kasutada arvutustes
-        // stContext.setVariable("Revenue", 150);
-        standardStatementCreationHelper.createAttributeWithValuesContext(balanceAttributesWithValues, stContext);
-        standardStatementCreationHelper.createAttributeWithValuesContext(cashflowAttributesWithValues, stContext2);
-        standardStatementCreationHelper.createAttributeWithValuesContext(incomeAttributesWithValues, stContext3);
+        standardStatementCreationHelper.populateContextesWithValues(balanceAttributesWithValues,
+                cashflowAttributesWithValues, incomeAttributesWithValues);
 
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
         // Hetkel on periodOrDate nt "30.06.2017"
@@ -332,7 +326,7 @@ public class StandardObjCreationController {
 
         // Ettevalmistus on tehtud. Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                stContext);
+                standardStatementCreationHelper.getStContextBalance());
 
         // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
         company.getBalanceStatements().add(balanceStatement);
@@ -357,7 +351,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createCashflowStrings(cashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                stContext2);
+                standardStatementCreationHelper.getStContextCashflow());
 
         company.getCashflowStatements().add(cashflowStatement);
 
@@ -365,7 +359,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createIncomeStrings(incomeConfig);
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                stContext3);
+                standardStatementCreationHelper.getStContextIncome());
 
         company.getIncomeStatements().add(incomeStatement);
 

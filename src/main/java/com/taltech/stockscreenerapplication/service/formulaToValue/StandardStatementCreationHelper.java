@@ -2,9 +2,12 @@ package com.taltech.stockscreenerapplication.service.formulaToValue;
 
 import com.taltech.stockscreenerapplication.model.statement.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
+import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -28,6 +31,11 @@ public class StandardStatementCreationHelper {
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardStatementCreationHelper.class);
     // Initializing Spel parser and helper class to help controller do its job
     SpelExpressionParser parser = new SpelExpressionParser();
+
+    // Spring expression language'i spetsiifiline context, tänu millele saab kasutada selle valemite mootorit
+    StandardEvaluationContext stContextBalance;
+    StandardEvaluationContext stContextCashflow;
+    StandardEvaluationContext stContextIncome;
 
     List<String> incomeStandardFieldFormulas;
 
@@ -125,6 +133,14 @@ public class StandardStatementCreationHelper {
         incomeStandardFieldFormulas = new LinkedList<>();
         cashflowStandardFieldFormulas = new LinkedList<>();
         balanceStandardFieldFormulas = new LinkedList<>();
+    }
+
+    public void populateContextesWithValues(List<Attribute> balanceAttributesWithValues,
+                                            List<Attribute> cashflowAttributesWithValues,
+                                            List<Attribute> incomeAttributesWithValues) {
+        createAttributeWithValuesContext(balanceAttributesWithValues, stContextBalance);
+        createAttributeWithValuesContext(cashflowAttributesWithValues, stContextCashflow);
+        createAttributeWithValuesContext(incomeAttributesWithValues, stContextIncome);
     }
 
     public void createValuesForStatementFromFormulas(List<String> statementStandardFieldFormulas,
@@ -403,6 +419,8 @@ public class StandardStatementCreationHelper {
         return null;
     }
 
+    // Atribuutide lisamine konteksti, et neid saaks hiljem muutujatena kasutada arvutustes
+    // stContext.setVariable("Revenue", 150);
     public void createAttributeWithValuesContext(List<Attribute> statementAttributesWithValues,
                                                  StandardEvaluationContext stContext) {
         for (Attribute attr : statementAttributesWithValues) {
@@ -411,6 +429,13 @@ public class StandardStatementCreationHelper {
         for (Attribute attr : statementAttributesWithValues) {
             LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
         }
+    }
+    public void createStContextes(BalanceStatStandWithValues balanceStatement,
+                                  CashflowStatStandWithValues cashflowStatement,
+                                  IncomeStatStandWithValues incomeStatement) {
+        stContextBalance = new StandardEvaluationContext(balanceStatement);
+        stContextCashflow = new StandardEvaluationContext(cashflowStatement);
+        stContextIncome = new StandardEvaluationContext(incomeStatement);
     }
 }
 
