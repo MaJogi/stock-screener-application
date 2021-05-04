@@ -283,7 +283,7 @@ public class StandardObjCreationController {
         GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
-        // nüüd on vaja teha leida as is aruanded, mida hiljem kasutatakse.
+        // nüüd on vaja leida as is aruanded, mida hiljem kasutatakse.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
         CashflowStatRaw cashflowStatementRaw = rightRawGroupOfStatements.getCashflowStatRaw();
         IncomeStatRaw incomeStatementRaw = rightRawGroupOfStatements.getIncomeStatRaw();
@@ -364,24 +364,18 @@ public class StandardObjCreationController {
                 standardStatementCreationHelper.getStContextIncome());
 
 
-
-        // Setting dependency so I can get later on information, which config was used.
+        // Setting dependency, so I can get later on information, which config was used.
         balanceStatement.setBalance_stat_formula_id(rightCompanyBalanceConfig);
         cashflowStatement.setCashflow_stat_formula_id(cashflowConfig);
         incomeStatement.setIncome_stat_formula_id(incomeConfig);
 
-        // Setting peroid values from raw statement to standard statement
-        balanceStatement.setDateOrPeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
-        cashflowStatement.setDateOrPeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
-        incomeStatement.setDateOrPeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
+        setDateToEachStatement(balanceStatement, cashflowStatement,
+                incomeStatement, rightRawGroupOfStatements);
 
         // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
-        company.getBalanceStatements().add(balanceStatement);
-        company.getCashflowStatements().add(cashflowStatement);
-        company.getIncomeStatements().add(incomeStatement);
+        addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
 
         //This is now the place to create new GroupOfStandardStatements
-
         GroupOfStatementsStandard groupOfStandardStatements =
                 createGroupUsingPreviouslyFoundData(balanceStatement, cashflowStatement, incomeStatement, company);
 
@@ -392,6 +386,25 @@ public class StandardObjCreationController {
                 .status(200)
                 .body(new MessageResponse(
                         "GET method (balance) returned. Check if result is correct"));
+    }
+
+    public void setDateToEachStatement(BalanceStatStandWithValues balanceStatement,
+                                       CashflowStatStandWithValues cashflowStatement,
+                                       IncomeStatStandWithValues incomeStatement,
+                                       GroupOfStatements rightRawGroupOfStatements) {
+        // Setting peroid values from raw statement to standard statement
+        balanceStatement.setDateOrPeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
+        cashflowStatement.setDateOrPeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
+        incomeStatement.setDateOrPeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
+    }
+
+    public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
+                                                         BalanceStatStandWithValues balanceStatement,
+                                                         CashflowStatStandWithValues cashflowStatement,
+                                                         IncomeStatStandWithValues incomeStatement){
+        company.getBalanceStatements().add(balanceStatement);
+        company.getCashflowStatements().add(cashflowStatement);
+        company.getIncomeStatements().add(incomeStatement);
     }
 
     public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandWithValues balanceStatement,
