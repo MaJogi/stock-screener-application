@@ -319,9 +319,21 @@ public class StandardObjCreationController {
         // On olemas 31.12.2015 kuni 31.12.2016 ja teine conf 01.01.2017 - 31.12.2019
         // Nüüd tuleb vastavalt bilansi ajale leida korrektne configuratsioon, mida kasutada standartse bilansiaruande
         // tegemise jaoks
-
         CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = StandardStatementCreationHelper
                 .findRightBalanceConfig(companyBalanceConfigs, balance_date);
+
+        // Vaatan, mis on selle ettevõtte bilansi konfiguratsiooni id, et leida veel kaks aruannet, mis on
+        // Seotud selle konfiguratsiooni grupiga, et hiljem saaks seda kolmikut koos kasutada.
+        Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
+
+        // Siin leitakse üles veel 2 aruande konfiguratsiooni, mis kuuluvad samasse kollektsiooni, kuhu kuulub leitud
+        // balance konfiguratsioon
+        CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
+                .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
+        CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
+                .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
+
+
 
         // Luuakse dünaamiliselt valemid, mille läbi saadakse hiljem standartsele bilansi aruandele väärtused
         // Lisatakse need vajalikku listi
@@ -334,23 +346,8 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextBalance());
 
-        // Vaatan, mis on selle ettevõtte bilansi konfiguratsiooni id, et leida veel kaks aruannet, mis on
-        // Seotud selle konfiguratsiooni grupiga, et hiljem saaks seda kolmikut koos kasutada.
-        Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
 
-
-
-
-
-
-        // Siin leitakse üles veel 2 aruande konfiguratsiooni, mis kuuluvad samasse kollektsiooni, kuhu kuulub eelmine
-        // balance konfiguratsioon
-
-        CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
-                .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
-        CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
-                .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
 
         // Siin hakkab pihta kõik sama tegevus, mis ennegi juba teiste aruannetega.
 
@@ -365,11 +362,6 @@ public class StandardObjCreationController {
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextIncome());
-
-
-
-
-
 
 
 
