@@ -153,55 +153,98 @@ public class StandardStatementCreationHelper {
     }
 
     public void createIncomeStrings(CompanyIncomeStatFormulaConfig rightCompanyIncomeConfig) {
-        revenueString = String.format("revenue=%s", rightCompanyIncomeConfig.getRevenue());
-        costOfRevenueString = String.format("costOfRevenue=%s", rightCompanyIncomeConfig.getCostOfRevenue());
-        grossProfitString = String.format("grossProfit=%s", rightCompanyIncomeConfig.getGrossProfit());
-        grossProfitRatioString = String.format("grossProfitRatio=%s", rightCompanyIncomeConfig.getGrossProfitRatio());
-        rAndDexpensesString = String.format("rAndDexpenses=%s", rightCompanyIncomeConfig.getRAndDexpenses());
-        generalAndAdminExpensesString = String.format("generalAndAdminExpenses=%s", rightCompanyIncomeConfig.getGeneralAndAdminExpenses());
-        sellingAndMarketingExpensesString = String.format("sellingAndMarketingExpenses=%s", rightCompanyIncomeConfig.getSellingAndMarketingExpenses());
-        otherExpensesString = String.format("otherExpenses=%s", rightCompanyIncomeConfig.getOtherExpenses());
-        operatingExpensesString = String.format("operatingExpenses=%s", rightCompanyIncomeConfig.getOperatingExpenses());
-        costAndExpensesString = String.format("costAndExpenses=%s", rightCompanyIncomeConfig.getCostAndExpenses());
-        interestExpenseString = String.format("interestExpense=%s", rightCompanyIncomeConfig.getInterestExpense());
-        depricationAndAmortizationString = String.format("depricationAndAmortization=%s", rightCompanyIncomeConfig.getDepricationAndAmortization());
-        ebitdaString = String.format("ebitda=%s", rightCompanyIncomeConfig.getEbitda());
-        ebitdaRatioString = String.format("ebitdaRatio=%s", rightCompanyIncomeConfig.getEbitdaRatio());
-        operatingIncomeString = String.format("operatingIncome=%s", rightCompanyIncomeConfig.getOperatingIncome());
-        operatingIncomeRatioString = String.format("operatingIncomeRatio=%s", rightCompanyIncomeConfig.getOperatingIncomeRatio());
-        totalOtherIncomeExpensesNetString = String.format("totalOtherIncomeExpensesNet=%s", rightCompanyIncomeConfig.getTotalOtherIncomeExpensesNet());
-        incomeBeforeTaxString = String.format("incomeBeforeTax=%s", rightCompanyIncomeConfig.getIncomeBeforeTax());
-        incomeBeforeTaxRatioString = String.format("incomeBeforeTaxRatio=%s", rightCompanyIncomeConfig.getIncomeBeforeTaxRatio());
-        incomeTaxExpenseString = String.format("incomeTaxExpense=%s", rightCompanyIncomeConfig.getIncomeTaxExpense());
-        netIncomeString = String.format("netIncome=%s", rightCompanyIncomeConfig.getNetIncome());
-        netIncomeRatioString = String.format("netIncomeRatio=%s", rightCompanyIncomeConfig.getNetIncomeRatio());
-        epsString = String.format("eps=%s", rightCompanyIncomeConfig.getEps());
-        epsDilutedeString = String.format("epsDiluted=%s", rightCompanyIncomeConfig.getEpsDiluted());
-        weightedAverageShsOutString = String.format("weightedAverageShsOut=%s", rightCompanyIncomeConfig.getWeightedAverageShsOut());
-        weightedAverageShsOutDilString = String.format("weightedAverageShsOutDil=%s", rightCompanyIncomeConfig.getWeightedAverageShsOutDil());
+        revenueString = String.format("revenue=%s",
+                rightCompanyIncomeConfig.getRevenue());
+        costOfRevenueString = String.format("costOfRevenue=%s",
+                rightCompanyIncomeConfig.getCostOfRevenue());
+        grossProfitString = String.format("grossProfit=%s",
+                rightCompanyIncomeConfig.getGrossProfit());
+        grossProfitRatioString = String.format("grossProfitRatio=%s",
+                rightCompanyIncomeConfig.getGrossProfitRatio());
+        rAndDexpensesString = String.format("rAndDexpenses=%s",
+                rightCompanyIncomeConfig.getRAndDexpenses());
+        generalAndAdminExpensesString = String.format("generalAndAdminExpenses=%s",
+                rightCompanyIncomeConfig.getGeneralAndAdminExpenses());
+        sellingAndMarketingExpensesString = String.format("sellingAndMarketingExpenses=%s",
+                rightCompanyIncomeConfig.getSellingAndMarketingExpenses());
+        otherExpensesString = String.format("otherExpenses=%s",
+                rightCompanyIncomeConfig.getOtherExpenses());
+        operatingExpensesString = String.format("operatingExpenses=%s",
+                rightCompanyIncomeConfig.getOperatingExpenses());
+        costAndExpensesString = String.format("costAndExpenses=%s",
+                rightCompanyIncomeConfig.getCostAndExpenses());
+        interestExpenseString = String.format("interestExpense=%s",
+                rightCompanyIncomeConfig.getInterestExpense());
+        depricationAndAmortizationString = String.format("depricationAndAmortization=%s",
+                rightCompanyIncomeConfig.getDepricationAndAmortization());
+        ebitdaString = String.format("ebitda=%s",
+                rightCompanyIncomeConfig.getEbitda());
+        ebitdaRatioString = String.format("ebitdaRatio=%s",
+                rightCompanyIncomeConfig.getEbitdaRatio());
+        operatingIncomeString = String.format("operatingIncome=%s",
+                rightCompanyIncomeConfig.getOperatingIncome());
+        operatingIncomeRatioString = String.format("operatingIncomeRatio=%s",
+                rightCompanyIncomeConfig.getOperatingIncomeRatio());
+        totalOtherIncomeExpensesNetString = String.format("totalOtherIncomeExpensesNet=%s",
+                rightCompanyIncomeConfig.getTotalOtherIncomeExpensesNet());
+        incomeBeforeTaxString = String.format("incomeBeforeTax=%s",
+                rightCompanyIncomeConfig.getIncomeBeforeTax());
+        incomeBeforeTaxRatioString = String.format("incomeBeforeTaxRatio=%s",
+                rightCompanyIncomeConfig.getIncomeBeforeTaxRatio());
+        incomeTaxExpenseString = String.format("incomeTaxExpense=%s",
+                rightCompanyIncomeConfig.getIncomeTaxExpense());
+        netIncomeString = String.format("netIncome=%s",
+                rightCompanyIncomeConfig.getNetIncome());
+        netIncomeRatioString = String.format("netIncomeRatio=%s",
+                rightCompanyIncomeConfig.getNetIncomeRatio());
+        epsString = String.format("eps=%s",
+                rightCompanyIncomeConfig.getEps());
+        epsDilutedeString = String.format("epsDiluted=%s",
+                rightCompanyIncomeConfig.getEpsDiluted());
+        weightedAverageShsOutString = String.format("weightedAverageShsOut=%s",
+                rightCompanyIncomeConfig.getWeightedAverageShsOut());
+        weightedAverageShsOutDilString = String.format("weightedAverageShsOutDil=%s",
+                rightCompanyIncomeConfig.getWeightedAverageShsOutDil());
 
         createListOfIncomeStrings();
     }
 
     public void createCashflowStrings(CompanyCashflowStatFormulaConfig rightCompanyCashflowConfig) {
         LOGGER.info("Start of string .format");
-        netCashflowIncomeString = String.format("netIncome=%s", rightCompanyCashflowConfig.getNetIncome());
-        depriciationAndAmortizationString = String.format("depriciationAndAmortization=%s", rightCompanyCashflowConfig.getDepriciationAndAmortization());
-        stockBasedCompensationString = String.format("stockBasedCompensation=%s", rightCompanyCashflowConfig.getStockBasedCompensation());
-        changeInWorkingCapitalString = String.format("changeInWorkingCapital=%s", rightCompanyCashflowConfig.getChangeInWorkingCapital());
-        accountsReceivablesString = String.format("accountsReceivables=%s", rightCompanyCashflowConfig.getAccountsReceivables());
-        inventoryCashflowString = String.format("inventory=%s", rightCompanyCashflowConfig.getInventory());
-        accountsPaymentsString = String.format("accountsPayments=%s", rightCompanyCashflowConfig.getAccountsPayments());
-        otherWorkingCapitalString = String.format("otherWorkingCapital=%s", rightCompanyCashflowConfig.getOtherWorkingCapital());
-        otherNonCashItemsString = String.format("otherNonCashItems=%s", rightCompanyCashflowConfig.getOtherNonCashItems());
-        netCashProvidedByOperatingActivitiesString = String.format("netCashProvidedByOperatingActivities=%s", rightCompanyCashflowConfig.getNetCashProvidedByOperatingActivities());
-        investmentsInPropertyPlantAndEquipmentString = String.format("investmentsInPropertyPlantAndEquipment=%s", rightCompanyCashflowConfig.getInvestmentsInPropertyPlantAndEquipment());
-        acquisitionsNetString = String.format("acquisitionsNet=%s", rightCompanyCashflowConfig.getAcquisitionsNet());
-        purchasesOfInvestmentsString = String.format("purchasesOfInvestments=%s", rightCompanyCashflowConfig.getPurchasesOfInvestments());
-        salesMaturitiesOfInvestmentsString = String.format("salesMaturitiesOfInvestments=%s", rightCompanyCashflowConfig.getSalesMaturitiesOfInvestments());
-        otherInvestingActivitiesString = String.format("otherInvestingActivities=%s", rightCompanyCashflowConfig.getOtherInvestingActivities());
-        netCashUsedForInvestingActivitiesString = String.format("netCashUsedForInvestingActivities=%s", rightCompanyCashflowConfig.getNetCashUsedForInvestingActivities());
-        debtRepaymentString = String.format("debtRepayment=%s", rightCompanyCashflowConfig.getDebtRepayment());
+        netCashflowIncomeString = String.format("netIncome=%s",
+                rightCompanyCashflowConfig.getNetIncome());
+        depriciationAndAmortizationString = String.format("depriciationAndAmortization=%s",
+                rightCompanyCashflowConfig.getDepriciationAndAmortization());
+        stockBasedCompensationString = String.format("stockBasedCompensation=%s",
+                rightCompanyCashflowConfig.getStockBasedCompensation());
+        changeInWorkingCapitalString = String.format("changeInWorkingCapital=%s",
+                rightCompanyCashflowConfig.getChangeInWorkingCapital());
+        accountsReceivablesString = String.format("accountsReceivables=%s",
+                rightCompanyCashflowConfig.getAccountsReceivables());
+        inventoryCashflowString = String.format("inventory=%s",
+                rightCompanyCashflowConfig.getInventory());
+        accountsPaymentsString = String.format("accountsPayments=%s",
+                rightCompanyCashflowConfig.getAccountsPayments());
+        otherWorkingCapitalString = String.format("otherWorkingCapital=%s",
+                rightCompanyCashflowConfig.getOtherWorkingCapital());
+        otherNonCashItemsString = String.format("otherNonCashItems=%s",
+                rightCompanyCashflowConfig.getOtherNonCashItems());
+        netCashProvidedByOperatingActivitiesString = String.format("netCashProvidedByOperatingActivities=%s",
+                rightCompanyCashflowConfig.getNetCashProvidedByOperatingActivities());
+        investmentsInPropertyPlantAndEquipmentString = String.format("investmentsInPropertyPlantAndEquipment=%s",
+                rightCompanyCashflowConfig.getInvestmentsInPropertyPlantAndEquipment());
+        acquisitionsNetString = String.format("acquisitionsNet=%s",
+                rightCompanyCashflowConfig.getAcquisitionsNet());
+        purchasesOfInvestmentsString = String.format("purchasesOfInvestments=%s",
+                rightCompanyCashflowConfig.getPurchasesOfInvestments());
+        salesMaturitiesOfInvestmentsString = String.format("salesMaturitiesOfInvestments=%s",
+                rightCompanyCashflowConfig.getSalesMaturitiesOfInvestments());
+        otherInvestingActivitiesString = String.format("otherInvestingActivities=%s",
+                rightCompanyCashflowConfig.getOtherInvestingActivities());
+        netCashUsedForInvestingActivitiesString = String.format("netCashUsedForInvestingActivities=%s",
+                rightCompanyCashflowConfig.getNetCashUsedForInvestingActivities());
+        debtRepaymentString = String.format("debtRepayment=%s",
+                rightCompanyCashflowConfig.getDebtRepayment());
         LOGGER.info("End of string .format");
 
         createListOfCashflowStrings();
@@ -209,45 +252,84 @@ public class StandardStatementCreationHelper {
 
     public void createBalanceStrings(CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig) {
         LOGGER.info("Start of string .format");
-        cashAndCashEquivalentsString = String.format("cashAndCashEquivalents=%s", rightCompanyBalanceConfig.getCashAndCashEquivalents());
-        shortTermInvestmentsString = String.format("shortTermInvestments=%s", rightCompanyBalanceConfig.getShortTermInvestments());
-        cashAndShortTermInvestmentsString = String.format("cashAndShortTermInvestments=%s", rightCompanyBalanceConfig.getCashAndShortTermInvestments());
-        netReceivablesString = String.format("netReceivables=%s", rightCompanyBalanceConfig.getNetReceivables());
-        inventoryBalanceString = String.format("inventory=%s", rightCompanyBalanceConfig.getInventory());
-        otherCurrentAssetsString = String.format("otherCurrentAssets=%s", rightCompanyBalanceConfig.getOtherCurrentAssets());
-        totalCurrentAssetsString = String.format("totalCurrentAssets=%s", rightCompanyBalanceConfig.getTotalCurrentAssets());
-        propertyPlantEquipmentAssetsString = String.format("propertyPlantEquipmentAssets=%s", rightCompanyBalanceConfig.getPropertyPlantEquipmentAssets());
-        goodwillString = String.format("goodwill=%s", rightCompanyBalanceConfig.getGoodwill());
-        intangibleAssetsString = String.format("intangibleAssets=%s", rightCompanyBalanceConfig.getIntangibleAssets());
-        goodwillAndIntangibleAssetsString = String.format("goodwillAndIntangibleAssets=%s", rightCompanyBalanceConfig.getGoodwillAndIntangibleAssets());
-        longTermInvestmetsString = String.format("longTermInvestmets=%s", rightCompanyBalanceConfig.getLongTermInvestmets());
-        taxAssetsString = String.format("taxAssets=%s", rightCompanyBalanceConfig.getTaxAssets());
-        otherNonCurrentAssetsString = String.format("otherNonCurrentAssets=%s", rightCompanyBalanceConfig.getOtherNonCurrentAssets());
-        totalNonCurrentAssetsString = String.format("totalNonCurrentAssets=%s", rightCompanyBalanceConfig.getTotalNonCurrentAssets());
-        otherAssetsString = String.format("otherAssets=%s", rightCompanyBalanceConfig.getOtherAssets());
-        totalAssetsString = String.format("totalAssets=%s", rightCompanyBalanceConfig.getTotalAssets());
-        accountPayablesString = String.format("accountPayables=%s", rightCompanyBalanceConfig.getAccountPayables());
-        shortTermDebtString = String.format("shortTermDebt=%s", rightCompanyBalanceConfig.getShortTermDebt());
-        taxPayablesString = String.format("taxPayables=%s", rightCompanyBalanceConfig.getTaxPayables());
-        deferredRevenueString = String.format("deferredRevenue=%s", rightCompanyBalanceConfig.getDeferredRevenue());
-        otherCurrentLiabilitiesString = String.format("otherCurrentLiabilities=%s", rightCompanyBalanceConfig.getOtherCurrentLiabilities());
-        totalCurrentLiabilitiesString = String.format("totalCurrentLiabilities=%s", rightCompanyBalanceConfig.getTotalCurrentLiabilities());
-        longTermDebtString = String.format("longTermDebt=%s", rightCompanyBalanceConfig.getLongTermDebt());
-        deferredRevenueNonCurrentString = String.format("deferredRevenueNonCurrent=%s", rightCompanyBalanceConfig.getDeferredRevenueNonCurrent());
-        deferredTaxLiabilitiesNonCurrentString = String.format("deferredTaxLiabilitiesNonCurrent=%s", rightCompanyBalanceConfig.getDeferredTaxLiabilitiesNonCurrent());
-        otherNonCurrentLiabilitiesString = String.format("otherNonCurrentLiabilities=%s", rightCompanyBalanceConfig.getOtherNonCurrentAssets());
-        totalNonCurrentLiabilitiesString = String.format("totalNonCurrentLiabilities=%s", rightCompanyBalanceConfig.getTotalNonCurrentLiabilities());
-        otherLiabilitiesString = String.format("otherLiabilities=%s", rightCompanyBalanceConfig.getOtherLiabilities());
-        totalLiabilitiesString = String.format("totalLiabilities=%s", rightCompanyBalanceConfig.getTotalLiabilities());
-        commonStockString = String.format("commonStock=%s", rightCompanyBalanceConfig.getCommonStock());
-        retainedEarningsString = String.format("retainedEarnings=%s", rightCompanyBalanceConfig.getRetainedEarnings());
-        accumulatedOtherComprehensiveIncomeLossString = String.format("accumulatedOtherComprehensiveIncomeLoss=%s", rightCompanyBalanceConfig.getAccumulatedOtherComprehensiveIncomeLoss());
-        otherTotalStockholdersEquityString = String.format("otherTotalStockholdersEquity=%s", rightCompanyBalanceConfig.getOtherTotalStockholdersEquity());
-        totalStockholdersEquityString = String.format("totalStockholdersEquity=%s", rightCompanyBalanceConfig.getTotalStockholdersEquity());
-        totalLiabilitiesAndStockHoldersEquityString = String.format("totalLiabilitiesAndStockHoldersEquity=%s", rightCompanyBalanceConfig.getTotalLiabilitiesAndStockHoldersEquity());
-        totalInvestmentsString = String.format("totalInvestments=%s", rightCompanyBalanceConfig.getTotalInvestments());
-        totalDebtString = String.format("totalDebt=%s", rightCompanyBalanceConfig.getTotalDebt());
-        netDebtString = String.format("netDebt=%s", rightCompanyBalanceConfig.getNetDebt());
+        cashAndCashEquivalentsString = String.format("cashAndCashEquivalents=%s",
+                rightCompanyBalanceConfig.getCashAndCashEquivalents());
+        shortTermInvestmentsString = String.format("shortTermInvestments=%s",
+                rightCompanyBalanceConfig.getShortTermInvestments());
+        cashAndShortTermInvestmentsString = String.format("cashAndShortTermInvestments=%s",
+                rightCompanyBalanceConfig.getCashAndShortTermInvestments());
+        netReceivablesString = String.format("netReceivables=%s",
+                rightCompanyBalanceConfig.getNetReceivables());
+        inventoryBalanceString = String.format("inventory=%s",
+                rightCompanyBalanceConfig.getInventory());
+        otherCurrentAssetsString = String.format("otherCurrentAssets=%s",
+                rightCompanyBalanceConfig.getOtherCurrentAssets());
+        totalCurrentAssetsString = String.format("totalCurrentAssets=%s",
+                rightCompanyBalanceConfig.getTotalCurrentAssets());
+        propertyPlantEquipmentAssetsString = String.format("propertyPlantEquipmentAssets=%s",
+                rightCompanyBalanceConfig.getPropertyPlantEquipmentAssets());
+        goodwillString = String.format("goodwill=%s",
+                rightCompanyBalanceConfig.getGoodwill());
+        intangibleAssetsString = String.format("intangibleAssets=%s",
+                rightCompanyBalanceConfig.getIntangibleAssets());
+        goodwillAndIntangibleAssetsString = String.format("goodwillAndIntangibleAssets=%s",
+                rightCompanyBalanceConfig.getGoodwillAndIntangibleAssets());
+        longTermInvestmetsString = String.format("longTermInvestmets=%s",
+                rightCompanyBalanceConfig.getLongTermInvestmets());
+        taxAssetsString = String.format("taxAssets=%s",
+                rightCompanyBalanceConfig.getTaxAssets());
+        otherNonCurrentAssetsString = String.format("otherNonCurrentAssets=%s",
+                rightCompanyBalanceConfig.getOtherNonCurrentAssets());
+        totalNonCurrentAssetsString = String.format("totalNonCurrentAssets=%s",
+                rightCompanyBalanceConfig.getTotalNonCurrentAssets());
+        otherAssetsString = String.format("otherAssets=%s",
+                rightCompanyBalanceConfig.getOtherAssets());
+        totalAssetsString = String.format("totalAssets=%s",
+                rightCompanyBalanceConfig.getTotalAssets());
+        accountPayablesString = String.format("accountPayables=%s",
+                rightCompanyBalanceConfig.getAccountPayables());
+        shortTermDebtString = String.format("shortTermDebt=%s",
+                rightCompanyBalanceConfig.getShortTermDebt());
+        taxPayablesString = String.format("taxPayables=%s",
+                rightCompanyBalanceConfig.getTaxPayables());
+        deferredRevenueString = String.format("deferredRevenue=%s",
+                rightCompanyBalanceConfig.getDeferredRevenue());
+        otherCurrentLiabilitiesString = String.format("otherCurrentLiabilities=%s",
+                rightCompanyBalanceConfig.getOtherCurrentLiabilities());
+        totalCurrentLiabilitiesString = String.format("totalCurrentLiabilities=%s",
+                rightCompanyBalanceConfig.getTotalCurrentLiabilities());
+        longTermDebtString = String.format("longTermDebt=%s",
+                rightCompanyBalanceConfig.getLongTermDebt());
+        deferredRevenueNonCurrentString = String.format("deferredRevenueNonCurrent=%s",
+                rightCompanyBalanceConfig.getDeferredRevenueNonCurrent());
+        deferredTaxLiabilitiesNonCurrentString = String.format("deferredTaxLiabilitiesNonCurrent=%s",
+                rightCompanyBalanceConfig.getDeferredTaxLiabilitiesNonCurrent());
+        otherNonCurrentLiabilitiesString = String.format("otherNonCurrentLiabilities=%s",
+                rightCompanyBalanceConfig.getOtherNonCurrentAssets());
+        totalNonCurrentLiabilitiesString = String.format("totalNonCurrentLiabilities=%s",
+                rightCompanyBalanceConfig.getTotalNonCurrentLiabilities());
+        otherLiabilitiesString = String.format("otherLiabilities=%s",
+                rightCompanyBalanceConfig.getOtherLiabilities());
+        totalLiabilitiesString = String.format("totalLiabilities=%s",
+                rightCompanyBalanceConfig.getTotalLiabilities());
+        commonStockString = String.format("commonStock=%s",
+                rightCompanyBalanceConfig.getCommonStock());
+        retainedEarningsString = String.format("retainedEarnings=%s",
+                rightCompanyBalanceConfig.getRetainedEarnings());
+        accumulatedOtherComprehensiveIncomeLossString = String.format("accumulatedOtherComprehensiveIncomeLoss=%s",
+                rightCompanyBalanceConfig.getAccumulatedOtherComprehensiveIncomeLoss());
+        otherTotalStockholdersEquityString = String.format("otherTotalStockholdersEquity=%s",
+                rightCompanyBalanceConfig.getOtherTotalStockholdersEquity());
+        totalStockholdersEquityString = String.format("totalStockholdersEquity=%s",
+                rightCompanyBalanceConfig.getTotalStockholdersEquity());
+        totalLiabilitiesAndStockHoldersEquityString = String.format("totalLiabilitiesAndStockHoldersEquity=%s",
+                rightCompanyBalanceConfig.getTotalLiabilitiesAndStockHoldersEquity());
+        totalInvestmentsString = String.format("totalInvestments=%s",
+                rightCompanyBalanceConfig.getTotalInvestments());
+        totalDebtString = String.format("totalDebt=%s",
+                rightCompanyBalanceConfig.getTotalDebt());
+        netDebtString = String.format("netDebt=%s",
+                rightCompanyBalanceConfig.getNetDebt());
 
 
         LOGGER.info("End of string .format");
@@ -367,7 +449,8 @@ public class StandardStatementCreationHelper {
 
     // Right config according to date.
     public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
-            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs, String balance_date) throws NullPointerException {
+            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs,
+            String balance_date) throws NullPointerException {
         Date dateObject = new Date();
         try {
             dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(balance_date);
@@ -402,18 +485,22 @@ public class StandardStatementCreationHelper {
         throw new NullPointerException("Balance config not found. Please create one before.");
     }
 
-    public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs, Long companyConfigCollectionId) {
+    public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(
+            List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs,
+            Long companyConfigCollectionId) {
         for (CompanyCashflowStatFormulaConfig config : companyCashflowStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
+            if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
                 return config;
             }
         }
         return null;
     }
 
-    public static CompanyIncomeStatFormulaConfig findRightIncomeConfig(List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs, Long companyConfigCollectionId) {
+    public static CompanyIncomeStatFormulaConfig findRightIncomeConfig(
+            List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs,
+            Long companyConfigCollectionId) {
         for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id() == companyConfigCollectionId) {
+            if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
                 return config;
             }
         }

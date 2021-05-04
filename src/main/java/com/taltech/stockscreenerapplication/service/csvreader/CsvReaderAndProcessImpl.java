@@ -123,7 +123,8 @@ public class CsvReaderAndProcessImpl implements IReader {
     }
 
     // Removing unnecessary columns for clean file, than can be persisted in database.
-    public void removeUnnecessaryCols(List<List<String>> finStatementList, List<Integer> emptyLineOrNoteLineStatement) {
+    public void removeUnnecessaryCols(List<List<String>> finStatementList,
+                                      List<Integer> emptyLineOrNoteLineStatement) {
         LOGGER.info("Starting removing empty && note columns");
         for (List<String> row : finStatementList) {
             int tempCounter = 0;
@@ -135,7 +136,8 @@ public class CsvReaderAndProcessImpl implements IReader {
         }
     }
 
-    public void determineUnnecessaryCols(List<List<String>> specificStatementList, List<Integer> emptyLineOrNoteIndexList) {
+    public void determineUnnecessaryCols(List<List<String>> specificStatementList,
+                                         List<Integer> emptyLineOrNoteIndexList) {
         int colCounter = 0;
         // Looking which header to remove
         for (String columnName : specificStatementList.get(0)) {

@@ -62,8 +62,10 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setInventory(cashflowRequest.getInventory());
         testCashflowConfig.setAccountsPayments(cashflowRequest.getAccountsPayments());
         testCashflowConfig.setOtherNonCashItems(cashflowRequest.getOtherNonCashItems());
-        testCashflowConfig.setNetCashProvidedByOperatingActivities(cashflowRequest.getNetCashProvidedByOperatingActivities());
-        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(cashflowRequest.getInvestmentsInPropertyPlantAndEquipment());
+        testCashflowConfig.setNetCashProvidedByOperatingActivities(
+                cashflowRequest.getNetCashProvidedByOperatingActivities());
+        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(
+                cashflowRequest.getInvestmentsInPropertyPlantAndEquipment());
         testCashflowConfig.setAcquisitionsNet(cashflowRequest.getAcquisitionsNet());
         testCashflowConfig.setPurchasesOfInvestments(cashflowRequest.getPurchasesOfInvestments());
         testCashflowConfig.setSalesMaturitiesOfInvestments(cashflowRequest.getSalesMaturitiesOfInvestments());
@@ -111,10 +113,12 @@ public class FormulaObjCreationHelper {
         testBalanceConfig.setTotalLiabilities(balanceRequest.getTotalLiabilities());
         testBalanceConfig.setCommonStock(balanceRequest.getCommonStock());
         testBalanceConfig.setRetainedEarnings(balanceRequest.getRetainedEarnings());
-        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(balanceRequest.getAccumulatedOtherComprehensiveIncomeLoss());
+        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(
+                balanceRequest.getAccumulatedOtherComprehensiveIncomeLoss());
         testBalanceConfig.setOtherTotalStockholdersEquity(balanceRequest.getOtherTotalStockholdersEquity());
         testBalanceConfig.setTotalStockholdersEquity(balanceRequest.getTotalStockholdersEquity());
-        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(balanceRequest.getTotalLiabilitiesAndStockHoldersEquity());
+        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(
+                balanceRequest.getTotalLiabilitiesAndStockHoldersEquity());
         testBalanceConfig.setTotalInvestments(balanceRequest.getTotalInvestments());
         testBalanceConfig.setTotalDebt(balanceRequest.getTotalDebt());
         testBalanceConfig.setNetDebt(balanceRequest.getNetDebt());
@@ -165,13 +169,17 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setInventory(cashflowNode.get("inventory").textValue());
         testCashflowConfig.setAccountsPayments(cashflowNode.get("accountsPayments").textValue());
         testCashflowConfig.setOtherNonCashItems(cashflowNode.get("otherNonCashItems").textValue());
-        testCashflowConfig.setNetCashProvidedByOperatingActivities(cashflowNode.get("netCashProvidedByOperatingActivities").textValue());
-        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(cashflowNode.get("investmentsInPropertyPlantAndEquipment").textValue());
+        testCashflowConfig.setNetCashProvidedByOperatingActivities(
+                cashflowNode.get("netCashProvidedByOperatingActivities").textValue());
+        testCashflowConfig.setInvestmentsInPropertyPlantAndEquipment(
+                cashflowNode.get("investmentsInPropertyPlantAndEquipment").textValue());
         testCashflowConfig.setAcquisitionsNet(cashflowNode.get("acquisitionsNet").textValue());
         testCashflowConfig.setPurchasesOfInvestments(cashflowNode.get("purchasesOfInvestments").textValue());
-        testCashflowConfig.setSalesMaturitiesOfInvestments(cashflowNode.get("salesMaturitiesOfInvestments").textValue());
+        testCashflowConfig.setSalesMaturitiesOfInvestments(
+                cashflowNode.get("salesMaturitiesOfInvestments").textValue());
         testCashflowConfig.setOtherInvestingActivities(cashflowNode.get("otherInvestingActivities").textValue());
-        testCashflowConfig.setNetCashUsedForInvestingActivities(cashflowNode.get("netCashUsedForInvestingActivities").textValue());
+        testCashflowConfig.setNetCashUsedForInvestingActivities(
+                cashflowNode.get("netCashUsedForInvestingActivities").textValue());
         testCashflowConfig.setDebtRepayment(cashflowNode.get("debtRepayment").textValue());
     }
 
@@ -204,17 +212,20 @@ public class FormulaObjCreationHelper {
         testBalanceConfig.setTotalCurrentLiabilities(balanceNode.get("totalCurrentLiabilities").textValue());
         testBalanceConfig.setLongTermDebt(balanceNode.get("longTermDebt").textValue());
         testBalanceConfig.setDeferredRevenueNonCurrent(balanceNode.get("deferredRevenueNonCurrent").textValue());
-        testBalanceConfig.setDeferredTaxLiabilitiesNonCurrent(balanceNode.get("deferredTaxLiabilitiesNonCurrent").textValue());
+        testBalanceConfig.setDeferredTaxLiabilitiesNonCurrent(
+                balanceNode.get("deferredTaxLiabilitiesNonCurrent").textValue());
         testBalanceConfig.setOtherNonCurrentLiabilities(balanceNode.get("otherNonCurrentLiabilities").textValue());
         testBalanceConfig.setTotalNonCurrentLiabilities(balanceNode.get("totalNonCurrentLiabilities").textValue());
         testBalanceConfig.setOtherLiabilities(balanceNode.get("otherLiabilities").textValue());
         testBalanceConfig.setTotalLiabilities(balanceNode.get("totalLiabilities").textValue());
         testBalanceConfig.setCommonStock(balanceNode.get("commonStock").textValue());
         testBalanceConfig.setRetainedEarnings(balanceNode.get("retainedEarnings").textValue());
-        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(balanceNode.get("accumulatedOtherComprehensiveIncomeLoss").textValue());
+        testBalanceConfig.setAccumulatedOtherComprehensiveIncomeLoss(
+                balanceNode.get("accumulatedOtherComprehensiveIncomeLoss").textValue());
         testBalanceConfig.setOtherTotalStockholdersEquity(balanceNode.get("otherTotalStockholdersEquity").textValue());
         testBalanceConfig.setTotalStockholdersEquity(balanceNode.get("totalStockholdersEquity").textValue());
-        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(balanceNode.get("totalLiabilitiesAndStockHoldersEquity").textValue());
+        testBalanceConfig.setTotalLiabilitiesAndStockHoldersEquity(
+                balanceNode.get("totalLiabilitiesAndStockHoldersEquity").textValue());
         testBalanceConfig.setTotalInvestments(balanceNode.get("totalInvestments").textValue());
         testBalanceConfig.setTotalDebt(balanceNode.get("totalDebt").textValue());
         testBalanceConfig.setNetDebt(balanceNode.get("netDebt").textValue());
