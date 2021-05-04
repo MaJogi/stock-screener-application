@@ -26,6 +26,8 @@ import java.util.List;
 public class StandardStatementCreationHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardStatementCreationHelper.class);
+    // Initializing Spel parser and helper class to help controller do its job
+    SpelExpressionParser parser = new SpelExpressionParser();
 
     List<String> incomeStandardFieldFormulas;
 
@@ -126,7 +128,6 @@ public class StandardStatementCreationHelper {
     }
 
     public void createValuesForStatementFromFormulas(List<String> statementStandardFieldFormulas,
-                                                           SpelExpressionParser parser,
                                                            StandardEvaluationContext stContext){
         for (String currentFormulaString : statementStandardFieldFormulas) {
             LOGGER.info(currentFormulaString);

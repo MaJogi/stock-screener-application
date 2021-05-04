@@ -63,7 +63,7 @@ public class StandardObjCreationController {
     @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
     public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker,
                                                                     @PathVariable String period_or_date) {
-        SpelExpressionParser parser = new SpelExpressionParser();
+        //SpelExpressionParser parser = new SpelExpressionParser();
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
 
@@ -106,7 +106,7 @@ public class StandardObjCreationController {
 
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                parser, stContext);
+                stContext);
 
         company.getIncomeStatements().add(incomeStatement);
         companyDimensionRepository.save(company);
@@ -162,7 +162,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createCashflowStrings(rightCompanyCashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                parser, stContext);
+                stContext);
 
         company.getCashflowStatements().add(cashflowStatement);
         companyDimensionRepository.save(company);
@@ -177,7 +177,6 @@ public class StandardObjCreationController {
     @GetMapping("/{ticker}/createBalanceStatementFromFormula/forPeriod/{period_or_date}/") // without ending "/" it is losing part of date!
     public ResponseEntity<MessageResponse> balanceMappingFromFormula(@PathVariable String ticker,
                                                                      @PathVariable String period_or_date) {
-        SpelExpressionParser parser = new SpelExpressionParser();
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
 
@@ -253,7 +252,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                parser, stContext);
+                stContext);
 
         company.getBalanceStatements().add(balanceStatement);
 
@@ -268,9 +267,6 @@ public class StandardObjCreationController {
     @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") // without ending "/" it is losing part of date!
     public ResponseEntity<MessageResponse> standardGroupMappingFromFormulaConfigurations(@PathVariable String ticker,
                                                                      @PathVariable String balance_date) {
-
-        // Initializing Spel parser and helper class to help controller do its job
-        SpelExpressionParser parser = new SpelExpressionParser();
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
 
         // Creating empty standardStatements to populate them after.
@@ -278,10 +274,7 @@ public class StandardObjCreationController {
         CashflowStatStandWithValues cashflowStatement = new CashflowStatStandWithValues();
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
-        LOGGER.info("FOUND COMPANY: {}", company);
+        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
 
         // Nüüd oleks vaja leida statementGroup, mille bilansi objekti date on {balance_date}
         List<GroupOfStatements> companyFullRawGroupOfStatements = groupOfStatementsRepository
@@ -339,7 +332,7 @@ public class StandardObjCreationController {
 
         // Ettevalmistus on tehtud. Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                parser, stContext);
+                stContext);
 
         // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
         company.getBalanceStatements().add(balanceStatement);
@@ -364,7 +357,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createCashflowStrings(cashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                parser, stContext2);
+                stContext2);
 
         company.getCashflowStatements().add(cashflowStatement);
 
@@ -372,7 +365,7 @@ public class StandardObjCreationController {
         standardStatementCreationHelper.createIncomeStrings(incomeConfig);
         List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                parser, stContext3);
+                stContext3);
 
         company.getIncomeStatements().add(incomeStatement);
 
@@ -410,5 +403,13 @@ public class StandardObjCreationController {
         groupOfStandardStatements.setIncomeStat(incomeStatement);
         groupOfStandardStatements.setCompanyDimension(company);
         return groupOfStandardStatements;
+    }
+
+    public CompanyDimension findCompanyWithExceptionHandler(String ticker) {
+        CompanyDimension company = companyDimensionRepository.findById(ticker)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with ticker: " + ticker));
+        LOGGER.info("FOUND COMPANY: {}", company);
+        return company;
     }
 }
