@@ -545,5 +545,19 @@ public class StandardStatementCreationHelper {
         createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 stContextBalance);
     }
+
+    public void createCashflowStatement(CompanyCashflowStatFormulaConfig cashflowConfig) {
+        createCashflowStrings(cashflowConfig);
+        List<String> cashflowStandardFieldFormulas = getCashflowStandardFieldFormulas();
+        createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
+                stContextCashflow);
+    }
+
+    public void createIncomeStatement(CompanyIncomeStatFormulaConfig incomeConfig) {
+        createIncomeStrings(incomeConfig);
+        List<String> incomeStandardFieldFormulas = getIncomeStandardFieldFormulas();
+        createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
+                stContextIncome);
+    }
 }
 

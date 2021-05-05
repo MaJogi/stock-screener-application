@@ -355,18 +355,8 @@ public class StandardObjCreationController {
 
         // new way to do all business logic in standardStatementCreationHelper.
         standardStatementCreationHelper.createBalanceStatement(rightCompanyBalanceConfig);
-
-        // here continues same process with other statements
-        // cashflow
-        standardStatementCreationHelper.createCashflowStrings(cashflowConfig);
-        List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                standardStatementCreationHelper.getStContextCashflow());
-        //income
-        standardStatementCreationHelper.createIncomeStrings(incomeConfig);
-        List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                standardStatementCreationHelper.getStContextIncome());
+        standardStatementCreationHelper.createCashflowStatement(cashflowConfig);
+        standardStatementCreationHelper.createIncomeStatement(incomeConfig);
 
 
         // Setting dependency, so I can get later on information, which config was used.
