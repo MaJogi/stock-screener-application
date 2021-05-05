@@ -75,10 +75,9 @@ public class ReadLocalCsvController {
     @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         boolean fileAlreadyExits = sourceCsvFileRepository
-                .existsBySourceFileName("src/main/resources/csv/" + fileName + ".csv");
+                .existsBySourceFileName(Constants.UPLOAD_LOCATION + fileName + ".csv");
 
         if (fileAlreadyExits){
-            LOGGER.error("File is already read in database");
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse(

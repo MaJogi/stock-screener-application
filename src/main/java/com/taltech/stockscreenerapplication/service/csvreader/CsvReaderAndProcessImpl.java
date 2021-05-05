@@ -34,6 +34,9 @@ public class CsvReaderAndProcessImpl implements IReader {
     List<List<String>> cashflowList;
     List<List<String>> incomeList;
 
+    Statement currentStatement;
+    boolean foundNoteColumn;
+
     public CsvReaderAndProcessImpl() {
         LOGGER.info("Default CsvReaderImpl constructor called");
         createCsvParser();
@@ -86,9 +89,6 @@ public class CsvReaderAndProcessImpl implements IReader {
                 || line.get(0).contains("</cash_flow_statement>")
                 || line.get(0).contains("</balance_sheet>");
     }
-
-    Statement currentStatement;
-    boolean foundNoteColumn;
 
     public boolean doesHeaderColContainNote(List<String> line) {
         if (line == null) {
@@ -180,8 +180,8 @@ public class CsvReaderAndProcessImpl implements IReader {
             // check if empty line. This will remove lines like: , , , ,
             if (line.get(0).isEmpty()) { continue; }
 
+            // Selleks, et controll tehtaks ühe korra
             if (!foundNoteColumn && csvReader.getLinesRead() < 2) {
-                // Mõtle hiljem kuidas teha nii, et see kontroll tehakse ainult ühe korra
                 foundNoteColumn = doesHeaderColContainNote(line);
             }
 

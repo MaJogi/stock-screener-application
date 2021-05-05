@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/* Class is simply used for testing in terminal */
+
 @Service
 public class CsvProgram {
 
