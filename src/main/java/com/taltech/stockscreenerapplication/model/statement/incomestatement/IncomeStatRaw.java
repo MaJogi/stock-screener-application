@@ -2,13 +2,12 @@ package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
+import com.taltech.stockscreenerapplication.model.statement.StatRaw;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @JsonSerialize
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -17,23 +16,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Table(name = "income_statement_as_imported")
-public class IncomeStatRaw {
+public class IncomeStatRaw extends StatRaw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "income_stat_raw_id")
     private Long income_stat_raw_id;
-
-    @Column(name = "date_or_period")
-    private String dateOrPeriod;
-
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Attribute> attributes;
-
-    /* Seems like its not necessary
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
-    */
 
     public IncomeStatRaw() {}
 
@@ -41,8 +28,8 @@ public class IncomeStatRaw {
     public String toString() {
         return "IncomeStatRaw{" +
                 "income_stat_raw_id=" + income_stat_raw_id +
-                ", dateOrPeriod='" + dateOrPeriod + '\'' +
-                ", attributes=" + attributes +
+                /*", dateOrPeriod='" + dateOrPeriod + '\'' + */
+                /*", attributes=" + attributes + */
                 /*", sourceCsvFile=" + sourceCsvFile + */
                 /*", ticker_id=" + ticker_id + */
                 '}';

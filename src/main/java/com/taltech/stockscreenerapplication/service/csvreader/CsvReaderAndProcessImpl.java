@@ -106,12 +106,8 @@ public class CsvReaderAndProcessImpl implements IReader {
             return false;
         }
         String stringToSearch = "note";
-        if (line.get(1).toLowerCase().contains(stringToSearch)) {
-            return true;
-            // Make note column empty to ignore it later
-            //line[1] = "";
-        }
-        return false;
+        // Make note column empty to ignore it later -> //line[1] = "";
+        return line.get(1).toLowerCase().contains(stringToSearch);
     }
 
     // If Statement is of type x, insert into dependent list y
