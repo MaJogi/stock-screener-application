@@ -80,7 +80,8 @@ public class CompanyDimension {
     private List<BalanceStatStandWithValues> balanceStatements = new LinkedList<>();
 
     /*
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL) // kui firma kustutatakse, siis kõik selle statemendid kaovad.
+    // When firm is deleted, all related groupsOfStatements are deleted.
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<GroupOfStatements> groupOfStatements = new LinkedList<>();
      */
 

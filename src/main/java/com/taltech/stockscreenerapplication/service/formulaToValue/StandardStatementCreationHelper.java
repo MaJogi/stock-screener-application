@@ -463,7 +463,7 @@ public class StandardStatementCreationHelper {
             System.out.println(balance_date +"\t" + dateObject );
         }
         catch (ParseException e) {
-            LOGGER.info("ParseExceiption!");
+            LOGGER.info("ParseException!");
         }
 
         for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
@@ -513,7 +513,7 @@ public class StandardStatementCreationHelper {
         return null;
     }
 
-    // Atribuutide lisamine konteksti, et neid saaks hiljem muutujatena kasutada arvutustes
+    // Adding attribute to context, so I can use them later as variables when creating standard statement.
     // stContext.setVariable("Revenue", 150);
     public void createAttributeWithValuesContext(List<Attribute> statementAttributesWithValues,
                                                  StandardEvaluationContext stContext) {

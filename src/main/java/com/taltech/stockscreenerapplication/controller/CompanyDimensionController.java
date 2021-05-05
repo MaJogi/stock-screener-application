@@ -50,14 +50,16 @@ public class CompanyDimensionController {
     }
 
     //  Maybe Iterable<IncomeStatRaw>
-    @GetMapping("/{tickerId}/incomeStatements") // localhost:8080/companies/TKM1T/incomeStatements
+    // localhost:8080/companies/TKM1T/incomeStatements
+    @GetMapping("/{tickerId}/incomeStatements")
     public List<IncomeStatRaw> getCompanyRawIncomeStats(@PathVariable final String tickerId) {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
         return company.getIncomeRawStatements();
     }
 
-    @GetMapping("/{tickerId}/income/{dateOrPeriod}") // localhost:8080/companies/TKM1T
+    // localhost:8080/companies/TKM1T/income/"Q3 2017"
+    @GetMapping("/{tickerId}/income/{dateOrPeriod}")
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId,
                                                               @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters ->" +
@@ -70,15 +72,16 @@ public class CompanyDimensionController {
                         "Unable to find income financial statement with Id: " + incomeStatementIdWithSpecificDate));
     }
 
-
-    @GetMapping("/{tickerId}/cashflowStatements") // localhost:8080/companies/TKM1T/cashflowStatements
+    // localhost:8080/companies/TKM1T/cashflowStatements
+    @GetMapping("/{tickerId}/cashflowStatements")
     public List<CashflowStatRaw> getCompanyRawCashflowStats(@PathVariable final String tickerId) {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
         return company.getCashflowRawStatements();
     }
 
-    @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}") // localhost:8080/companies/TKM1T/cashflow/{dateOrPeriod}
+    // localhost:8080/companies/TKM1T/cashflow/{dateOrPeriod}
+    @GetMapping("/{tickerId}/cashflow/{dateOrPeriod}")
     public CashflowStatRaw getCompanySpecificTimeRawBalanceStat(@PathVariable final String tickerId,
                                                                 @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters -> " +
@@ -91,14 +94,16 @@ public class CompanyDimensionController {
                         "Unable to find cashflow financial statement with id: " + cashflowStatementIdWithSpecificDate));
     }
 
-    @GetMapping("/{tickerId}/balanceStatements") // localhost:8080/companies/TKM1T/balanceStatements
+    // localhost:8080/companies/TKM1T/balanceStatements
+    @GetMapping("/{tickerId}/balanceStatements")
     public List<BalanceStatRaw> getCompanyRawBalanceStats(@PathVariable final String tickerId) {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(tickerId);
 
         return company.getBalanceRawStatements();
     }
 
-    @GetMapping("/{tickerId}/balance/{dateOrPeriod}") // localhost:8080/companies/TKM1T/balance/{dateOrPeriod}
+    // localhost:8080/companies/TKM1T/balance/{dateOrPeriod}
+    @GetMapping("/{tickerId}/balance/{dateOrPeriod}")
     public BalanceStatRaw getCompanySpecificTimeRawCashflowStat(@PathVariable final String tickerId,
                                                                 @PathVariable final String dateOrPeriod) {
         LOGGER.info("Starting method getCompanySpecificTimeRawBalanceStats with parameters -> " +

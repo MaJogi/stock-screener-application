@@ -36,9 +36,7 @@ public class ReadLocalCsvController {
     @Autowired
     private SourceCsvFileRepository sourceCsvFileRepository;
 
-    /*
-    @Autowired // creates a singleton. Do i even need a singleton?
-     */
+    /* @Autowired // creates a singleton. Do i even need a singleton? */
     @Autowired
     public StatementsToDbHelperImpl statementsToDbHelper;
 
@@ -67,7 +65,7 @@ public class ReadLocalCsvController {
     /*
     1. Data is in right format in csv file.
     1. 1. Index 0: Income, Index 1: cashflow, Index 2: balance
-    2. SourceCsvFile is created
+    ...
     3. incomeStatRaw object is created
     4. Attributes for raw income statement is created
     5. 3 & 4 is repated for other raw statements

@@ -30,6 +30,7 @@ public class FormulaObjCreationController {
     private CompanyDimensionRepository companyDimensionRepository;
 
     // Purely used for testing purposes.
+    /*
     @GetMapping("/createMappingFor/{ticker}/forTestingPurposes")
     public ResponseEntity<MessageResponse> test(@PathVariable String ticker) {
 
@@ -77,6 +78,7 @@ public class FormulaObjCreationController {
                 .body(new MessageResponse(
                         "Mapping created, check if formulas for income, balance, cashflow statements are done"));
     }
+     */
 
     @PostMapping(value = "/createMappingFor/{ticker}/income",
             produces = "application/json", consumes = "application/json")
