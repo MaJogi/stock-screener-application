@@ -326,10 +326,8 @@ public class StandardObjCreationController {
 
 
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
-        List<FormulaConfig> companyCashflowConfigs = new LinkedList<>();
-        companyCashflowConfigs.addAll(company.getCashflowConfigurations());
-        List<FormulaConfig> companyIncomeConfigs = new LinkedList<>();
-        companyIncomeConfigs.addAll(company.getIncomeConfigurations());
+        List<FormulaConfig> companyCashflowConfigs = new LinkedList<>(company.getCashflowConfigurations());
+        List<FormulaConfig> companyIncomeConfigs = new LinkedList<>(company.getIncomeConfigurations());
 
         /*
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
