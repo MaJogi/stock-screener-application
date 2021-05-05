@@ -61,12 +61,11 @@ public class StatementsToDbHelperImpl {
         //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
         for (List<String> dataLine : incomeListAttributesWithData) {
             Attribute attr = new Attribute();
-            // ajutine lahendus, siin eemaldatakse kõik komad ja eemaldatakse ülearused whitespaceid
             attr.setFieldName(dataLine.get(0).replace(',', ' ')
                     .replace('(', ' ')
                     .replace(')', ' ')
                     .replace('-', ' ')
-                    .replaceAll("\\s+", " ")
+                    .replaceAll("\\s+", " ") // replace extra whitespaces with one.
                     .trim()
                     );
 
