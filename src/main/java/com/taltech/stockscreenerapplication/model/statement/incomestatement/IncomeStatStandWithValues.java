@@ -1,13 +1,13 @@
 package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.taltech.stockscreenerapplication.model.statement.StatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -15,36 +15,15 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "income_statement_stand_with_values")
-public class IncomeStatStandWithValues {
+public class IncomeStatStandWithValues extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "income_stat_standard_id")
     private Long income_stat_standard_id;
 
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
-     */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "income_stat_formula_id") // or maybe joincolumn
     private CompanyIncomeStatFormulaConfig income_stat_formula_id;
-
-    @Column(name = "symbol")
-    private String symbol;
-
-    @Column(name = "reported_currency")
-    private String reportedCurrency;
-
-    @Column(name = "filling_date") // Date.today()
-    private Date fillingDate;
-
-    @Column(name = "accepted_date")
-    private Date acceptedDate;
-
-    @Column(name = "date_or_period")
-    private String dateOrPeriod;
 
     @Column(name = "revenue")
     private Double revenue;

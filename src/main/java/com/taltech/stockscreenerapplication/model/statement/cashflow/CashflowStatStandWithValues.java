@@ -1,13 +1,13 @@
 package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.taltech.stockscreenerapplication.model.statement.StatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 
 @Entity
@@ -16,37 +16,16 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "cash_flow_statement_stand_values")
-public class CashflowStatStandWithValues {
+public class CashflowStatStandWithValues extends StatStandard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_standard_id")
     private Long cashflow_standard_id;
 
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
-    */
-
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "cashflow_stat_formula_id") // or maybe joincolumn
     private CompanyCashflowStatFormulaConfig cashflow_stat_formula_id;
-
-    @Column(name = "symbol")
-    private String symbol;
-
-    @Column(name = "reported_currency")
-    private String reportedCurrency;
-
-    @Column(name = "filling_date")
-    private Date fillingDate;
-
-    @Column(name = "accepted_date")
-    private Date acceptedDate;
-
-    @Column(name = "date_or_period")
-    private String dateOrPeriod;
 
     @Column(name = "net_income")
     private Double netIncome;

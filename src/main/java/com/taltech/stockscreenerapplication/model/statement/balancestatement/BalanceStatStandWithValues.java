@@ -1,13 +1,13 @@
 package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.taltech.stockscreenerapplication.model.statement.StatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -15,17 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "balance_statement_stand_values")
-public class BalanceStatStandWithValues {
+public class BalanceStatStandWithValues extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "balance_stat_standard_id")
     private Long balance_stat_standard_id;
-
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
-     */
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "balance_stat_formula_id") // or maybe joincolumn
@@ -33,21 +27,6 @@ public class BalanceStatStandWithValues {
 
     @Column(name = "date_quarter_year")
     private String dateOrQuarterOrYear;
-
-    @Column(name = "symbol")
-    private String symbol;
-
-    @Column(name = "reported_currency")
-    private String reportedCurrency;
-
-    @Column(name = "filling_date")
-    private Date fillingDate;
-
-    @Column(name = "accepted_date")
-    private Date acceptedDate;
-
-    @Column(name = "date_or_period") // I mean quarter, year or specific date. Q1 2017, 2018 etc
-    private String dateOrPeriod;
 
     @Column(name = "cash_and_cash_equivalents")
     private Double cashAndCashEquivalents;
