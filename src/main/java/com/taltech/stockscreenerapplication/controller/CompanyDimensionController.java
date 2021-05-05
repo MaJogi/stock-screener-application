@@ -111,14 +111,14 @@ public class CompanyDimensionController {
                         , "Unable to find balance financial statement with id: " + balanceStatementIdWithSpecificDate));
     }
 
+    @GetMapping("/{tickerId}/getFullCombinationsIds")
+    public List<Long> getFullCombinationOfStatementsIds(@PathVariable final String tickerId) {
+        return companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
+    }
+
     public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
         return companyDimensionRepository.findById(tickerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company with tickerId: " + tickerId));
-    }
-
-    @GetMapping("/{tickerId}/getFullCombinationsIds")
-    public List<Long> getFullCombinationOfStatementsIds(@PathVariable final String tickerId) {
-        return companyDimensionRepository.findAllCompanyGroupOfStatementsWhereAllStatementsPresent(tickerId);
     }
 }

@@ -33,7 +33,7 @@ public class FormulaObjCreationController {
     @GetMapping("/createMappingFor/{ticker}/forTestingPurposes")
     public ResponseEntity<MessageResponse> test(@PathVariable String ticker) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
         long firstEvenConfigurationId = 1;
@@ -83,9 +83,7 @@ public class FormulaObjCreationController {
     public ResponseEntity<MessageResponse> singleIncomeStatementMapping(
             @PathVariable String ticker, @RequestBody final IncomeMappingRequest incomeRequest) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
         FormulaObjCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
@@ -104,9 +102,7 @@ public class FormulaObjCreationController {
     public ResponseEntity<MessageResponse> singleCashflowStatementMapping(
             @PathVariable String ticker, @RequestBody final CashflowMappingRequest cashflowRequest) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
         FormulaObjCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
@@ -125,9 +121,7 @@ public class FormulaObjCreationController {
     public ResponseEntity<MessageResponse> singleBalanceStatementMapping(
             @PathVariable String ticker, @RequestBody final BalanceMappingRequest balanceRequest) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CompanyBalanceStatFormulaConfig testBalanceConfig = new CompanyBalanceStatFormulaConfig();
         FormulaObjCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
@@ -145,9 +139,7 @@ public class FormulaObjCreationController {
     public ResponseEntity<MessageResponse> allStatementsAsOneMapping(@PathVariable String ticker,
                                                                      @RequestBody final ObjectNode json) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
         CompanyCashflowStatFormulaConfig testCashflowConfig = new CompanyCashflowStatFormulaConfig();
@@ -174,6 +166,12 @@ public class FormulaObjCreationController {
                 .status(200)
                 .body(new MessageResponse(
                         "Mapping created, check if formulas for income, balance, cashflow statements are done"));
+    }
+
+    public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
+        return companyDimensionRepository.findById(tickerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with tickerId: " + tickerId));
     }
 }
 

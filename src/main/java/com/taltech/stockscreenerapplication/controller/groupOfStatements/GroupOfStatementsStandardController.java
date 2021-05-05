@@ -42,11 +42,15 @@ public class GroupOfStatementsStandardController {
     public Iterable<GroupOfStatementsStandard> getGroupsOfStandardStatementsForCompany(
             @PathVariable final String ticker_id) {
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker_id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with id: " + ticker_id));;
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker_id);
 
         return groupOfStandardStatementsRepository.findAllByCompanyDimensionIs(company);
+    }
+
+    public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
+        return companyDimensionRepository.findById(tickerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with tickerId: " + tickerId));
     }
 }
 

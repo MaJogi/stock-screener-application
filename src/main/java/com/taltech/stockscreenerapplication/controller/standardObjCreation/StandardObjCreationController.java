@@ -1,8 +1,6 @@
 package com.taltech.stockscreenerapplication.controller.standardObjCreation;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
-import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
@@ -11,6 +9,8 @@ import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowSta
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import com.taltech.stockscreenerapplication.repository.*;
@@ -19,8 +19,6 @@ import com.taltech.stockscreenerapplication.util.payload.response.MessageRespons
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -59,7 +53,10 @@ public class StandardObjCreationController {
     @Autowired
     private GroupOfStandardStatementsRepository groupOfStandardStatementsRepository;
 
-    /* Outdated, nüüd on kasutusel @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
+    /* Outdated, now we use mapping, which creates all of them (statements) at once
+    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
+
+    /*
     @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
     public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker,
                                                                     @PathVariable String period_or_date) {
@@ -67,9 +64,7 @@ public class StandardObjCreationController {
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
         // Alternate way to get desiredRawIncome
         // List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements();
 
@@ -78,7 +73,7 @@ public class StandardObjCreationController {
 
         IncomeStatRaw incomeStatementRaw = incometatRawRepository.findById(desiredRawIncomeStatId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Unable to find incomeStatementRaw with id: " + desiredRawIncomeStatId));;
+                "Unable to find incomeStatementRaw with id: " + desiredRawIncomeStatId));
 
         List<Attribute> attributesWithValues = incomeStatementRaw.getAttributes();
         for (Attribute attr : attributesWithValues) {
@@ -98,7 +93,7 @@ public class StandardObjCreationController {
         }
 
         // VANA
-        // TODO: See on see koht, kus PEAKS PROGRAMM JUBA TEADMA, mis confi kasutada, mis perioodi puhul.
+        // See on see koht, kus PEAKS PROGRAMM JUBA TEADMA, mis confi kasutada, mis perioodi puhul.
         CompanyIncomeStatFormulaConfig rightCompanyIncomeConfig = company.getIncomeConfigurations().get(0);
         // VANA END
 
@@ -116,8 +111,11 @@ public class StandardObjCreationController {
                 .body(new MessageResponse(
                         "GET method (income) returned. Check if result is correct"));
     }
+    */
 
-    /* Outdated, nüüd on kasutusel @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
+    /* Outdated, now we use mapping, which creates all of them (statements) at once
+    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
+    /*
     @GetMapping("/{ticker}/createCashflowStatementFromFormula/forPeriod/{period_or_date}/")
     public ResponseEntity<MessageResponse> cashflowMappingFromFormula(@PathVariable String ticker,
                                                                       @PathVariable String period_or_date) {
@@ -125,9 +123,7 @@ public class StandardObjCreationController {
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         CashflowStatStandWithValues cashflowStatement = new CashflowStatStandWithValues();
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
         // Alternate way to get desiredRawCashflow
         //List<CashflowStatRaw> rawCashflowStatements = company.getCashflowRawStatements();
 
@@ -172,17 +168,19 @@ public class StandardObjCreationController {
                 .body(new MessageResponse(
                         "GET method (cashflow) returned. Check if result is correct"));
     }
+     */
 
-    /* Outdated, nüüd on kasutusel @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
-    @GetMapping("/{ticker}/createBalanceStatementFromFormula/forPeriod/{period_or_date}/") // without ending "/" it is losing part of date!
+    // without ending "/" it is losing part of date!
+    /* Outdated, now we use mapping, which creates all of them (statements) at once
+    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
+    /*
+    @GetMapping("/{ticker}/createBalanceStatementFromFormula/forPeriod/{period_or_date}/")
     public ResponseEntity<MessageResponse> balanceMappingFromFormula(@PathVariable String ticker,
                                                                      @PathVariable String period_or_date) {
         StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
         BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
 
-        CompanyDimension company = companyDimensionRepository.findById(ticker)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
 
         //List<BalanceStatRaw> rawBalanceStatements = company.getBalanceRawStatements();
         Long desiredRawBalanceStatId = companyDimensionRepository
@@ -224,7 +222,6 @@ public class StandardObjCreationController {
 
         for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
             try {
-
                 Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateFrom());
                 Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateTo());
 
@@ -249,6 +246,13 @@ public class StandardObjCreationController {
         }
 
 
+        if (rightCompanyBalanceConfig == null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "Couldn't find suitable balanceConfig. Does it even exist?"));
+        }
+
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
@@ -263,6 +267,7 @@ public class StandardObjCreationController {
                 .body(new MessageResponse(
                         "GET method (balance) returned. Check if result is correct"));
     }
+     */
 
     // without ending "/" it is losing part of date!
     @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/")
@@ -277,19 +282,34 @@ public class StandardObjCreationController {
 
         CompanyDimension company = findCompanyWithExceptionHandler(ticker);
 
-        // Nüüd oleks vaja leida statementGroup, mille bilansi objekti date on {balance_date}
+        // Now we need to get statementGroup, which balance date is {balance_date}
         List<GroupOfStatements> allOfcompanyRawGroupOfStatements = groupOfStatementsRepository
                 .findGroupOfStatementsByIncomeStatRawNotNullAndCashflowStatRawIsNotNullAndBalanceStatRawIsNotNullAndCompanyDimensionIs(company);
 
         GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
-        // nüüd on vaja leida as is aruanded, mida hiljem kasutatakse.
+        if (rightRawGroupOfStatements == null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "Couldn't find group of raw statement that is generated from csv file. Check if balance" +
+                                    "date is correct"));
+        }
+
+        // now we need to find as is statements, which are going to be used later.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
         CashflowStatRaw cashflowStatementRaw = rightRawGroupOfStatements.getCashflowStatRaw();
         IncomeStatRaw incomeStatementRaw = rightRawGroupOfStatements.getIncomeStatRaw();
 
-        // saadakse kätte as is aruannete kirjed koos kindla perioodi väärtusega.
+        if (balanceStatementRaw == null || cashflowStatementRaw == null || incomeStatementRaw == null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "Couldn't find any raw statements. Check if company has imported csv files"));
+        }
+
+        // we will get as is statements fields with values for this period (balance_date)
         List<Attribute> balanceAttributesWithValues = balanceStatementRaw.getAttributes();
         List<Attribute> cashflowAttributesWithValues = cashflowStatementRaw.getAttributes();
         List<Attribute> incomeAttributesWithValues = incomeStatementRaw.getAttributes();
@@ -316,38 +336,52 @@ public class StandardObjCreationController {
         List<CompanyIncomeStatFormulaConfig> companyIncomeConfigs = company.getIncomeConfigurations();
 
 
-        // Hetkel on periodOrDate nt "30.06.2017"
-        // On olemas 31.12.2015 kuni 31.12.2016 ja teine conf 01.01.2017 - 31.12.2019
-        // Nüüd tuleb vastavalt bilansi ajale leida korrektne configuratsioon, mida kasutada standartse bilansiaruande
-        // tegemise jaoks
+        // Ex balance_date is "30.06.2017"
+        // We have balance configurations: from 31.12.2015 to 31.12.2016 AND other one 01.01.2017 - 31.12.2019
+        // Now we have to find right configuration according to balance_date. This way we will get also a configuration
+        // collection id, which in turn gives us three configurations.
+        // This condfigurations will be used to generate standard statement objects.
+
         CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = StandardStatementCreationHelper
                 .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
-        // Vaatan, mis on selle ettevõtte bilansi konfiguratsiooni id, et leida veel kaks aruannet, mis on
-        // Seotud selle konfiguratsiooni grupiga, et hiljem saaks seda kolmikut koos kasutada.
+        if (rightCompanyBalanceConfig == null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "Couldn't find suitable balance configuration. Does it even exits?"));
+        }
+
+        // I am looking at a collection id property of balance configuration, to find other (2) related configurations
+        // that i am going to use later, to generate standard statements (group of them).
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
-        // Siin leitakse üles veel 2 aruande konfiguratsiooni, mis kuuluvad samasse kollektsiooni, kuhu kuulub leitud
-        // balance konfiguratsioon
         CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
                 .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
         CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
                 .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
 
+        if (cashflowConfig == null || incomeConfig == null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "Couldn't find suitable cashflow Or income configuration object. Does it even exist?"));
+        }
 
-
-        // Luuakse dünaamiliselt valemid, mille läbi saadakse hiljem standartsele bilansi aruandele väärtused
-        // Lisatakse need vajalikku listi
+        // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
+        // statements which will later be used to populate standard statements. Correct executable statements are added
+        // into list.
         standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
-        // Nüüd saadakse kätte dünaamiliselt tehtud valemid
+        // Now we get dynamically created formulas
         List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        // Ettevalmistus on tehtud.
-        // Nüüd käivitatakse meetod, mis kasutades muutujatega valemeid teevad valmis balanceStatemendi.
+        // Preparation is done.
+        // Now method is executed, which using formulas with pre defined variables
+        // generates new standard balance statement.
         standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
                 standardStatementCreationHelper.getStContextBalance());
 
 
-        // Siin hakkab pihta kõik sama tegevus, mis ennegi juba teiste aruannetega.
+        // here continues same process with other statements
         // cashflow
         standardStatementCreationHelper.createCashflowStrings(cashflowConfig);
         List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
@@ -368,10 +402,10 @@ public class StandardObjCreationController {
         setDateToEachStatement(balanceStatement, cashflowStatement,
                 incomeStatement, rightRawGroupOfStatements);
 
-        // Lisan eraldi ettevõtte alla standartse rea väljaspool gruppi kolmest standartsest aruandest.
+        // Will add each new standard statement separately to company. (without a group)
         addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
 
-        //This is now the place to create new GroupOfStandardStatements
+        //This is now the place to create new GroupOfStandardStatements with newly generated standard statements.
         GroupOfStatementsStandard groupOfStandardStatements =
                 createGroupUsingPreviouslyFoundData(balanceStatement, cashflowStatement, incomeStatement, company);
 

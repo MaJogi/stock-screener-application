@@ -65,14 +65,14 @@ public class ReadLocalCsvController {
     }
 
     /*
-    1. Andmed on kindlal kujul csv formaadis.
+    1. Data is in right format in csv file.
     1. 1. Index 0: Income, Index 1: cashflow, Index 2: balance
-    2. Luuakse uus SourceCsvFile üksus
-    3. Luuakse incomeStatRaw objekt
-    4. Luuakse incomeStatRaw objekti jaoks Attribute objektid (nt 20 tk) ja lisatakse sellele.
-    6. (Tehakse kõik sama läbi teiste finantsaruannetega)
-    7. Salvestatakse company uuendatud aruanneteg
-    KINDLASTI TÄIENDADA
+    2. SourceCsvFile is created
+    3. incomeStatRaw object is created
+    4. Attributes for raw income statement is created
+    5. 3 & 4 is repated for other raw statements
+    6. Company is resaved to database with newly added objects.
+    <Needs to be updated>
     */
 
     // TKM1T
