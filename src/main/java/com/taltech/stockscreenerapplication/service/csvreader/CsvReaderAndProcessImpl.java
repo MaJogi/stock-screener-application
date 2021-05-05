@@ -42,6 +42,15 @@ public class CsvReaderAndProcessImpl implements IReader {
         createCsvParser();
     }
 
+    public void initListsAndDefaultReadProperties() {
+        balanceList = new ArrayList<>();
+        cashflowList = new ArrayList<>();
+        incomeList = new ArrayList<>();
+
+        currentStatement = Statement.Statement_notinitialized;
+        foundNoteColumn = false;
+    }
+
     public void createCsvParser() {
         this.parser = new CSVParserBuilder()
                 .withSeparator(';')
@@ -56,11 +65,12 @@ public class CsvReaderAndProcessImpl implements IReader {
                 .build();
     }
 
+    // We have to check, if we have something inside <>
     public boolean isCurrentRowStatementBlock(List<String> line) {
         if (line == null) {
             return false;
         }
-
+        // Check which financial statement we have: <income_statement>, <balance_sheet>, <cash_flow_statement>
         return line.get(0).toLowerCase().contains("<income_statement>")
                 || line.get(0).toLowerCase().contains("<cash_flow_statement>")
                 || line.get(0).toLowerCase().contains("<balance_sheet>");
@@ -81,6 +91,7 @@ public class CsvReaderAndProcessImpl implements IReader {
         }
     }
 
+    // Skip statement closing tag
     public boolean isEndingStatementBlock(List<String> line) {
         if (line == null) {
             return false;
@@ -103,6 +114,7 @@ public class CsvReaderAndProcessImpl implements IReader {
         return false;
     }
 
+    // If Statement is of type x, insert into dependent list y
     public void addFieldToCurrentStatement(List<String> line) {
         if (currentStatement == Statement.Statement_income) {
             incomeList.add(line);
@@ -156,16 +168,7 @@ public class CsvReaderAndProcessImpl implements IReader {
         removeUnnecessaryCols(list, emptyOrNoteLineIndexList);
     }
 
-    public void initListsAndDefaultReadProperties() {
-        balanceList = new ArrayList<>();
-        cashflowList = new ArrayList<>();
-        incomeList = new ArrayList<>();
 
-        currentStatement = Statement.Statement_notinitialized;
-        foundNoteColumn = false;
-    }
-
-    // Similarly, we can abstract readNext() which reads a supplied .csv line by line:
     public List<List<List<String>>> readCsvAndReturnLists(CSVReader csvReader) throws Exception {
         // Default initialization
         initListsAndDefaultReadProperties();
@@ -180,34 +183,21 @@ public class CsvReaderAndProcessImpl implements IReader {
             // check if empty line. This will remove lines like: , , , ,
             if (line.get(0).isEmpty()) { continue; }
 
-            // Selleks, et controll tehtaks ühe korra
+            // Check for note column should be done only once
             if (!foundNoteColumn && csvReader.getLinesRead() < 2) {
                 foundNoteColumn = doesHeaderColContainNote(line);
             }
 
-            // 1st step: We have to check, if we have something inside <>
             if (isCurrentRowStatementBlock(line)) {
-                // Check which financial statement we have: <income_statement>, <balance_sheet>, <cash_flow_statement>
                 determineCurrentSpecificStatementBlock(line);
                 continue;
             }
 
-            // Skip statement closing tag
             if (isEndingStatementBlock(line)) { continue; }
 
-            /*
-            // 2th step: Remove everything inside parantheses (CURRENTLY DEACTIVATED)
-            String paranthesis = ")";
-            String regexTarget = "\\(([^\\)]+)\\)"; // matches any character inside parantheses
-            String replacement = ""; // empty
-            if (line[0].contains(paranthesis)) {
-                line[0] = line[0].replaceAll(regexTarget, replacement).trim();
-            }
-            */
+            /* That's the place to remove everything in paranthesis (currently not included) */
 
             addNoteToFieldIfNecessary(line);
-
-            // 3rd step:: If Statement is of type x, insert into dependent list y
             addFieldToCurrentStatement(line);
         }
         csvReader.close();
@@ -242,4 +232,14 @@ public class CsvReaderAndProcessImpl implements IReader {
 
         return readCsvAndReturnLists(csvReader);
     }
+
+    /*
+    // 2th step: Remove everything inside parantheses (CURRENTLY DEACTIVATED)
+    String paranthesis = ")";
+    String regexTarget = "\\(([^\\)]+)\\)"; // matches any character inside parantheses
+    String replacement = ""; // empty
+            if (line[0].contains(paranthesis)) {
+        line[0] = line[0].replaceAll(regexTarget, replacement).trim();
+    }
+    */
 }

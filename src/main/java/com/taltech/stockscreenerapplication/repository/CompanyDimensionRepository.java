@@ -48,17 +48,6 @@ public interface CompanyDimensionRepository extends JpaRepository<CompanyDimensi
             "WHERE income_stat_raw_income_stat_raw_id IN ?1", nativeQuery = true)
     List<GroupOfStatements> findAllCompanyCashflowStatements(List<Long> ids);
 
-    /*
-    @Query(value = "SELECT group_of_stats_id from group_of_statements\n" +
-            "LEFT JOIN company_dimension_group_of_statements\n" +
-            "ON group_of_statements.group_of_stats_id = company_dimension_group_of_statements.group_of_statements_group_of_stats_id\n" +
-            "WHERE group_of_statements.incomeStatRaw IS NOT NULL\n" +
-            "AND group_of_statements.cashflowStatRaw IS NOT NULL\n" +
-            "AND group_of_statements.balanceStatRaw IS NOT NULL\n" +
-            "AND company_dimension_ticker_id = ?1", nativeQuery = true)
-    List<Long> findCompanyGroupOfStatementsWhereAllStatementsPresentIds(String companyTicker);
-
-     */
 
 }
 

@@ -161,7 +161,6 @@ public class StandardObjCreationController {
     }
      */
 
-    // without ending "/" it is losing part of date!
     /* Outdated, now we use mapping, which creates all of them (statements) at once
     @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
     /*
@@ -350,7 +349,8 @@ public class StandardObjCreationController {
             return ResponseEntity
                     .status(404)
                     .body(new MessageResponse(
-                            "Couldn't find suitable cashflow Or income configuration object. Does it even exist?"));
+                            "Couldn't find suitable cashflow Or income configuration object. " +
+                                    "Does two of them even exist?"));
         }
 
         // new way to do all business logic in standardStatementCreationHelper.

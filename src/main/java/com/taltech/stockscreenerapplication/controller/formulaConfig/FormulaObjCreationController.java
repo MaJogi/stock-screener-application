@@ -29,57 +29,6 @@ public class FormulaObjCreationController {
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
 
-    // Purely used for testing purposes.
-    /*
-    @GetMapping("/createMappingFor/{ticker}/forTestingPurposes")
-    public ResponseEntity<MessageResponse> test(@PathVariable String ticker) {
-
-        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
-
-        CompanyIncomeStatFormulaConfig testIncomeConfig = new CompanyIncomeStatFormulaConfig();
-        long firstEvenConfigurationId = 1;
-        testIncomeConfig.setCompany_config_collection_id(firstEvenConfigurationId);
-
-        testIncomeConfig.setDateFrom("2016");
-        testIncomeConfig.setDateTo(null);
-        testIncomeConfig.setRevenue("#Revenue + #Other operating income");
-        testIncomeConfig.setCostOfRevenue("#Cost of sales");
-        testIncomeConfig.setGrossProfit("#Revenue - #Cost of sales");
-        testIncomeConfig.setGrossProfitRatio("(#Revenue - #Cost of sales) / (#Revenue + #Other operating income)");
-        testIncomeConfig.setRAndDexpenses(null);
-        testIncomeConfig.setGeneralAndAdminExpenses("#Other Operating Expenses + #Staff costs");
-        testIncomeConfig.setSellingAndMarketingExpenses(null);
-        testIncomeConfig.setOtherExpenses("#Other expenses");
-        testIncomeConfig.setOperatingExpenses("#Other Operating Expenses + #Staff costs + #Other expenses + #Depreciation");
-        testIncomeConfig.setCostAndExpenses("#Cost of sales + (#Other Operating Expenses + #Staff costs + #Other expenses + #Depriciation, amortization and impairment losses)");
-        testIncomeConfig.setInterestExpense("#Finance costs");
-        testIncomeConfig.setDepricationAndAmortization("#Depriciation, amortization and impairment losses");
-        testIncomeConfig.setEbitda("#Operating profit + #Depriciation, amortization and impairment losses");
-        testIncomeConfig.setEbitdaRatio("(#Operating profit + #Depreciation …) / (#Revenue + #Other operating income)");
-        testIncomeConfig.setOperatingIncome("#Operating profit");
-        testIncomeConfig.setOperatingIncomeRatio("#Operating profit / (#Revenue + #Other operating income)");
-        testIncomeConfig.setTotalOtherIncomeExpensesNet(null);
-        testIncomeConfig.setIncomeBeforeTax("#NET PROFIT FOR THE FINANCIAL YEAR");
-        testIncomeConfig.setIncomeBeforeTaxRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-        testIncomeConfig.setIncomeTaxExpense(null);
-        testIncomeConfig.setNetIncome("#NET PROFIT FOR THE FINANCIAL YEAR");
-        testIncomeConfig.setNetIncomeRatio("#NET PROFIT FOR THE FINANCIAL YEAR / (#Revenue + #Other operating income)");
-        testIncomeConfig.setEps("#Basic and diluted earnings per share");
-        testIncomeConfig.setEpsDiluted("#Basic and diluted earnings per share");
-        testIncomeConfig.setWeightedAverageShsOut(null);
-        testIncomeConfig.setWeightedAverageShsOutDil(null);
-
-        company.getIncomeConfigurations().add(testIncomeConfig);
-
-        companyDimensionRepository.save(company);
-
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse(
-                        "Mapping created, check if formulas for income, balance, cashflow statements are done"));
-    }
-     */
-
     @PostMapping(value = "/createMappingFor/{ticker}/income",
             produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> singleIncomeStatementMapping(

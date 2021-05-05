@@ -4,7 +4,6 @@ import com.taltech.stockscreenerapplication.Constants;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
-import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
 import com.taltech.stockscreenerapplication.service.StatementsToDb.RawStatementsToDbHelper;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
@@ -38,19 +37,10 @@ public class ReadLocalCsvController {
     @Autowired
     public RawStatementsToDbHelper statementsToDbHelper;
 
-    @Autowired
-    private GroupOfStatementsRepository groupOfStatementsRepository;
 
-    //Advanced request example:
-    /*
-    @PostMapping(value = "/{userId}/tickers", produces = "application/json")
+    /* Authorization example:
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<MessageResponse> saveTicker(@PathVariable final Long userId,
-                                                      @RequestBody final AddTickerRequest addTickerRequest) {
-        ...
-    }
     */
-
 
     @GetMapping("/") // default mapping without additional arguments. Right now reading in csv
     public ResponseEntity<MessageResponse> getDefaultPage() {
@@ -60,18 +50,7 @@ public class ReadLocalCsvController {
                         "Read Usage guide to know how this controller can be used"));
     }
 
-    /*
-    1. Data is in right format in csv file.
-    1. 1. Index 0: Income, Index 1: cashflow, Index 2: balance
-    ...
-    3. incomeStatRaw object is created
-    4. Attributes for raw income statement is created
-    5. 3 & 4 is repated for other raw statements
-    6. Company is resaved to database with newly added objects.
-    <Needs to be updated>
-    */
-
-    // TKM1T
+    // Ticker can be for example: TKM1T
     @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         boolean fileAlreadyExits = sourceCsvFileRepository
@@ -81,7 +60,7 @@ public class ReadLocalCsvController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse(
-                            "File is already read in database"));
+                            "File is already in the database. No need to add it second time."));
         }
 
         LOGGER.info("Starting reading in csv file");
@@ -95,24 +74,22 @@ public class ReadLocalCsvController {
         }
 
         if (result == null) {
-            LOGGER.error("Result entity contains null, which should actually be a list of three different lists");
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Something went wrong with reading in values from CSV file"));
+                    .body(new MessageResponse("Something went wrong with reading in values from CSV file." +
+                            " Result contains null"));
         }
 
         // we need to find a firm, to upload a csv file to its name.
         CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         // get lists for all statements rows of particular file
-        // Example nr 1 (readme)
         List<List<String>> incomeList = result.get(0);
         List<List<String>> cashFlowList = result.get(1);
         List<List<String>> balanceList = result.get(2);
 
         // first rows of all income statements (header)
         // Ex: [Date_information (note: Note), Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-
         List<String> firstIncomeStatRow = incomeList.get(0);
         List<String> firstCashflowRow = cashFlowList.get(0);
         List<String> firstBalanceRow = balanceList.get(0);
@@ -130,7 +107,7 @@ public class ReadLocalCsvController {
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
         List<List<String>> balanceListAttributesWithData = balanceList.subList(1, balanceList.size());
 
-        // Luuakse uus SourceCsvFile üksus
+        // New source file object is created.
         SourceCsvFile newSourceFile = new SourceCsvFile();
         newSourceFile.setSourceFileName(String.format(Constants.UPLOADED_FILE_LOCATION, fileName));
 

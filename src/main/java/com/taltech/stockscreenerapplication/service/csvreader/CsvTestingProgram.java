@@ -9,9 +9,9 @@ import java.util.List;
 /* Class is simply used for testing in terminal */
 
 @Service
-public class CsvProgram {
+public class CsvTestingProgram {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvProgram.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvTestingProgram.class);
 
     public static void main(String[] args) throws Exception {
         CsvReaderAndProcessImpl readerImpl = new CsvReaderAndProcessImpl();

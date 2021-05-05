@@ -452,11 +452,12 @@ public class StandardStatementCreationHelper {
         We have balance configurations: from 31.12.2015 to 31.12.2016 AND other one 01.01.2017 - 31.12.2019
         Now we have to find right configuration according to balance_date. This way we will get also a configuration
         collection id, which in turn gives us three configurations.
-        This condfigurations will be used to generate standard statement objects.
+        Those configurations will be used to generate standard statement objects.
     */
     public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
             List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs,
             String balance_date) {
+
         Date dateObject = new Date();
         try {
             dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(balance_date);
@@ -492,8 +493,8 @@ public class StandardStatementCreationHelper {
     }
 
     public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(
-            List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs,
-            Long companyConfigCollectionId) {
+            List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs, Long companyConfigCollectionId) {
+
         for (CompanyCashflowStatFormulaConfig config : companyCashflowStatFormulaConfigs) {
             if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
                 return config;
@@ -503,8 +504,8 @@ public class StandardStatementCreationHelper {
     }
 
     public static CompanyIncomeStatFormulaConfig findRightIncomeConfig(
-            List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs,
-            Long companyConfigCollectionId) {
+            List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs, Long companyConfigCollectionId) {
+
         for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
             if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
                 return config;
@@ -512,6 +513,7 @@ public class StandardStatementCreationHelper {
         }
         return null;
     }
+
 
     // Adding attribute to context, so I can use them later as variables when creating standard statement.
     // stContext.setVariable("Revenue", 150);

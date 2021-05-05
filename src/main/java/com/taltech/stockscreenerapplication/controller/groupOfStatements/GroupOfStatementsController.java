@@ -38,7 +38,7 @@ public class GroupOfStatementsController {
 
         CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker_id);
 
-        return groupOfStatementsRepository.findGroupOfStatementsWhereEveryStatementIsPresent(company.getTicker_id()); // where...
+        return groupOfStatementsRepository.findGroupOfStatementsWhereEveryStatementIsPresent(company.getTicker_id());
     }
 
     public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
