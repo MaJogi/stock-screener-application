@@ -9,11 +9,14 @@ import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowSta
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
-import com.taltech.stockscreenerapplication.repository.*;
+import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
+import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
+import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.service.formulaToValue.StandardStatementCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -322,11 +326,19 @@ public class StandardObjCreationController {
 
 
         List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
+        List<FormulaConfig> companyCashflowConfigs = new LinkedList<>();
+        companyCashflowConfigs.addAll(company.getCashflowConfigurations());
+        List<FormulaConfig> companyIncomeConfigs = new LinkedList<>();
+        companyIncomeConfigs.addAll(company.getIncomeConfigurations());
+
+        /*
+        List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
         List<CompanyCashflowStatFormulaConfig> companyCashflowConfigs = company.getCashflowConfigurations();
         List<CompanyIncomeStatFormulaConfig> companyIncomeConfigs = company.getIncomeConfigurations();
+         */
 
 
-        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = StandardStatementCreationHelper
+        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = (CompanyBalanceStatFormulaConfig) StandardStatementCreationHelper
                 .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
         if (rightCompanyBalanceConfig == null) {
@@ -340,10 +352,17 @@ public class StandardObjCreationController {
         // that i am going to use later, to generate standard statements (group of them).
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
+        CompanyCashflowStatFormulaConfig cashflowConfig = (CompanyCashflowStatFormulaConfig) StandardStatementCreationHelper
+                .findRightConfig(companyCashflowConfigs, companyConfigCollectionId);
+        CompanyIncomeStatFormulaConfig incomeConfig = (CompanyIncomeStatFormulaConfig) StandardStatementCreationHelper
+                .findRightConfig(companyIncomeConfigs, companyConfigCollectionId);
+
+        /*
         CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
                 .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
         CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
                 .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
+         */
 
         if (cashflowConfig == null || incomeConfig == null) {
             return ResponseEntity

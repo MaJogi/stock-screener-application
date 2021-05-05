@@ -1,5 +1,6 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
+import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
@@ -454,7 +455,7 @@ public class StandardStatementCreationHelper {
         collection id, which in turn gives us three configurations.
         Those configurations will be used to generate standard statement objects.
     */
-    public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
+    public static FormulaConfig findRightBalanceConfig(
             List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs,
             String balance_date) {
 
@@ -467,7 +468,7 @@ public class StandardStatementCreationHelper {
             LOGGER.info("ParseException!");
         }
 
-        for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
+        for (FormulaConfig currentConfig : companyBalanceConfigs) {
             try {
                 Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateFrom());
                 Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateTo());
@@ -507,6 +508,17 @@ public class StandardStatementCreationHelper {
             List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs, Long companyConfigCollectionId) {
 
         for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
+            if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
+                return config;
+            }
+        }
+        return null;
+    }
+
+    public static FormulaConfig findRightConfig(
+            List<FormulaConfig> companyFormulaConfigs, Long companyConfigCollectionId) {
+
+        for (FormulaConfig config : companyFormulaConfigs) {
             if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
                 return config;
             }

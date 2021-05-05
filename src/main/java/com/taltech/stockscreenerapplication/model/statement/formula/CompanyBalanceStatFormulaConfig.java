@@ -14,20 +14,21 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "firm_balance_statement_formula")
-public class CompanyBalanceStatFormulaConfig {
+public class CompanyBalanceStatFormulaConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "balance_stat_formula_id")
     private Long income_stat_formula_id;
 
-    // Administrator can create a collection of statement configurations, for specific date. For example: 31.06.2017
-    @Column(name = "company_config_collection_id")
-    private Long company_config_collection_id;
-
     /*
     @Column(name = "symbol") // which company it belong to
     private String symbol;
      */
+
+    /*
+    // Administrator can create a collection of statement configurations, for specific date. For example: 31.06.2017
+    @Column(name = "company_config_collection_id")
+    private Long company_config_collection_id;
 
     @Column(name = "date_from") // For example 2014-
     private String dateFrom;
@@ -35,6 +36,7 @@ public class CompanyBalanceStatFormulaConfig {
     @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
     // because company changed statement writing policy
     private String dateTo;
+     */
 
     @Column(name = "cash_and_cash_equivalents")
     private String cashAndCashEquivalents;
@@ -157,9 +159,9 @@ public class CompanyBalanceStatFormulaConfig {
     public String toString() {
         return "CompanyBalanceStatFormulaConfig{" +
                 "income_stat_formula_id=" + income_stat_formula_id +
-                ", company_config_collection_id=" + company_config_collection_id +
-                ", dateFrom='" + dateFrom + '\'' +
-                ", dateTo='" + dateTo + '\'' +
+//                ", company_config_collection_id=" + company_config_collection_id +
+//                ", dateFrom='" + dateFrom + '\'' +
+//                ", dateTo='" + dateTo + '\'' +
                 ", cashAndCashEquivalents='" + cashAndCashEquivalents + '\'' +
                 ", shortTermInvestments='" + shortTermInvestments + '\'' +
                 ", cashAndShortTermInvestments='" + cashAndShortTermInvestments + '\'' +

@@ -14,12 +14,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "firm_cashflow_statement_formula")
-public class CompanyCashflowStatFormulaConfig {
+public class CompanyCashflowStatFormulaConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_stat_formula_id")
     private Long cashflow_stat_formula_id;
 
+    /*
     @Column(name = "company_config_collection_id")
     private Long company_config_collection_id;
     
@@ -28,6 +29,7 @@ public class CompanyCashflowStatFormulaConfig {
 
     @Column(name = "date_to")
     private String dateTo;
+     */
 
     @Column(name = "net_income")
     private String netIncome;
@@ -84,9 +86,9 @@ public class CompanyCashflowStatFormulaConfig {
     public String toString() {
         return "CompanyCashflowStatFormulaConfig{" +
                 "cashflow_stat_formula_id=" + cashflow_stat_formula_id +
-                ", company_config_collection_id=" + company_config_collection_id +
-                ", dateFrom='" + dateFrom + '\'' +
-                ", dateTo='" + dateTo + '\'' +
+//                ", company_config_collection_id=" + company_config_collection_id +
+//                ", dateFrom='" + dateFrom + '\'' +
+//                ", dateTo='" + dateTo + '\'' +
                 ", netIncome='" + netIncome + '\'' +
                 ", depriciationAndAmortization='" + depriciationAndAmortization + '\'' +
                 ", stockBasedCompensation='" + stockBasedCompensation + '\'' +
