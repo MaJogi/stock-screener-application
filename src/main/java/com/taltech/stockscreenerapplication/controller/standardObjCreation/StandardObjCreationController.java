@@ -291,6 +291,8 @@ public class StandardObjCreationController {
                                     "date is correct"));
         }
 
+        // Todo: At this point you should check if standard object group is already created for that balance date!!!
+
         // now we need to find as is statements, which are going to be used later.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
         CashflowStatRaw cashflowStatementRaw = rightRawGroupOfStatements.getCashflowStatRaw();

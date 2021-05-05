@@ -25,9 +25,6 @@ public class BalanceStatStandWithValues extends StatStandard {
     @PrimaryKeyJoinColumn(name = "balance_stat_formula_id") // or maybe joincolumn
     private CompanyBalanceStatFormulaConfig balance_stat_formula_id;
 
-    @Column(name = "date_quarter_year")
-    private String dateOrQuarterOrYear;
-
     @Column(name = "cash_and_cash_equivalents")
     private Double cashAndCashEquivalents;
 
