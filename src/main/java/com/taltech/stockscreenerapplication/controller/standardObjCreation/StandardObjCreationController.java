@@ -39,15 +39,6 @@ public class StandardObjCreationController {
     private CompanyDimensionRepository companyDimensionRepository;
 
     @Autowired
-    private IncomeStatRawRepository incometatRawRepository;
-
-    @Autowired
-    private CashflowStatRawRepository cashflowStatRawRepository;
-
-    @Autowired
-    private BalanceStatRawRepository balanceStatRawRepository;
-
-    @Autowired
     private GroupOfStatementsRepository groupOfStatementsRepository;
 
     @Autowired
@@ -289,7 +280,7 @@ public class StandardObjCreationController {
         GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
-        if (rightRawGroupOfStatements == null) {
+        if (rightRawGroupOfStatements == null){
             return ResponseEntity
                     .status(404)
                     .body(new MessageResponse(
@@ -336,12 +327,6 @@ public class StandardObjCreationController {
         List<CompanyIncomeStatFormulaConfig> companyIncomeConfigs = company.getIncomeConfigurations();
 
 
-        // Ex balance_date is "30.06.2017"
-        // We have balance configurations: from 31.12.2015 to 31.12.2016 AND other one 01.01.2017 - 31.12.2019
-        // Now we have to find right configuration according to balance_date. This way we will get also a configuration
-        // collection id, which in turn gives us three configurations.
-        // This condfigurations will be used to generate standard statement objects.
-
         CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = StandardStatementCreationHelper
                 .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
@@ -368,18 +353,8 @@ public class StandardObjCreationController {
                             "Couldn't find suitable cashflow Or income configuration object. Does it even exist?"));
         }
 
-        // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
-        // statements which will later be used to populate standard statements. Correct executable statements are added
-        // into list.
-        standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
-        // Now we get dynamically created formulas
-        List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        // Preparation is done.
-        // Now method is executed, which using formulas with pre defined variables
-        // generates new standard balance statement.
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                standardStatementCreationHelper.getStContextBalance());
-
+        // new way to do all business logic in standardStatementCreationHelper.
+        standardStatementCreationHelper.createBalanceStatement(rightCompanyBalanceConfig);
 
         // here continues same process with other statements
         // cashflow

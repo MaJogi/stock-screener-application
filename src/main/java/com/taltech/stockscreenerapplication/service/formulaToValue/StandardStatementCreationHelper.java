@@ -447,6 +447,13 @@ public class StandardStatementCreationHelper {
     }
 
     // Right config according to date.
+    /*
+        Ex balance_date is "30.06.2017"
+        We have balance configurations: from 31.12.2015 to 31.12.2016 AND other one 01.01.2017 - 31.12.2019
+        Now we have to find right configuration according to balance_date. This way we will get also a configuration
+        collection id, which in turn gives us three configurations.
+        This condfigurations will be used to generate standard statement objects.
+    */
     public static CompanyBalanceStatFormulaConfig findRightBalanceConfig(
             List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs,
             String balance_date) {
@@ -523,6 +530,20 @@ public class StandardStatementCreationHelper {
         stContextBalance = new StandardEvaluationContext(balanceStatement);
         stContextCashflow = new StandardEvaluationContext(cashflowStatement);
         stContextIncome = new StandardEvaluationContext(incomeStatement);
+    }
+
+    public void createBalanceStatement(CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig) {
+        // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
+        // statements which will later be used to populate standard statements. Correct executable statements are added
+        // into list.
+        createBalanceStrings(rightCompanyBalanceConfig);
+        // Now we get dynamically created formulas
+        List<String> balanceStandardFieldFormulas = getBalanceStandardFieldFormulas();
+        // Preparation is done.
+        // Now method is executed, which using formulas with pre defined variables
+        // generates new standard balance statement.
+        createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
+                stContextBalance);
     }
 }
 
