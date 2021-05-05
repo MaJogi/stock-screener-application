@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -207,6 +208,47 @@ public class StatementsToDbHelperImpl {
 
             i++;
         }
+    }
+
+    public IncomeStatRaw customIncomeRawGet(int i) {
+        IncomeStatRaw currentCsvStatement = null;
+        try {
+            currentCsvStatement = currentCsvIncomeRawList.get(i);
+        }
+        catch (Exception ignored) { }
+
+        return currentCsvStatement;
+    }
+
+    public CashflowStatRaw customCashflowRawGet(int i) {
+        CashflowStatRaw currentCsvStatement = null;
+        try {
+            currentCsvStatement = currentCsvCashflowRawList.get(i);
+        }
+        catch (Exception ignored) { }
+
+        return currentCsvStatement;
+    }
+
+    public BalanceStatRaw customBalanceRawGet(int i) {
+        BalanceStatRaw currentCsvStatement = null;
+        try {
+            currentCsvStatement = currentCsvBalanceRawList.get(i);
+        }
+        catch (Exception ignored) { }
+
+        return currentCsvStatement;
+    }
+
+    List<Integer> listInts;
+    public int findMaxAmountOfSpecificStatementsInCsvFile() {
+        listInts = new LinkedList<>();
+        listInts.add(currentCsvIncomeRawList.size()); // 4
+        listInts.add(currentCsvCashflowRawList.size()); // 2
+        listInts.add(currentCsvBalanceRawList.size()); // 2
+        int maxLength = Collections.max(listInts);
+        LOGGER.info("MaxLength: {}", maxLength);
+        return maxLength;
     }
 
     @Override

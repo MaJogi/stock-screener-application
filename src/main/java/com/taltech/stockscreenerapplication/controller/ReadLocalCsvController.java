@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 @RestController
@@ -105,11 +103,7 @@ public class ReadLocalCsvController {
         }
 
         // we need to find a firm, to upload a csv file to its name.
-        CompanyDimension company = companyDimensionRepository
-                .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
-
-        LOGGER.info("Company name:::::::::::. {}", company.getName());
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         // get lists for all statements rows of particular file
         // Example nr 1 (readme)
@@ -152,41 +146,18 @@ public class ReadLocalCsvController {
         statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries,
                 balanceListAttributesWithData, company, newSourceFile);
 
-        // new
-        // length of largest collection of statements
-        List<Integer> listInts = new LinkedList<>();
-        listInts.add(statementsToDbHelper.currentCsvIncomeRawList.size()); // 4
-        listInts.add(statementsToDbHelper.currentCsvCashflowRawList.size()); // 2
-        listInts.add(statementsToDbHelper.currentCsvBalanceRawList.size()); // 2
-        int maxLength = Collections.max(listInts);
-        LOGGER.info("MaxLength: {}", maxLength);
+        int maxLength = statementsToDbHelper.findMaxAmountOfSpecificStatementsInCsvFile();
 
         // Creating GroupsOfStatements
         for (int i = 0; i < maxLength; i++) {
             GroupOfStatements groupOfStatements = new GroupOfStatements();
-            try {
-                groupOfStatements.setIncomeStatRaw(statementsToDbHelper.currentCsvIncomeRawList.get(i));
-            }
-            catch (Exception ignored) { }
-            try {
-                groupOfStatements.setCashflowStatRaw(statementsToDbHelper.currentCsvCashflowRawList.get(i));
-            }
-            catch (Exception ignored) { }
-            try {
-                groupOfStatements.setBalanceStatRaw(statementsToDbHelper.currentCsvBalanceRawList.get(i));
-            }
-            catch (Exception ignored) { }
-
-            /*
-            groupOfStatements.setIncomeStatRaw(statementsToDbHelper.tempIncomeRawList.get(i));
-            groupOfStatements.setCashflowStatRaw(statementsToDbHelper.tempCashflowRawList.get(i));
-            groupOfStatements.setBalanceStatRaw(statementsToDbHelper.tempBalanceRawList.get(i));
-             */
+            groupOfStatements.setIncomeStatRaw(statementsToDbHelper.customIncomeRawGet(i));
+            groupOfStatements.setCashflowStatRaw(statementsToDbHelper.customCashflowRawGet(i));
+            groupOfStatements.setBalanceStatRaw(statementsToDbHelper.customBalanceRawGet(i));
 
             //company.getGroupOfStatements().add(groupOfStatements);
             groupOfStatements.setCompanyDimension(company);
             groupOfStatementsRepository.save(groupOfStatements);
-
         }
 
         // End creating GroupsOfStatements
@@ -196,15 +167,22 @@ public class ReadLocalCsvController {
         newSourceFile.setTicker_id(ticker);
         sourceCsvFileRepository.save(newSourceFile);
 
-        CompanyDimension com = companyDimensionRepository
-                .findById(ticker).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with ticker: " + ticker));
+        /*
+        CompanyDimension com = findCompanyByIdWithExceptionHelper(ticker);
         LOGGER.info("Thats how many company have incomestatements now: {} ", com.getIncomeRawStatements().size());
         LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.getCashflowRawStatements().size());
         LOGGER.info("Thats how many company have balancestatements now: {} ", com.getBalanceRawStatements().size());
+         */
 
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse("Database seems to be populated successfully, check database"));
     }
+
+    public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
+        return companyDimensionRepository.findById(tickerId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Unable to find company with tickerId: " + tickerId));
+    }
+
 }
