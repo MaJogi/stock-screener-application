@@ -1,11 +1,12 @@
 package com.taltech.stockscreenerapplication.controller;
 
+import com.taltech.stockscreenerapplication.Constants;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
-import com.taltech.stockscreenerapplication.service.StatementsToDb.StatementsToDbHelperImpl;
+import com.taltech.stockscreenerapplication.service.StatementsToDb.RawStatementsToDbHelper;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class ReadLocalCsvController {
 
     /* @Autowired // creates a singleton. Do i even need a singleton? */
     @Autowired
-    public StatementsToDbHelperImpl statementsToDbHelper;
+    public RawStatementsToDbHelper statementsToDbHelper;
 
     @Autowired
     private GroupOfStatementsRepository groupOfStatementsRepository;
@@ -116,9 +117,6 @@ public class ReadLocalCsvController {
         List<String> firstIncomeStatRow = incomeList.get(0);
         List<String> firstCashflowRow = cashFlowList.get(0);
         List<String> firstBalanceRow = balanceList.get(0);
-        LOGGER.info("Size of the list is {} <-----------", firstIncomeStatRow.size());
-        LOGGER.info("Size of the list is {} <-----------", firstCashflowRow.size());
-        LOGGER.info("Size of the list is {} <-----------", firstBalanceRow.size());
 
         // Pure date lists of specific financial statements
         // Ex: [Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
@@ -133,10 +131,9 @@ public class ReadLocalCsvController {
         List<List<String>> cashflowListAttributesWithData = cashFlowList.subList(1, cashFlowList.size());
         List<List<String>> balanceListAttributesWithData = balanceList.subList(1, balanceList.size());
 
-        // 2. Luuakse uus SourceCsvFile üksus
-
+        // Luuakse uus SourceCsvFile üksus
         SourceCsvFile newSourceFile = new SourceCsvFile();
-        newSourceFile.setSourceFileName(String.format("src/main/resources/csv/%s.csv", fileName));
+        newSourceFile.setSourceFileName(String.format(Constants.UPLOADED_FILE_LOCATION, fileName));
 
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile);
@@ -146,7 +143,6 @@ public class ReadLocalCsvController {
                 balanceListAttributesWithData, company, newSourceFile);
 
         int maxLength = statementsToDbHelper.findMaxAmountOfSpecificStatementsInCsvFile();
-
         statementsToDbHelper.createGroupsOfStatementsForCompany(maxLength, company);
 
         companyDimensionRepository.save(company);

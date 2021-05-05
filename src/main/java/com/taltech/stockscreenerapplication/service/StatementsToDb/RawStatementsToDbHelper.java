@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class StatementsToDbHelperImpl {
+public class RawStatementsToDbHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StatementsToDbHelperImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RawStatementsToDbHelper.class);
 
     @Autowired
     private CashflowStatRawRepository cashflowStatRawRepository;
@@ -44,7 +44,7 @@ public class StatementsToDbHelperImpl {
     public List<CashflowStatRaw> currentCsvCashflowRawList;
     public List<BalanceStatRaw> currentCsvBalanceRawList;
 
-    public StatementsToDbHelperImpl() {
+    public RawStatementsToDbHelper() {
         currentCsvIncomeRawList = new LinkedList<>();
         currentCsvCashflowRawList = new LinkedList<>();
         currentCsvBalanceRawList = new LinkedList<>();

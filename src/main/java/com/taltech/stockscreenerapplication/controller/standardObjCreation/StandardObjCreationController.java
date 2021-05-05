@@ -275,7 +275,7 @@ public class StandardObjCreationController {
 
         // Now we need to get statementGroup, which balance date is {balance_date}
         List<GroupOfStatements> allOfcompanyRawGroupOfStatements = groupOfStatementsRepository
-                .findGroupOfStatementsByIncomeStatRawNotNullAndCashflowStatRawIsNotNullAndBalanceStatRawIsNotNullAndCompanyDimensionIs(company);
+                .findGroupOfStatementsWhereEveryStatementIsPresent(company.getTicker_id());
 
         GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
