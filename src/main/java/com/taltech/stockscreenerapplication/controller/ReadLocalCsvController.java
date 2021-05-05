@@ -2,7 +2,6 @@ package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
-import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
@@ -148,19 +147,7 @@ public class ReadLocalCsvController {
 
         int maxLength = statementsToDbHelper.findMaxAmountOfSpecificStatementsInCsvFile();
 
-        // Creating GroupsOfStatements
-        for (int i = 0; i < maxLength; i++) {
-            GroupOfStatements groupOfStatements = new GroupOfStatements();
-            groupOfStatements.setIncomeStatRaw(statementsToDbHelper.customIncomeRawGet(i));
-            groupOfStatements.setCashflowStatRaw(statementsToDbHelper.customCashflowRawGet(i));
-            groupOfStatements.setBalanceStatRaw(statementsToDbHelper.customBalanceRawGet(i));
-
-            //company.getGroupOfStatements().add(groupOfStatements);
-            groupOfStatements.setCompanyDimension(company);
-            groupOfStatementsRepository.save(groupOfStatements);
-        }
-
-        // End creating GroupsOfStatements
+        statementsToDbHelper.createGroupsOfStatementsForCompany(maxLength, company);
 
         companyDimensionRepository.save(company);
 

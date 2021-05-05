@@ -5,9 +5,11 @@ import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
+import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,9 @@ public class StatementsToDbHelperImpl {
 
     @Autowired
     private IncomeStatRawRepository incomeStatRawRepository;
+
+    @Autowired
+    private GroupOfStatementsRepository groupOfStatementsRepository;
 
     public List<IncomeStatRaw> currentCsvIncomeRawList;
     public List<CashflowStatRaw> currentCsvCashflowRawList;
@@ -249,6 +254,22 @@ public class StatementsToDbHelperImpl {
         int maxLength = Collections.max(listInts);
         LOGGER.info("MaxLength: {}", maxLength);
         return maxLength;
+    }
+
+    public void createGroupsOfStatementsForCompany(int maxLength, CompanyDimension company) {
+        // Creating GroupsOfStatements
+        for (int i = 0; i < maxLength; i++) {
+            GroupOfStatements groupOfStatements = new GroupOfStatements();
+            groupOfStatements.setIncomeStatRaw(customIncomeRawGet(i));
+            groupOfStatements.setCashflowStatRaw(customCashflowRawGet(i));
+            groupOfStatements.setBalanceStatRaw(customBalanceRawGet(i));
+
+            //company.getGroupOfStatements().add(groupOfStatements);
+            groupOfStatements.setCompanyDimension(company);
+            groupOfStatementsRepository.save(groupOfStatements);
+        }
+
+        // End creating GroupsOfStatements
     }
 
     @Override
