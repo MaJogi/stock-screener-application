@@ -339,14 +339,9 @@ public class StandardObjCreationController {
         List<FormulaConfig> companyCashflowConfigs = new LinkedList<>(company.getCashflowConfigurations());
         List<FormulaConfig> companyIncomeConfigs = new LinkedList<>(company.getIncomeConfigurations());
 
-        /*
-        List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
-        List<CompanyCashflowStatFormulaConfig> companyCashflowConfigs = company.getCashflowConfigurations();
-        List<CompanyIncomeStatFormulaConfig> companyIncomeConfigs = company.getIncomeConfigurations();
-         */
 
-
-        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = (CompanyBalanceStatFormulaConfig) StandardStatementCreationHelper
+        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig =
+                (CompanyBalanceStatFormulaConfig) StandardStatementCreationHelper
                 .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
         if (rightCompanyBalanceConfig == null) {
@@ -365,12 +360,6 @@ public class StandardObjCreationController {
         CompanyIncomeStatFormulaConfig incomeConfig = (CompanyIncomeStatFormulaConfig) StandardStatementCreationHelper
                 .findRightConfig(companyIncomeConfigs, companyConfigCollectionId);
 
-        /*
-        CompanyCashflowStatFormulaConfig cashflowConfig = StandardStatementCreationHelper
-                .findRightCashflowConfig(companyCashflowConfigs, companyConfigCollectionId);
-        CompanyIncomeStatFormulaConfig incomeConfig = StandardStatementCreationHelper
-                .findRightIncomeConfig(companyIncomeConfigs, companyConfigCollectionId);
-         */
 
         if (cashflowConfig == null || incomeConfig == null) {
             return ResponseEntity

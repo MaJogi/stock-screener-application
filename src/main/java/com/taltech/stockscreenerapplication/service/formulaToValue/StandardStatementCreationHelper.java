@@ -493,28 +493,6 @@ public class StandardStatementCreationHelper {
         return null;
     }
 
-    public static CompanyCashflowStatFormulaConfig findRightCashflowConfig(
-            List<CompanyCashflowStatFormulaConfig> companyCashflowStatFormulaConfigs, Long companyConfigCollectionId) {
-
-        for (CompanyCashflowStatFormulaConfig config : companyCashflowStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
-                return config;
-            }
-        }
-        return null;
-    }
-
-    public static CompanyIncomeStatFormulaConfig findRightIncomeConfig(
-            List<CompanyIncomeStatFormulaConfig> companyIncomeStatFormulaConfigs, Long companyConfigCollectionId) {
-
-        for (CompanyIncomeStatFormulaConfig config : companyIncomeStatFormulaConfigs) {
-            if (config.getCompany_config_collection_id().equals(companyConfigCollectionId)) {
-                return config;
-            }
-        }
-        return null;
-    }
-
     public static FormulaConfig findRightConfig(
             List<FormulaConfig> companyFormulaConfigs, Long companyConfigCollectionId) {
 
