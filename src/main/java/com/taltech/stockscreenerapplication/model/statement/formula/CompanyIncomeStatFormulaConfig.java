@@ -12,28 +12,12 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "firm_income_statement_formula")
+@Table(name = "company_income_statement_config")
 public class CompanyIncomeStatFormulaConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "income_stat_formula_id")
     private Long income_stat_formula_id;
-
-    /*
-    @Column(name = "symbol") // which company it belong to
-    private String symbol;
-     */
-
-    /*
-    @Column(name = "company_config_collection_id")
-    private Long company_config_collection_id;
-
-    @Column(name = "date_from")
-    private String dateFrom;
-
-    @Column(name = "date_to")
-    private String dateTo;
-    */
 
     @Column(name = "revenue")
     private String revenue; // #Revenue

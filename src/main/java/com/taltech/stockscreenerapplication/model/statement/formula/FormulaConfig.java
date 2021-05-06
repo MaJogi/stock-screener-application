@@ -20,4 +20,9 @@ public class FormulaConfig {
 
     @Column(name = "date_to")
     private String dateTo;
+
+    /*
+    @Column(name = "symbol") // which company it belong to
+    private String symbol;
+     */
 }

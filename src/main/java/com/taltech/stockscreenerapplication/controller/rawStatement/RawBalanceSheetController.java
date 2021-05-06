@@ -1,7 +1,7 @@
-package com.taltech.stockscreenerapplication.controller.rawSheet;
+package com.taltech.stockscreenerapplication.controller.rawStatement;
 
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
-import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
+import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
+import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/rawIncomeStats")
-public class RawIncomeStatController {
+@RequestMapping("/rawBalanceSheets")
+public class RawBalanceSheetController {
     @Autowired
-    private IncomeStatRawRepository incomeStatRawRepository;
+    private BalanceStatRawRepository balanceStatRawRepository;
 
     @GetMapping
-    public Iterable<IncomeStatRaw> getRawIncomeStatements() {
-        return incomeStatRawRepository.findAll();
+    public Iterable<BalanceStatRaw> getRawBalanceSheets() {
+        return balanceStatRawRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public IncomeStatRaw getRawIncomeStatement(@PathVariable final Long id) {
+    public BalanceStatRaw getRawIncomeStatement(@PathVariable final Long id) {
 
-        return incomeStatRawRepository.findById(id)
+        return balanceStatRawRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find company by id: " + id));
     }

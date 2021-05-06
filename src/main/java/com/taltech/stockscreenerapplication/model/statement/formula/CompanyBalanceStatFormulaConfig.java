@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "firm_balance_statement_formula")
+@Table(name = "company_balance_statement_config")
 public class CompanyBalanceStatFormulaConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
