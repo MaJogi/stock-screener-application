@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CompanyBalanceStatFormulaConfigRepository
+public interface CompanyBalanceStatConfigRepository
         extends JpaRepository<CompanyBalanceStatFormulaConfig, Long> { }

@@ -11,5 +11,7 @@ import java.util.List;
 public interface GroupOfStandardStatementsRepository extends JpaRepository<GroupOfStatementsStandard, Long> {
 
     List<GroupOfStatementsStandard> findAllByCompanyDimensionIs(CompanyDimension ticker_id);
+
+    GroupOfStatementsStandard findByBalanceStat_DatePeriodIs(String dateOrPeriod);
 }
 

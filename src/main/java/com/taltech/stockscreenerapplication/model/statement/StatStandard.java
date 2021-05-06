@@ -24,7 +24,7 @@ public class StatStandard {
     private Date acceptedDate;
 
     @Column(name = "date_or_period")
-    private String dateOrPeriod;
+    private String datePeriod;
 
     /*
     @ManyToOne(fetch = FetchType.LAZY)

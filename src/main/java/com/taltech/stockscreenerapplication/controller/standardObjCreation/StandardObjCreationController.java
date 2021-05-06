@@ -291,7 +291,15 @@ public class StandardObjCreationController {
                                     "date is correct"));
         }
 
-        // Todo: At this point you should check if standard object group is already created for that balance date!!!
+        /* Alternative to update'ing existing standard statement (currently keeping code)
+        // Check if groupOfStandardStatement with that balance id already exits
+        if (groupOfStandardStatementsRepository.findByBalanceStat_DatePeriodIs(balance_date) != null) {
+            return ResponseEntity
+                    .status(404)
+                    .body(new MessageResponse(
+                            "You have already created standard statement. Can't create new one."));
+        }
+         */
 
         // now we need to find as is statements, which are going to be used later.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
@@ -386,14 +394,28 @@ public class StandardObjCreationController {
         setDateToEachStatement(balanceStatement, cashflowStatement,
                 incomeStatement, rightRawGroupOfStatements);
 
-        // Will add each new standard statement separately to company. (without a group)
-        addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
-
         //This is now the place to create new GroupOfStandardStatements with newly generated standard statements.
         GroupOfStatementsStandard groupOfStandardStatements =
                 createGroupUsingPreviouslyFoundData(balanceStatement, cashflowStatement, incomeStatement, company);
 
-        groupOfStandardStatementsRepository.save(groupOfStandardStatements);
+        // Check if groupOfStandardStatement with that balance id already exits
+        GroupOfStatementsStandard possibleExistingGroupOfStatements =
+                groupOfStandardStatementsRepository.findByBalanceStat_DatePeriodIs(balance_date);
+        if (possibleExistingGroupOfStatements != null) {
+            LOGGER.info("GROUP of standard statement already exits with that balance date. " +
+                    "Updating values with current configurations");
+            possibleExistingGroupOfStatements.setBalanceStat(balanceStatement);
+            possibleExistingGroupOfStatements.setCashflowStat(cashflowStatement);
+            possibleExistingGroupOfStatements.setIncomeStat(incomeStatement);
+            groupOfStandardStatementsRepository.save(possibleExistingGroupOfStatements);
+        }
+        else {
+            // Will add each new standard statement separately to company. (without a group)
+            addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
+            groupOfStandardStatementsRepository.save(groupOfStandardStatements);
+            LOGGER.info("Created brand new group of standard statements");
+        }
+
         companyDimensionRepository.save(company);
 
         return ResponseEntity
@@ -407,9 +429,9 @@ public class StandardObjCreationController {
                                        IncomeStatStandWithValues incomeStatement,
                                        GroupOfStatements rightRawGroupOfStatements) {
         // Setting peroid values from raw statement to standard statement
-        balanceStatement.setDateOrPeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
-        cashflowStatement.setDateOrPeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
-        incomeStatement.setDateOrPeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
+        balanceStatement.setDatePeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
+        cashflowStatement.setDatePeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
+        incomeStatement.setDatePeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
     }
 
     public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
