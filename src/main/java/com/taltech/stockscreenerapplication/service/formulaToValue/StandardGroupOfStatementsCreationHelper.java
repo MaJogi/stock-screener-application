@@ -1,13 +1,15 @@
 package com.taltech.stockscreenerapplication.service.formulaToValue;
 
-import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
+import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,9 +29,9 @@ import java.util.List;
 @Getter
 @Setter
 //@Service
-public class StandardStatementCreationHelper {
+public class StandardGroupOfStatementsCreationHelper {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StandardStatementCreationHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StandardGroupOfStatementsCreationHelper.class);
     // Initializing Spel parser and helper class to help controller do its job
     SpelExpressionParser parser = new SpelExpressionParser();
 
@@ -130,7 +132,7 @@ public class StandardStatementCreationHelper {
     String netDebtString;
 
 
-    public StandardStatementCreationHelper() {
+    public StandardGroupOfStatementsCreationHelper() {
         incomeStandardFieldFormulas = new LinkedList<>();
         cashflowStandardFieldFormulas = new LinkedList<>();
         balanceStandardFieldFormulas = new LinkedList<>();
@@ -551,5 +553,40 @@ public class StandardStatementCreationHelper {
         createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
                 stContextIncome);
     }
+
+    public void setDateToEachStatement(BalanceStatStandWithValues balanceStatement,
+                                       CashflowStatStandWithValues cashflowStatement,
+                                       IncomeStatStandWithValues incomeStatement,
+                                       GroupOfStatements rightRawGroupOfStatements) {
+        // Setting peroid values from raw statement to standard statement
+        balanceStatement.setDatePeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
+        cashflowStatement.setDatePeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
+        incomeStatement.setDatePeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
+    }
+
+
+    public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
+                                                         BalanceStatStandWithValues balanceStatement,
+                                                         CashflowStatStandWithValues cashflowStatement,
+                                                         IncomeStatStandWithValues incomeStatement){
+        company.getBalanceStatements().add(balanceStatement);
+        company.getCashflowStatements().add(cashflowStatement);
+        company.getIncomeStatements().add(incomeStatement);
+    }
+
+    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandWithValues balanceStatement,
+                                                                         CashflowStatStandWithValues cashflowStatement,
+                                                                         IncomeStatStandWithValues incomeStatement,
+                                                                         CompanyDimension company) {
+        GroupOfStatementsStandard groupOfStandardStatements = new GroupOfStatementsStandard();
+        groupOfStandardStatements.setBalanceStat(balanceStatement);
+        groupOfStandardStatements.setCashflowStat(cashflowStatement);
+        groupOfStandardStatements.setIncomeStat(incomeStatement);
+        groupOfStandardStatements.setCompanyDimension(company);
+        return groupOfStandardStatements;
+    }
+
+
+
 }
 

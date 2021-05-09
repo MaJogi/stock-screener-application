@@ -17,7 +17,7 @@ import com.taltech.stockscreenerapplication.model.statement.incomestatement.Inco
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
-import com.taltech.stockscreenerapplication.service.formulaToValue.StandardStatementCreationHelper;
+import com.taltech.stockscreenerapplication.service.formulaToValue.StandardGroupOfStatementsCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,234 +64,17 @@ public class GroupOfStatementsStandardController {
     public Iterable<GroupOfStatementsStandard> getGroupsOfStandardStatementsForCompany(
             @PathVariable final String ticker_id) {
 
-        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker_id);
+        CompanyDimension company = findCompanyWithExceptionHandler(ticker_id);
 
         return groupOfStandardStatementsRepository.findAllByCompanyDimensionIs(company);
     }
-
-
-    /* Outdated, now we use mapping, which creates all of them (statements) at once
-    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
-
-    /*
-    @GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
-    public ResponseEntity<MessageResponse> incomeMappingFromFormula(@PathVariable String ticker,
-                                                                    @PathVariable String period_or_date) {
-        //SpelExpressionParser parser = new SpelExpressionParser();
-        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
-        IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
-
-        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
-        // Alternate way to get desiredRawIncome
-        // List<IncomeStatRaw> rawIncomeStatements = company.getIncomeRawStatements();
-
-        Long desiredRawIncomeStatId = companyDimensionRepository
-                .findIncomeRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
-
-        IncomeStatRaw incomeStatementRaw = incometatRawRepository.findById(desiredRawIncomeStatId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                "Unable to find incomeStatementRaw with id: " + desiredRawIncomeStatId));
-
-        List<Attribute> attributesWithValues = incomeStatementRaw.getAttributes();
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-
-        // sulgudes on see, mis objekti jaoks need valemid tehakse
-        StandardEvaluationContext stContext  = new StandardEvaluationContext(incomeStatement);
-
-        // stContext.setVariable("Revenue", 150);
-        for (Attribute attr : attributesWithValues) {
-            stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.toString().replaceAll("\\s+", "_"));
-        }
-
-        // VANA
-        // See on see koht, kus PEAKS PROGRAMM JUBA TEADMA, mis confi kasutada, mis perioodi puhul.
-        CompanyIncomeStatFormulaConfig rightCompanyIncomeConfig = company.getIncomeConfigurations().get(0);
-        // VANA END
-
-        standardStatementCreationHelper.createIncomeStrings(rightCompanyIncomeConfig);
-
-        List<String> incomeStandardFieldFormulas = standardStatementCreationHelper.getIncomeStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                stContext);
-
-        company.getIncomeStatements().add(incomeStatement);
-        companyDimensionRepository.save(company);
-
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse(
-                        "GET method (income) returned. Check if result is correct"));
-    }
-    */
-
-    /* Outdated, now we use mapping, which creates all of them (statements) at once
-    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
-    /*
-    @GetMapping("/{ticker}/createCashflowStatementFromFormula/forPeriod/{period_or_date}/")
-    public ResponseEntity<MessageResponse> cashflowMappingFromFormula(@PathVariable String ticker,
-                                                                      @PathVariable String period_or_date) {
-        SpelExpressionParser parser = new SpelExpressionParser();
-        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
-        CashflowStatStandWithValues cashflowStatement = new CashflowStatStandWithValues();
-
-        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
-        // Alternate way to get desiredRawCashflow
-        //List<CashflowStatRaw> rawCashflowStatements = company.getCashflowRawStatements();
-
-        // Miks läbi companyDimensionRepository? Sest seal olen juba kord realiseerinud selle findByDate... meetodi :D
-        Long desiredRawCashflowStatId = companyDimensionRepository
-                .findIncomeRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
-
-        CashflowStatRaw cashflowStatementRaw = cashflowStatRawRepository.findById(desiredRawCashflowStatId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find cashflowStatementRaw with id: " + desiredRawCashflowStatId));
-
-        List<Attribute> attributesWithValues = cashflowStatementRaw.getAttributes();
-
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-
-        // sulgudes on see, mis objekti jaoks need valemid tehakse
-        StandardEvaluationContext stContext  = new StandardEvaluationContext(cashflowStatement);
-
-        // stContext.setVariable("Revenue", 150);
-        for (Attribute attr : attributesWithValues) {
-            stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.toString().replaceAll("\\s+", "_"));
-        }
-
-        CompanyCashflowStatFormulaConfig rightCompanyCashflowConfig = company.getCashflowConfigurations().get(0);
-
-        standardStatementCreationHelper.createCashflowStrings(rightCompanyCashflowConfig);
-        List<String> cashflowStandardFieldFormulas = standardStatementCreationHelper.getCashflowStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                stContext);
-
-        company.getCashflowStatements().add(cashflowStatement);
-        companyDimensionRepository.save(company);
-
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse(
-                        "GET method (cashflow) returned. Check if result is correct"));
-    }
-     */
-
-    /* Outdated, now we use mapping, which creates all of them (statements) at once
-    @GetMapping("/{ticker}/createGroupOfStandardStatements/forPeriod/{balance_date}/") */
-    /*
-    @GetMapping("/{ticker}/createBalanceStatementFromFormula/forPeriod/{period_or_date}/")
-    public ResponseEntity<MessageResponse> balanceMappingFromFormula(@PathVariable String ticker,
-                                                                     @PathVariable String period_or_date) {
-        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
-        BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
-
-        CompanyDimension company = findCompanyWithExceptionHandler(ticker);
-
-        //List<BalanceStatRaw> rawBalanceStatements = company.getBalanceRawStatements();
-        Long desiredRawBalanceStatId = companyDimensionRepository
-                .findBalanceRawIdByDateOrPeriodSpecificCompany(period_or_date, ticker);
-        BalanceStatRaw balanceStatementRaw = balanceStatRawRepository.findById(desiredRawBalanceStatId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find balanceStatementRaw with id: " + desiredRawBalanceStatId));
-        List<Attribute> attributesWithValues = balanceStatementRaw.getAttributes();
-
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-
-        // sulgudes on see, mis objekti jaoks need # tehakse
-        StandardEvaluationContext stContext  = new StandardEvaluationContext(balanceStatement);
-
-        // stContext.setVariable("Revenue", 150);
-        for (Attribute attr : attributesWithValues) {
-            stContext.setVariable(attr.getFieldName().replaceAll("\\s+", "_"), attr.getValue());
-        }
-        for (Attribute attr : attributesWithValues) {
-            LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
-        }
-
-        List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs = company.getBalanceConfigurations();
-        // Hetkel on nt periodOrDate "30.06.2017"
-        // On olemas 31.12.2015 kuni 31.12.2016 ja teine conf 01.01.2017 - 31.12.2019
-
-        // This can be some default value also
-        CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig = null;
-        Date dateObject = new Date();
-        try {
-            dateObject = new SimpleDateFormat("dd.MM.yyyy").parse(period_or_date);
-            System.out.println(period_or_date +"\t" + dateObject );
-        }
-        catch (ParseException e) {
-            LOGGER.info("ParseExceiption!");
-        }
-
-        for (CompanyBalanceStatFormulaConfig currentConfig : companyBalanceConfigs) {
-            try {
-                Date dateFrom = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateFrom());
-                Date dateTo = new SimpleDateFormat("dd.MM.yyyy").parse(currentConfig.getDateTo());
-
-                // convert date to calendar
-                Calendar c = Calendar.getInstance();
-                c.setTime(dateTo);
-                c.add(Calendar.HOUR, 24);
-
-                // convert calendar to date
-                Date dateToOne = c.getTime();
-
-                if (dateObject.after(dateFrom) && dateObject.before(dateToOne) ) {
-                    rightCompanyBalanceConfig = currentConfig;
-                    LOGGER.info("Right company balanceConfig id is: {}", rightCompanyBalanceConfig);
-                    break;
-                }
-            }
-            catch (ParseException e) {
-                LOGGER.info("ParseException!");
-            }
-
-        }
-
-
-        if (rightCompanyBalanceConfig == null) {
-            return ResponseEntity
-                    .status(404)
-                    .body(new MessageResponse(
-                            "Couldn't find suitable balanceConfig. Does it even exist?"));
-        }
-
-        standardStatementCreationHelper.createBalanceStrings(rightCompanyBalanceConfig);
-        List<String> balanceStandardFieldFormulas = standardStatementCreationHelper.getBalanceStandardFieldFormulas();
-        standardStatementCreationHelper.createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                stContext);
-
-        company.getBalanceStatements().add(balanceStatement);
-
-        companyDimensionRepository.save(company);
-
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse(
-                        "GET method (balance) returned. Check if result is correct"));
-    }
-     */
-
 
 
     // without ending "/" it is losing part of date!
     @GetMapping("/{ticker}/create/forPeriod/{balance_date}/")
     public ResponseEntity<MessageResponse> createGroupOfStandardStatementsWithConfigurations(@PathVariable String ticker,
                                                                                              @PathVariable String balance_date) {
-        StandardStatementCreationHelper standardStatementCreationHelper = new StandardStatementCreationHelper();
+        StandardGroupOfStatementsCreationHelper standardGroupOfStatementsCreationHelper = new StandardGroupOfStatementsCreationHelper();
 
         // Creating empty standardStatements to populate them after.
         BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
@@ -304,7 +87,7 @@ public class GroupOfStatementsStandardController {
         List<GroupOfStatements> allOfcompanyRawGroupOfStatements = groupOfStatementsRepository
                 .findGroupOfStatementsWhereEveryStatementIsPresent(company.getTicker_id());
 
-        GroupOfStatements rightRawGroupOfStatements = StandardStatementCreationHelper
+        GroupOfStatements rightRawGroupOfStatements = StandardGroupOfStatementsCreationHelper
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
         if (rightRawGroupOfStatements == null){
@@ -315,15 +98,6 @@ public class GroupOfStatementsStandardController {
                                     "date is correct"));
         }
 
-        /* Alternative to update'ing existing standard statement (currently keeping code)
-        // Check if groupOfStandardStatement with that balance id already exits
-        if (groupOfStandardStatementsRepository.findByBalanceStat_DatePeriodIs(balance_date) != null) {
-            return ResponseEntity
-                    .status(404)
-                    .body(new MessageResponse(
-                            "You have already created standard statement. Can't create new one."));
-        }
-         */
 
         // now we need to find as is statements, which are going to be used later.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
@@ -353,9 +127,9 @@ public class GroupOfStatementsStandardController {
         }
 
 
-        standardStatementCreationHelper.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
+        standardGroupOfStatementsCreationHelper.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
 
-        standardStatementCreationHelper.populateContextesWithValues(balanceAttributesWithValues,
+        standardGroupOfStatementsCreationHelper.populateContextesWithValues(balanceAttributesWithValues,
                 cashflowAttributesWithValues, incomeAttributesWithValues);
 
 
@@ -365,7 +139,7 @@ public class GroupOfStatementsStandardController {
 
 
         BalanceStatConfig rightCompanyBalanceConfig =
-                (BalanceStatConfig) StandardStatementCreationHelper
+                (BalanceStatConfig) StandardGroupOfStatementsCreationHelper
                         .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
         if (rightCompanyBalanceConfig == null) {
@@ -379,9 +153,9 @@ public class GroupOfStatementsStandardController {
         // that i am going to use later, to generate standard statements (group of them).
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
-        CashflowStatConfig cashflowConfig = (CashflowStatConfig) StandardStatementCreationHelper
+        CashflowStatConfig cashflowConfig = (CashflowStatConfig) StandardGroupOfStatementsCreationHelper
                 .findRightConfig(companyCashflowConfigs, companyConfigCollectionId);
-        IncomeStatConfig incomeConfig = (IncomeStatConfig) StandardStatementCreationHelper
+        IncomeStatConfig incomeConfig = (IncomeStatConfig) StandardGroupOfStatementsCreationHelper
                 .findRightConfig(companyIncomeConfigs, companyConfigCollectionId);
 
 
@@ -394,9 +168,9 @@ public class GroupOfStatementsStandardController {
         }
 
         // new way to do all business logic in standardStatementCreationHelper.
-        standardStatementCreationHelper.createBalanceStatement(rightCompanyBalanceConfig);
-        standardStatementCreationHelper.createCashflowStatement(cashflowConfig);
-        standardStatementCreationHelper.createIncomeStatement(incomeConfig);
+        standardGroupOfStatementsCreationHelper.createBalanceStatement(rightCompanyBalanceConfig);
+        standardGroupOfStatementsCreationHelper.createCashflowStatement(cashflowConfig);
+        standardGroupOfStatementsCreationHelper.createIncomeStatement(incomeConfig);
 
 
         // Setting dependency, so I can get later on information, which config was used.
@@ -404,12 +178,13 @@ public class GroupOfStatementsStandardController {
         cashflowStatement.setCashflow_stat_formula_id(cashflowConfig);
         incomeStatement.setIncome_stat_formula_id(incomeConfig);
 
-        setDateToEachStatement(balanceStatement, cashflowStatement,
+        standardGroupOfStatementsCreationHelper.setDateToEachStatement(balanceStatement, cashflowStatement,
                 incomeStatement, rightRawGroupOfStatements);
 
         //This is now the place to create new GroupOfStandardStatements with newly generated standard statements.
         GroupOfStatementsStandard groupOfStandardStatements =
-                createGroupUsingPreviouslyFoundData(balanceStatement, cashflowStatement, incomeStatement, company);
+                standardGroupOfStatementsCreationHelper.createGroupUsingPreviouslyFoundData(balanceStatement,
+                        cashflowStatement, incomeStatement, company);
 
         // Check if groupOfStandardStatement with that balance id already exits
         GroupOfStatementsStandard possibleExistingGroupOfStatements =
@@ -425,7 +200,7 @@ public class GroupOfStatementsStandardController {
         }
         else {
             // Will add each new standard statement separately to company. (without a group)
-            addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
+            standardGroupOfStatementsCreationHelper.addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
             groupOfStandardStatementsRepository.save(groupOfStandardStatements);
             LOGGER.info("Created brand new group of standard statements");
         }
@@ -438,37 +213,6 @@ public class GroupOfStatementsStandardController {
                         "GET method (balance) returned. Check if result is correct"));
     }
 
-    public void setDateToEachStatement(BalanceStatStandWithValues balanceStatement,
-                                       CashflowStatStandWithValues cashflowStatement,
-                                       IncomeStatStandWithValues incomeStatement,
-                                       GroupOfStatements rightRawGroupOfStatements) {
-        // Setting peroid values from raw statement to standard statement
-        balanceStatement.setDatePeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
-        cashflowStatement.setDatePeriod(rightRawGroupOfStatements.getCashflowStatRaw().getDateOrPeriod());
-        incomeStatement.setDatePeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
-    }
-
-    public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
-                                                         BalanceStatStandWithValues balanceStatement,
-                                                         CashflowStatStandWithValues cashflowStatement,
-                                                         IncomeStatStandWithValues incomeStatement){
-        company.getBalanceStatements().add(balanceStatement);
-        company.getCashflowStatements().add(cashflowStatement);
-        company.getIncomeStatements().add(incomeStatement);
-    }
-
-    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandWithValues balanceStatement,
-                                                                         CashflowStatStandWithValues cashflowStatement,
-                                                                         IncomeStatStandWithValues incomeStatement,
-                                                                         CompanyDimension company) {
-        GroupOfStatementsStandard groupOfStandardStatements = new GroupOfStatementsStandard();
-        groupOfStandardStatements.setBalanceStat(balanceStatement);
-        groupOfStandardStatements.setCashflowStat(cashflowStatement);
-        groupOfStandardStatements.setIncomeStat(incomeStatement);
-        groupOfStandardStatements.setCompanyDimension(company);
-        return groupOfStandardStatements;
-    }
-
     public CompanyDimension findCompanyWithExceptionHandler(String ticker) {
         CompanyDimension company = companyDimensionRepository.findById(ticker)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
@@ -477,10 +221,5 @@ public class GroupOfStatementsStandardController {
         return company;
     }
 
-    public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
-        return companyDimensionRepository.findById(tickerId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Unable to find company with tickerId: " + tickerId));
-    }
 }
 
