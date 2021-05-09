@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.incomestatement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class IncomeStatStandWithValues extends StatStandard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "income_stat_formula_id") // or maybe joincolumn
-    private CompanyIncomeStatFormulaConfig income_stat_formula_id;
+    private IncomeStatConfig income_stat_formula_id;
 
     @Column(name = "revenue")
     private Double revenue;

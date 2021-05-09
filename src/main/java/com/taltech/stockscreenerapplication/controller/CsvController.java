@@ -22,8 +22,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/readCsv")
-public class ReadLocalCsvController {
+@RequestMapping("/csv")
+public class CsvController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
 
@@ -51,7 +51,7 @@ public class ReadLocalCsvController {
     }
 
     // Ticker can be for example: TKM1T
-    @GetMapping("/readAndSaveToDb/{ticker}/{fileName}")
+    @GetMapping("/readAndSave/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         boolean fileAlreadyExits = sourceCsvFileRepository
                 .existsBySourceFileName(Constants.UPLOAD_LOCATION + fileName + ".csv");
@@ -70,10 +70,10 @@ public class ReadLocalCsvController {
             result = readerImpl.createReaderAndUseReadingMethod(fileName);
         }
         catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            LOGGER.error(e.getMessage()); // siin saab juba kätte exceptioni. Siin peab veel badrequest tagastama.
         }
 
-        if (result == null) {
+        if (result == null) { // Vii see meetodisse helper classis. Throw exception.
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Something went wrong with reading in values from CSV file." +

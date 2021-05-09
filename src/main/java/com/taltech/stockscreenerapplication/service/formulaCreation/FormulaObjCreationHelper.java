@@ -1,9 +1,9 @@
 package com.taltech.stockscreenerapplication.service.formulaCreation;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.IncomeMappingRequest;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FormulaObjCreationHelper {
-    public static void setIncomeConfigObjectFields(CompanyIncomeStatFormulaConfig testIncomeConfig,
+    public static void setIncomeConfigObjectFields(IncomeStatConfig testIncomeConfig,
                                                    IncomeMappingRequest incomeRequest) {
         testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());
         testIncomeConfig.setDateFrom(incomeRequest.getDateFrom());
@@ -46,7 +46,7 @@ public class FormulaObjCreationHelper {
         testIncomeConfig.setWeightedAverageShsOutDil(incomeRequest.getWeightedAverageShsOutDil());
     }
 
-    public static void setCashflowConfigObjectFields(CompanyCashflowStatFormulaConfig testCashflowConfig,
+    public static void setCashflowConfigObjectFields(CashflowStatConfig testCashflowConfig,
                                                      CashflowMappingRequest cashflowRequest) {
         testCashflowConfig.setCompany_config_collection_id(cashflowRequest.getCompanyConfigCollectionId());
         testCashflowConfig.setDateFrom(cashflowRequest.getDateFrom());
@@ -74,7 +74,7 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setDebtRepayment(cashflowRequest.getDebtRepayment());
     }
 
-    public static void setBalanceConfigObjectFields(CompanyBalanceStatFormulaConfig testBalanceConfig,
+    public static void setBalanceConfigObjectFields(BalanceStatConfig testBalanceConfig,
                                                     BalanceMappingRequest balanceRequest) {
         testBalanceConfig.setCompany_config_collection_id(balanceRequest.getCompanyConfigCollectionId());
         testBalanceConfig.setDateFrom(balanceRequest.getDateFrom());
@@ -125,7 +125,7 @@ public class FormulaObjCreationHelper {
     }
 
     // .asText() can also be used. But instead of null, value be returned as String with text "null"
-    public static void setJsonValuesToIncomeConfig(CompanyIncomeStatFormulaConfig testIncomeConfig,
+    public static void setJsonValuesToIncomeConfig(IncomeStatConfig testIncomeConfig,
                                                    JsonNode incomeNode) {
         testIncomeConfig.setDateFrom(incomeNode.get("dateFrom").textValue());
         testIncomeConfig.setDateTo(incomeNode.get("dateTo").textValue());
@@ -157,7 +157,7 @@ public class FormulaObjCreationHelper {
         testIncomeConfig.setWeightedAverageShsOutDil(incomeNode.get("weightedAverageShsOutDil").textValue());
     }
 
-    public static void setJsonValuesToCashflowConfig(CompanyCashflowStatFormulaConfig testCashflowConfig,
+    public static void setJsonValuesToCashflowConfig(CashflowStatConfig testCashflowConfig,
                                                      JsonNode cashflowNode) {
         testCashflowConfig.setDateFrom(cashflowNode.get("dateFrom").textValue());
         testCashflowConfig.setDateTo(cashflowNode.get("dateTo").textValue());
@@ -183,7 +183,7 @@ public class FormulaObjCreationHelper {
         testCashflowConfig.setDebtRepayment(cashflowNode.get("debtRepayment").textValue());
     }
 
-    public static void setJsonValuesToBalanceConfig(CompanyBalanceStatFormulaConfig testBalanceConfig,
+    public static void setJsonValuesToBalanceConfig(BalanceStatConfig testBalanceConfig,
                                                     JsonNode balanceNode) {
         testBalanceConfig.setDateFrom(balanceNode.get("dateFrom").textValue());
         testBalanceConfig.setDateTo(balanceNode.get("dateTo").textValue());

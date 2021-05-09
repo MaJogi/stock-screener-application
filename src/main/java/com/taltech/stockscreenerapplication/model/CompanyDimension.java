@@ -5,9 +5,9 @@ import com.taltech.stockscreenerapplication.model.statement.balancestatement.Bal
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import lombok.AllArgsConstructor;
@@ -62,13 +62,13 @@ public class CompanyDimension {
     private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CompanyIncomeStatFormulaConfig> incomeConfigurations = new LinkedList<>();
+    private List<IncomeStatConfig> incomeConfigurations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CompanyBalanceStatFormulaConfig> balanceConfigurations = new LinkedList<>();
+    private List<BalanceStatConfig> balanceConfigurations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CompanyCashflowStatFormulaConfig> cashflowConfigurations = new LinkedList<>();
+    private List<CashflowStatConfig> cashflowConfigurations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatStandWithValues> incomeStatements = new LinkedList<>();

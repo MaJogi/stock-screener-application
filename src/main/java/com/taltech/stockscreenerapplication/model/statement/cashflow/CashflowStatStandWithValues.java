@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,7 +25,7 @@ public class CashflowStatStandWithValues extends StatStandard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "cashflow_stat_formula_id") // or maybe joincolumn
-    private CompanyCashflowStatFormulaConfig cashflow_stat_formula_id;
+    private CashflowStatConfig cashflow_stat_formula_id;
 
     @Column(name = "net_income")
     private Double netIncome;

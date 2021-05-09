@@ -5,9 +5,9 @@ import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.Gr
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyCashflowStatFormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyIncomeStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
 import lombok.Getter;
 import lombok.Setter;
@@ -153,7 +153,7 @@ public class StandardStatementCreationHelper {
         }
     }
 
-    public void createIncomeStrings(CompanyIncomeStatFormulaConfig rightCompanyIncomeConfig) {
+    public void createIncomeStrings(IncomeStatConfig rightCompanyIncomeConfig) {
         revenueString = String.format("revenue=%s",
                 rightCompanyIncomeConfig.getRevenue());
         costOfRevenueString = String.format("costOfRevenue=%s",
@@ -210,7 +210,7 @@ public class StandardStatementCreationHelper {
         createListOfIncomeStrings();
     }
 
-    public void createCashflowStrings(CompanyCashflowStatFormulaConfig rightCompanyCashflowConfig) {
+    public void createCashflowStrings(CashflowStatConfig rightCompanyCashflowConfig) {
         LOGGER.info("Start of string .format");
         netCashflowIncomeString = String.format("netIncome=%s",
                 rightCompanyCashflowConfig.getNetIncome());
@@ -251,7 +251,7 @@ public class StandardStatementCreationHelper {
         createListOfCashflowStrings();
     }
 
-    public void createBalanceStrings(CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig) {
+    public void createBalanceStrings(BalanceStatConfig rightCompanyBalanceConfig) {
         LOGGER.info("Start of string .format");
         cashAndCashEquivalentsString = String.format("cashAndCashEquivalents=%s",
                 rightCompanyBalanceConfig.getCashAndCashEquivalents());
@@ -456,7 +456,7 @@ public class StandardStatementCreationHelper {
         Those configurations will be used to generate standard statement objects.
     */
     public static FormulaConfig findRightBalanceConfig(
-            List<CompanyBalanceStatFormulaConfig> companyBalanceConfigs,
+            List<BalanceStatConfig> companyBalanceConfigs,
             String balance_date) {
 
         Date dateObject = new Date();
@@ -524,7 +524,7 @@ public class StandardStatementCreationHelper {
         stContextIncome = new StandardEvaluationContext(incomeStatement);
     }
 
-    public void createBalanceStatement(CompanyBalanceStatFormulaConfig rightCompanyBalanceConfig) {
+    public void createBalanceStatement(BalanceStatConfig rightCompanyBalanceConfig) {
         // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
         // statements which will later be used to populate standard statements. Correct executable statements are added
         // into list.
@@ -538,14 +538,14 @@ public class StandardStatementCreationHelper {
                 stContextBalance);
     }
 
-    public void createCashflowStatement(CompanyCashflowStatFormulaConfig cashflowConfig) {
+    public void createCashflowStatement(CashflowStatConfig cashflowConfig) {
         createCashflowStrings(cashflowConfig);
         List<String> cashflowStandardFieldFormulas = getCashflowStandardFieldFormulas();
         createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
                 stContextCashflow);
     }
 
-    public void createIncomeStatement(CompanyIncomeStatFormulaConfig incomeConfig) {
+    public void createIncomeStatement(IncomeStatConfig incomeConfig) {
         createIncomeStrings(incomeConfig);
         List<String> incomeStandardFieldFormulas = getIncomeStandardFieldFormulas();
         createValuesForStatementFromFormulas(incomeStandardFieldFormulas,

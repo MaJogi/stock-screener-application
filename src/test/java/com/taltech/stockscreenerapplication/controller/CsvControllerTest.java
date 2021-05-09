@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.equalTo;
 // https://www.baeldung.com/junit-5
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ReadLocalCsvControllerTest {
+class CsvControllerTest {
 
     @LocalServerPort
     private int port;
@@ -79,19 +79,19 @@ class ReadLocalCsvControllerTest {
 
     @Test
     void getDefaultPage() {
-        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/csv/", String.class);
         assertThat("Insert reason here.", response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
     @Test
     void readAndSaveToDbStatusOK() {
-        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/readAndSaveToDb/TKM1T/tkm-2017_q2_CSV_modified_by_frontend", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend", String.class);
         assertThat("Insert reason here", response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
     @Test
     void readAndSaveToDbBadRequest() {
-        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/readCsv/readAndSaveToDb/TKM1T/nonExisting", String.class);
+        ResponseEntity<String> response = restTemplate.getForEntity(getRootUrl() + "/csv/readAndSave/TKM1T/nonExisting", String.class);
         assertThat("Insert reason here", response.getStatusCode(), equalTo(HttpStatus.BAD_REQUEST));
 
     }

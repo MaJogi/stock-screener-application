@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "company_cashflow_statement_config")
-public class CompanyCashflowStatFormulaConfig extends FormulaConfig {
+public class CashflowStatConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cashflow_stat_formula_id")
@@ -98,6 +98,6 @@ public class CompanyCashflowStatFormulaConfig extends FormulaConfig {
                 '}';
     }
 
-    public CompanyCashflowStatFormulaConfig() {}
+    public CashflowStatConfig() {}
 
 }

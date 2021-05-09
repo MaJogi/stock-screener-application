@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "company_income_statement_config")
-public class CompanyIncomeStatFormulaConfig extends FormulaConfig {
+public class IncomeStatConfig extends FormulaConfig {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "income_stat_formula_id")
@@ -98,6 +98,6 @@ public class CompanyIncomeStatFormulaConfig extends FormulaConfig {
     @Column(name = "weighted_average_shs_out_dil")
     private String weightedAverageShsOutDil;
 
-    public CompanyIncomeStatFormulaConfig() {}
+    public IncomeStatConfig() {}
 
 }

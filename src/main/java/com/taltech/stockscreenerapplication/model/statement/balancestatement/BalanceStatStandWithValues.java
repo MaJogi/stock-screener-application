@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.balancestatement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.CompanyBalanceStatFormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,7 +23,7 @@ public class BalanceStatStandWithValues extends StatStandard {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "balance_stat_formula_id") // or maybe joincolumn
-    private CompanyBalanceStatFormulaConfig balance_stat_formula_id;
+    private BalanceStatConfig balance_stat_formula_id;
 
     @Column(name = "cash_and_cash_equivalents")
     private Double cashAndCashEquivalents;
