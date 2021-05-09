@@ -40,7 +40,7 @@ public class GroupOfStatements {
     //@JoinColumn(name = "balance_stat_raw_id") // or maybe joincolumn
     private BalanceStatRaw balanceStatRaw;
 
-    private Boolean allStatementsPresent;
+    private Boolean allStatementsPresent; //TODO: remove that
 
     public GroupOfStatements() { }
 

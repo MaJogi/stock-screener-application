@@ -25,19 +25,6 @@ public class CompanyBalanceStatFormulaConfig extends FormulaConfig {
     private String symbol;
      */
 
-    /*
-    // Administrator can create a collection of statement configurations, for specific date. For example: 31.06.2017
-    @Column(name = "company_config_collection_id")
-    private Long company_config_collection_id;
-
-    @Column(name = "date_from") // For example 2014-
-    private String dateFrom;
-
-    @Column(name = "date_to")  // For example -2018 (later on, another formulas should be used,
-    // because company changed statement writing policy
-    private String dateTo;
-     */
-
     @Column(name = "cash_and_cash_equivalents")
     private String cashAndCashEquivalents;
 

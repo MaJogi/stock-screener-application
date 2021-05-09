@@ -15,13 +15,13 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "cash_flow_statement_stand_values")
+@Table(name = "cashflow_statement_stand")
 public class CashflowStatStandWithValues extends StatStandard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cashflow_standard_id")
-    private Long cashflow_standard_id;
+    @Column(name = "cashflow_stat_standard_id")
+    private Long cashflow_stat_standard_id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn(name = "cashflow_stat_formula_id") // or maybe joincolumn

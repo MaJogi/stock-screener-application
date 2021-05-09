@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "balance_statement_stand_values")
+@Table(name = "balance_statement_stand")
 public class BalanceStatStandWithValues extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

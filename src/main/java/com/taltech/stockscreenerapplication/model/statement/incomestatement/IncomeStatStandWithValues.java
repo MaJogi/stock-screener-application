@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "income_statement_stand_with_values")
+@Table(name = "income_statement_stand")
 public class IncomeStatStandWithValues extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
