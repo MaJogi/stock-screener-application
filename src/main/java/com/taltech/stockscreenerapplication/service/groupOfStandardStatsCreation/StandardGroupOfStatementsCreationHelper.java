@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.service.formulaToValue;
+package com.taltech.stockscreenerapplication.service.groupOfStandardStatsCreation;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;

@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.service.formulaCreation;
+package com.taltech.stockscreenerapplication.service.configCreation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
@@ -10,7 +10,7 @@ import com.taltech.stockscreenerapplication.util.payload.request.statementMappin
 import org.springframework.stereotype.Service;
 
 @Service
-public class FormulaObjCreationHelper {
+public class ConfigCreationHelper {
     public static void setIncomeConfigObjectFields(IncomeStatConfig testIncomeConfig,
                                                    IncomeMappingRequest incomeRequest) {
         testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());

@@ -5,7 +5,7 @@ import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
-import com.taltech.stockscreenerapplication.service.StatementsToDb.RawStatementsToDbHelper;
+import com.taltech.stockscreenerapplication.service.statementsSave.RawStatementsToDbHelper;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;

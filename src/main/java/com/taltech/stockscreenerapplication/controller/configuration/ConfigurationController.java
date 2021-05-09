@@ -5,7 +5,7 @@ import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatC
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
-import com.taltech.stockscreenerapplication.service.formulaCreation.FormulaObjCreationHelper;
+import com.taltech.stockscreenerapplication.service.configCreation.ConfigCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.IncomeMappingRequest;
@@ -35,7 +35,7 @@ public class ConfigurationController {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         IncomeStatConfig testIncomeConfig = new IncomeStatConfig();
-        FormulaObjCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
+        ConfigCreationHelper.setIncomeConfigObjectFields(testIncomeConfig, incomeRequest);
         company.getIncomeConfigurations().add(testIncomeConfig);
 
         companyDimensionRepository.save(company);
@@ -54,7 +54,7 @@ public class ConfigurationController {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         CashflowStatConfig testCashflowConfig = new CashflowStatConfig();
-        FormulaObjCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
+        ConfigCreationHelper.setCashflowConfigObjectFields(testCashflowConfig, cashflowRequest);
         company.getCashflowConfigurations().add(testCashflowConfig);
 
         companyDimensionRepository.save(company);
@@ -73,7 +73,7 @@ public class ConfigurationController {
         CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
 
         BalanceStatConfig testBalanceConfig = new BalanceStatConfig();
-        FormulaObjCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
+        ConfigCreationHelper.setBalanceConfigObjectFields(testBalanceConfig, balanceRequest);
         company.getBalanceConfigurations().add(testBalanceConfig);
 
         companyDimensionRepository.save(company);

@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.service.StatementsToDb;
+package com.taltech.stockscreenerapplication.service.statementsSave;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;

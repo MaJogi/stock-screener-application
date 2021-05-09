@@ -17,7 +17,7 @@ import com.taltech.stockscreenerapplication.model.statement.incomestatement.Inco
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
-import com.taltech.stockscreenerapplication.service.formulaToValue.StandardGroupOfStatementsCreationHelper;
+import com.taltech.stockscreenerapplication.service.groupOfStandardStatsCreation.StandardGroupOfStatementsCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
