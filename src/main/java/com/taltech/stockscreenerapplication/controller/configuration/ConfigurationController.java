@@ -27,7 +27,7 @@ public class ConfigurationController {
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
 
-    @PostMapping(value = "/createMapping/{ticker}/income",
+    @PostMapping(value = "/create/{ticker}/income",
             produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> singleIncomeStatementMapping(
             @PathVariable String ticker, @RequestBody final IncomeMappingRequest incomeRequest) {
@@ -46,7 +46,7 @@ public class ConfigurationController {
                         "Mapping created, check if formulas for income statement are done"));
     }
 
-    @PostMapping(value = "/createMapping/{ticker}/cashflow",
+    @PostMapping(value = "/create/{ticker}/cashflow",
             produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> singleCashflowStatementMapping(
             @PathVariable String ticker, @RequestBody final CashflowMappingRequest cashflowRequest) {
@@ -65,7 +65,7 @@ public class ConfigurationController {
                         "Mapping created, check if formulas cashflow statement are done"));
     }
 
-    @PostMapping(value = "/createMapping/{ticker}/balance",
+    @PostMapping(value = "/create/{ticker}/balance",
             produces = "application/json", consumes = "application/json")
     public ResponseEntity<MessageResponse> singleBalanceStatementMapping(
             @PathVariable String ticker, @RequestBody final BalanceMappingRequest balanceRequest) {
@@ -85,7 +85,7 @@ public class ConfigurationController {
     }
 
     /*
-    @PostMapping(value = "/createMapping/{ticker}",  produces = "application/json", consumes = "application/json") // Pigem eemalda enne esitamist et ei peaks testima.
+    @PostMapping(value = "/create/{ticker}",  produces = "application/json", consumes = "application/json") // Pigem eemalda enne esitamist et ei peaks testima.
     public ResponseEntity<MessageResponse> allStatementsAsOneMapping(@PathVariable String ticker,
                                                                      @RequestBody final ObjectNode json) {
 

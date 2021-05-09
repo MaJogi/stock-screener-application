@@ -1,15 +1,15 @@
 Example of usage:
-UPDATED: 28.04.2021 19:00
+UPDATED: 09.05.2021 17:35
 
 1.
 // POST method with included key: file, value: exampleFinStatement.csv
 localhost:8080/uploadFile
-// now file is stored under resources/csv folder. Example: resources/csv/exampleFinStatement.csv
+// now file is stored under upload/files/ folder. Example: upload/files/exampleFinStatement.csv
 
-2. GET method to read csv file that is already stored under resources/csv.
-http://localhost:8080/readCsv/readAndSaveToDb/{company ticker}}/{filenameWithout ".csv"}}.
-Example: http://localhost:8080/readCsvAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend
-// Now data is persisted in postgre database.
+2. GET method to read csv file that is already stored under upload/files/ folder.
+http://localhost:8080/csv/readAndSave/{ticker}}/{filenameWithout ".csv"}}.
+Example: http://localhost:8080/csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend
+// Now data is persisted in Postgre database.
 
 3. GET method to get information about a company by ticker.
 http://localhost:8080/companies/{ticker}.
@@ -66,37 +66,15 @@ Ex: /rawCashflowStats and /rawCashflowStats/{id}
 Ex: /rawIncomeStats and /rawIncomeStats/{id}
 Ex: /rawBalanceSheets and /rawBalanceSheets/{id}
 
-POST meetod URLile: http://localhost:8080/map/createMappingFor/TKM1T (ticker võib olla muu)
-Programm ootab jsoni formaadis json faili, mille sees on kolm kollektsiooni: incomeRequest, balanceRequest,
-cashflowRequest.
-Postmanis tuleb valida body -> raw -> JSON ja sisestada andmed kujul:
-{
-    "incomeRequest":{
-        "dateFrom": "2017",
-        ...
-        "weightedAverageShsOutDil": null
-    },
-    "balanceRequest":{
-        "dateFrom": "2017",
-        ...
-        "netDebt": "#Revenue + #Other operating income"
-    },
-    "cashflowRequest":{
-        "dateFrom": "2017",
-        ...
-        "debtRepayment": "#Other expenses"
-    }
-}
+Nüüd tuleb aruannete aruannete confide loomise osa
+Siin on kõik meetodid POSTid. Ehk Postmaniga saab saata andmeid nendele endpointidele.
 
-Nüüd tuleb aruannete valemite confide loomise osa
-Siin on kõik meetodid POSTid. Ehk POSTMANIga saaab saata andmeid nendele endpointidele.
+_____ConfigurationController____________
 
-FormulaObjCreationController...
-
-localhost:8080/formulaCreation/...
+localhost:8080/configuration/...
 1. Valemi confi loomine incomeStatementi jaoks. Ticker on firma, mille jaoks conf luuakse. Income on see aruanne, mille jaoks luuakse.
-@PostMapping(value = "/createMappingFor/{ticker}/income")
-Ex: http://localhost:8080/formulaCreation/createMappingFor/TKM1T/income
+@PostMapping(value = "/createMapping/{ticker}/income")
+Ex: http://localhost:8080/configuration/createMapping/TKM1T/income
 Saata tuleb JSON fail kujul:
 
 {
@@ -112,16 +90,14 @@ Peale seda on conf loodud ning selle valemeid saab kasutada standartse kasumiaru
 
 //////////////////////////
 
-StandardObjCreationController
-localhost:8080/standardStatementCreation/...
+______________StandardObjCreationController_____________
+http://localhost:8080/groupOfStandardStatements/TKM1T/create/forPeriod/30.06.2017/
 2. Standartse kasumiaruande loomine kindla firma jaoks
-@GetMapping("/{ticker}/createIncomeStatementFromFormula/forPeriod/{period_or_date}/")
-Ex: http://localhost:8080/standardStatementCreation/TKM1T/createIncomeStatementFromFormula/forPeriod/Q2%202017
 
-Nüüd (hetkel) kasutatakse kõige esimest loodud kasumiaruande konfi, et luua standarne aruanne koos arvutatud väärtustega.
-Hiljem muudan seda nii, et saaks valida, mis konfi kasutad või seon selle perioodiga.
 
-Voilaa http://localhost:8080/companies/TKM1T näitab, et firmal on olemas standartne kasumiaruanne.
+
+Muutusi firma aruannetes ja aruannete konfiguratsioonides võib näha siin:
+http://localhost:8080/companies/TKM1T
 
 
 
