@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.Constants;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
+import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
 import com.taltech.stockscreenerapplication.service.statementsSave.RawStatementsToDbHelper;

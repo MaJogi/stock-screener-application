@@ -6,10 +6,10 @@ import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatR
 import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.FormulaConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;

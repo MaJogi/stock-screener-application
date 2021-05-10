@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.income;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

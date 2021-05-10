@@ -1,6 +1,6 @@
 package com.taltech.stockscreenerapplication.controller;
 
-import com.taltech.stockscreenerapplication.model.statement.SourceCsvFile;
+import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

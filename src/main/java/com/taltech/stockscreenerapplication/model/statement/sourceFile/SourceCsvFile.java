@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement;
+package com.taltech.stockscreenerapplication.model.statement.sourceFile;
 
 import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;

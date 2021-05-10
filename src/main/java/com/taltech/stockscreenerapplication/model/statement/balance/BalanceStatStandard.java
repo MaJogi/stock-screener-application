@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.balance;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.BalanceStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

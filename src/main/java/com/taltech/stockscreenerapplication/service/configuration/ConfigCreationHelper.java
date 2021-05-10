@@ -1,9 +1,9 @@
 package com.taltech.stockscreenerapplication.service.configuration;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.IncomeMappingRequest;

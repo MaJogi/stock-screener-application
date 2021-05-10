@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.formula;
+package com.taltech.stockscreenerapplication.model.statement.configuration;
 
 import lombok.Getter;
 import lombok.Setter;

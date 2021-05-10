@@ -2,7 +2,7 @@ package com.taltech.stockscreenerapplication.model.statement.cashflow;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
-import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;

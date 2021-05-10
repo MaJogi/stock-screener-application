@@ -1,9 +1,9 @@
 package com.taltech.stockscreenerapplication.controller.configuration;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.BalanceStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
+import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.service.configuration.ConfigCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
