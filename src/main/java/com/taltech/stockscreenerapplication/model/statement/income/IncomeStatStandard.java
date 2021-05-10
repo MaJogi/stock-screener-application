@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.incomestatement;
+package com.taltech.stockscreenerapplication.model.statement.income;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "income_statement_stand")
-public class IncomeStatStandWithValues extends StatStandard {
+public class IncomeStatStandard extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "income_stat_standard_id")
@@ -103,5 +103,5 @@ public class IncomeStatStandWithValues extends StatStandard {
     @Column(name = "weighted_average_shs_out_dil")
     private Double weightedAverageShsOutDil;
 
-    public IncomeStatStandWithValues() {}
+    public IncomeStatStandard() {}
 }

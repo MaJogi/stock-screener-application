@@ -3,9 +3,9 @@ package com.taltech.stockscreenerapplication.model.statement.groupOfStatements;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,15 +28,15 @@ public class GroupOfStatementsStandard {
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private IncomeStatStandWithValues incomeStat;
+    private IncomeStatStandard incomeStat;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL) // When GroupOfStatementsStandard is removed, CashflowStat will be removed also.
-    private CashflowStatStandWithValues cashflowStat;
+    private CashflowStatStandard cashflowStat;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    private BalanceStatStandWithValues balanceStat;
+    private BalanceStatStandard balanceStat;
 
     public GroupOfStatementsStandard() { }
 

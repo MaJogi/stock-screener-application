@@ -1,16 +1,16 @@
-package com.taltech.stockscreenerapplication.service.groupOfStandardStatsCreation;
+package com.taltech.stockscreenerapplication.service.groupOfStandardStats;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -518,9 +518,9 @@ public class StandardGroupOfStatementsCreationHelper {
             LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
         }
     }
-    public void createStContextes(BalanceStatStandWithValues balanceStatement,
-                                  CashflowStatStandWithValues cashflowStatement,
-                                  IncomeStatStandWithValues incomeStatement) {
+    public void createStContextes(BalanceStatStandard balanceStatement,
+                                  CashflowStatStandard cashflowStatement,
+                                  IncomeStatStandard incomeStatement) {
         stContextBalance = new StandardEvaluationContext(balanceStatement);
         stContextCashflow = new StandardEvaluationContext(cashflowStatement);
         stContextIncome = new StandardEvaluationContext(incomeStatement);
@@ -554,9 +554,9 @@ public class StandardGroupOfStatementsCreationHelper {
                 stContextIncome);
     }
 
-    public void setDateToEachStatement(BalanceStatStandWithValues balanceStatement,
-                                       CashflowStatStandWithValues cashflowStatement,
-                                       IncomeStatStandWithValues incomeStatement,
+    public void setDateToEachStatement(BalanceStatStandard balanceStatement,
+                                       CashflowStatStandard cashflowStatement,
+                                       IncomeStatStandard incomeStatement,
                                        GroupOfStatements rightRawGroupOfStatements) {
         // Setting peroid values from raw statement to standard statement
         balanceStatement.setDatePeriod(rightRawGroupOfStatements.getBalanceStatRaw().getDateOrPeriod());
@@ -566,17 +566,17 @@ public class StandardGroupOfStatementsCreationHelper {
 
 
     public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
-                                                         BalanceStatStandWithValues balanceStatement,
-                                                         CashflowStatStandWithValues cashflowStatement,
-                                                         IncomeStatStandWithValues incomeStatement){
+                                                         BalanceStatStandard balanceStatement,
+                                                         CashflowStatStandard cashflowStatement,
+                                                         IncomeStatStandard incomeStatement){
         company.getBalanceStatements().add(balanceStatement);
         company.getCashflowStatements().add(cashflowStatement);
         company.getIncomeStatements().add(incomeStatement);
     }
 
-    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandWithValues balanceStatement,
-                                                                         CashflowStatStandWithValues cashflowStatement,
-                                                                         IncomeStatStandWithValues incomeStatement,
+    public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandard balanceStatement,
+                                                                         CashflowStatStandard cashflowStatement,
+                                                                         IncomeStatStandard incomeStatement,
                                                                          CompanyDimension company) {
         GroupOfStatementsStandard groupOfStandardStatements = new GroupOfStatementsStandard();
         groupOfStandardStatements.setBalanceStat(balanceStatement);

@@ -1,15 +1,15 @@
 package com.taltech.stockscreenerapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -71,13 +71,13 @@ public class CompanyDimension {
     private List<CashflowStatConfig> cashflowConfigurations = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<IncomeStatStandWithValues> incomeStatements = new LinkedList<>();
+    private List<IncomeStatStandard> incomeStatements = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CashflowStatStandWithValues> cashflowStatements = new LinkedList<>();
+    private List<CashflowStatStandard> cashflowStatements = new LinkedList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BalanceStatStandWithValues> balanceStatements = new LinkedList<>();
+    private List<BalanceStatStandard> balanceStatements = new LinkedList<>();
 
     /*
     // When firm is deleted, all related groupsOfStatements are deleted.

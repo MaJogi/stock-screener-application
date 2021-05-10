@@ -1,9 +1,9 @@
 package com.taltech.stockscreenerapplication.controller;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;

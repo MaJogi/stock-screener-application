@@ -16,7 +16,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "cashflow_statement_stand")
-public class CashflowStatStandWithValues extends StatStandard {
+public class CashflowStatStandard extends StatStandard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,7 +78,7 @@ public class CashflowStatStandWithValues extends StatStandard {
     @Column(name = "debt_repayment")
     private Double debtRepayment;
 
-    public CashflowStatStandWithValues() {}
+    public CashflowStatStandard() {}
 
 
 }

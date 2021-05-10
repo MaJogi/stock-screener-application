@@ -2,22 +2,22 @@ package com.taltech.stockscreenerapplication.controller.groupOfStatements;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.balancestatement.BalanceStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.formula.BalanceStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.FormulaConfig;
 import com.taltech.stockscreenerapplication.model.statement.formula.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatStandWithValues;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
-import com.taltech.stockscreenerapplication.service.groupOfStandardStatsCreation.StandardGroupOfStatementsCreationHelper;
+import com.taltech.stockscreenerapplication.service.groupOfStandardStats.StandardGroupOfStatementsCreationHelper;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,9 +77,9 @@ public class GroupOfStatementsStandardController {
         StandardGroupOfStatementsCreationHelper standardGroupOfStatementsCreationHelper = new StandardGroupOfStatementsCreationHelper();
 
         // Creating empty standardStatements to populate them after.
-        BalanceStatStandWithValues balanceStatement = new BalanceStatStandWithValues();
-        CashflowStatStandWithValues cashflowStatement = new CashflowStatStandWithValues();
-        IncomeStatStandWithValues incomeStatement = new IncomeStatStandWithValues();
+        BalanceStatStandard balanceStatement = new BalanceStatStandard();
+        CashflowStatStandard cashflowStatement = new CashflowStatStandard();
+        IncomeStatStandard incomeStatement = new IncomeStatStandard();
 
         CompanyDimension company = findCompanyWithExceptionHandler(ticker);
 

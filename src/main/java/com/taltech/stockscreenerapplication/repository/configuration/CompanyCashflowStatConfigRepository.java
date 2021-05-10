@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.repository.formulaConfig;
+package com.taltech.stockscreenerapplication.repository.configuration;
 
 import com.taltech.stockscreenerapplication.model.statement.formula.CashflowStatConfig;
 import org.springframework.data.jpa.repository.JpaRepository;

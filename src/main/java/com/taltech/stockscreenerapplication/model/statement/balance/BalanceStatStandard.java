@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.balancestatement;
+package com.taltech.stockscreenerapplication.model.statement.balance;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatStandard;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "balance_statement_stand")
-public class BalanceStatStandWithValues extends StatStandard {
+public class BalanceStatStandard extends StatStandard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "balance_stat_standard_id")
@@ -142,5 +142,5 @@ public class BalanceStatStandWithValues extends StatStandard {
     @Column(name = "net_debt")
     private Double netDebt;
 
-    public BalanceStatStandWithValues() { }
+    public BalanceStatStandard() { }
 }

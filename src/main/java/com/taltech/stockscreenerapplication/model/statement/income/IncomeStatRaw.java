@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.incomestatement;
+package com.taltech.stockscreenerapplication.model.statement.income;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

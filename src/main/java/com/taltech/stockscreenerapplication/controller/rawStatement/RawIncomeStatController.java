@@ -1,6 +1,6 @@
 package com.taltech.stockscreenerapplication.controller.rawStatement;
 
-import com.taltech.stockscreenerapplication.model.statement.incomestatement.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
 import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

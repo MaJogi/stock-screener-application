@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.model.statement.balancestatement;
+package com.taltech.stockscreenerapplication.model.statement.balance;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.StatRaw;
