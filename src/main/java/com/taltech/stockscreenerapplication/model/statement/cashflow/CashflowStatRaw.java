@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Table(name = "cash_flow_statement_as_imported")
+@Table(name = "cashflow_statement_as_imported")
 public class CashflowStatRaw extends StatRaw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
