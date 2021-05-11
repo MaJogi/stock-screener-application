@@ -5,8 +5,8 @@ import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
-import com.taltech.stockscreenerapplication.service.statementsSave.RawStatementsToDbHelper;
-import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderAndProcessImpl;
+import com.taltech.stockscreenerapplication.service.rawStats.RawStatsCreation;
+import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderImpl;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +25,7 @@ import java.util.List;
 @RequestMapping("/csv")
 public class CsvController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
 
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
@@ -35,7 +35,7 @@ public class CsvController {
 
     /* @Autowired // creates a singleton. Do i even need a singleton? */
     @Autowired
-    public RawStatementsToDbHelper statementsToDbHelper;
+    public RawStatsCreation statementsToDbHelper;
 
 
     /* Authorization example:
@@ -64,7 +64,7 @@ public class CsvController {
         }
 
         LOGGER.info("Starting reading in csv file");
-        CsvReaderAndProcessImpl readerImpl = new CsvReaderAndProcessImpl();
+        CsvReaderImpl readerImpl = new CsvReaderImpl();
         List<List<List<String>>> result = null;
         try {
             result = readerImpl.createReaderAndUseReadingMethod(fileName);

@@ -9,7 +9,7 @@ import com.taltech.stockscreenerapplication.util.payload.request.statementMappin
 import org.springframework.stereotype.Service;
 
 @Service
-public class ConfigCreationHelper {
+public class ConfigCreation {
     public static void setIncomeConfigObjectFields(IncomeStatConfig testIncomeConfig,
                                                    IncomeMappingRequest incomeRequest) {
         testIncomeConfig.setCompany_config_collection_id(incomeRequest.getCompanyConfigCollectionId());

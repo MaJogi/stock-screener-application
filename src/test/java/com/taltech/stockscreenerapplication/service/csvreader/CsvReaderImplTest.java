@@ -21,9 +21,9 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-class CsvReaderAndProcessImplTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
-    private static CsvReaderAndProcessImpl csvReaderAndProcessImpl;
+class CsvReaderImplTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
+    private static CsvReaderImpl csvReaderImpl;
     @BeforeAll
     static void setup() {
         LOGGER.info("@BeforeAll - executes once before all test methods in this class");
@@ -32,7 +32,7 @@ class CsvReaderAndProcessImplTest {
     @BeforeEach
     void init() {
         LOGGER.info("@BeforeEach - executes before each test method in this class");
-        csvReaderAndProcessImpl = new CsvReaderAndProcessImpl();
+        csvReaderImpl = new CsvReaderImpl();
     }
 
     @AfterEach
@@ -48,13 +48,13 @@ class CsvReaderAndProcessImplTest {
     //@Disabled("Not implemented yet")
     @Test
     void createCsvParser() {
-        Assert.assertNotNull(csvReaderAndProcessImpl.parser);
-        Assert.assertEquals(';', csvReaderAndProcessImpl.parser.getSeparator());
+        Assert.assertNotNull(csvReaderImpl.parser);
+        Assert.assertEquals(';', csvReaderImpl.parser.getSeparator());
     }
 
     @Test
     void createCsvReader() {
-        Assert.assertNull(csvReaderAndProcessImpl.csvReader);
+        Assert.assertNull(csvReaderImpl.csvReader);
 
         String fileName = "tkm-2017_q2_CSV_modified_by_frontend";
         String stringPath = String.format("src/main/resources/csv/%s.csv", fileName);
@@ -69,9 +69,9 @@ class CsvReaderAndProcessImplTest {
         }
 
         // custom reader configuration
-        csvReaderAndProcessImpl.createCsvReader(reader);
+        csvReaderImpl.createCsvReader(reader);
 
-        Assert.assertNotNull(csvReaderAndProcessImpl.csvReader);
+        Assert.assertNotNull(csvReaderImpl.csvReader);
 
         //Assert.assertEquals(..., csvReaderImpl.csvReader.);
     }
@@ -100,20 +100,20 @@ class CsvReaderAndProcessImplTest {
         List<String> line10 = new LinkedList<>(
                 Arrays.asList("Net profit", "", "8379", "8,39"));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(null));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(null));
 
-        Assert.assertTrue(csvReaderAndProcessImpl.isCurrentRowStatementBlock(lineBalance));
-        Assert.assertTrue(csvReaderAndProcessImpl.isCurrentRowStatementBlock(lineCashFlow));
-        Assert.assertTrue(csvReaderAndProcessImpl.isCurrentRowStatementBlock(lineIncome));
+        Assert.assertTrue(csvReaderImpl.isCurrentRowStatementBlock(lineBalance));
+        Assert.assertTrue(csvReaderImpl.isCurrentRowStatementBlock(lineCashFlow));
+        Assert.assertTrue(csvReaderImpl.isCurrentRowStatementBlock(lineIncome));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line4));
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line5));
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line6));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line4));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line5));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line6));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line7));
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line8));
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line9));
-        Assert.assertFalse(csvReaderAndProcessImpl.isCurrentRowStatementBlock(line10));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line7));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line8));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line9));
+        Assert.assertFalse(csvReaderImpl.isCurrentRowStatementBlock(line10));
     }
 
     @Test
@@ -126,16 +126,16 @@ class CsvReaderAndProcessImplTest {
                 Arrays.asList("<income_statement>", "", ""));
 
         // Check if error doesn't happen
-        csvReaderAndProcessImpl.determineCurrentSpecificStatementBlock(null);
+        csvReaderImpl.determineCurrentSpecificStatementBlock(null);
 
-        Assert.assertEquals(null, csvReaderAndProcessImpl.currentStatement);
+        Assert.assertEquals(null, csvReaderImpl.currentStatement);
 
-        csvReaderAndProcessImpl.determineCurrentSpecificStatementBlock(lineIncome);
-        Assert.assertEquals(Statement.Statement_income , csvReaderAndProcessImpl.currentStatement);
-        csvReaderAndProcessImpl.determineCurrentSpecificStatementBlock(lineBalance);
-        Assert.assertEquals(Statement.Statement_balance , csvReaderAndProcessImpl.currentStatement);
-        csvReaderAndProcessImpl.determineCurrentSpecificStatementBlock(lineCashFlow);
-        Assert.assertEquals(Statement.Statement_cashflow , csvReaderAndProcessImpl.currentStatement);
+        csvReaderImpl.determineCurrentSpecificStatementBlock(lineIncome);
+        Assert.assertEquals(Statement.Statement_income , csvReaderImpl.currentStatement);
+        csvReaderImpl.determineCurrentSpecificStatementBlock(lineBalance);
+        Assert.assertEquals(Statement.Statement_balance , csvReaderImpl.currentStatement);
+        csvReaderImpl.determineCurrentSpecificStatementBlock(lineCashFlow);
+        Assert.assertEquals(Statement.Statement_cashflow , csvReaderImpl.currentStatement);
 
 
     }
@@ -164,20 +164,20 @@ class CsvReaderAndProcessImplTest {
         List<String> line10 = new LinkedList<>(
                 Arrays.asList("Net profit", "", "8379", "8,39"));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(null));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(null));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(lineBalance));
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(lineCashFlow));
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(lineIncome));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(lineBalance));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(lineCashFlow));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(lineIncome));
 
-        Assert.assertTrue(csvReaderAndProcessImpl.isEndingStatementBlock(lineEndingBalance));
-        Assert.assertTrue(csvReaderAndProcessImpl.isEndingStatementBlock(lineEndingCashFlow));
-        Assert.assertTrue(csvReaderAndProcessImpl.isEndingStatementBlock(lineEndingIncome));
+        Assert.assertTrue(csvReaderImpl.isEndingStatementBlock(lineEndingBalance));
+        Assert.assertTrue(csvReaderImpl.isEndingStatementBlock(lineEndingCashFlow));
+        Assert.assertTrue(csvReaderImpl.isEndingStatementBlock(lineEndingIncome));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(line7));
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(line8));
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(line9));
-        Assert.assertFalse(csvReaderAndProcessImpl.isEndingStatementBlock(line10));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(line7));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(line8));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(line9));
+        Assert.assertFalse(csvReaderImpl.isEndingStatementBlock(line10));
     }
 
     @Test
@@ -187,9 +187,9 @@ class CsvReaderAndProcessImplTest {
         List<String> withOutNote = new LinkedList<>(
                 Arrays.asList("Date_information", "smthelse", ""));
 
-        Assert.assertTrue(csvReaderAndProcessImpl.doesHeaderColContainNote(withNote));
-        Assert.assertFalse(csvReaderAndProcessImpl.doesHeaderColContainNote(withOutNote));
-        Assert.assertFalse(csvReaderAndProcessImpl.doesHeaderColContainNote(null));
+        Assert.assertTrue(csvReaderImpl.doesHeaderColContainNote(withNote));
+        Assert.assertFalse(csvReaderImpl.doesHeaderColContainNote(withOutNote));
+        Assert.assertFalse(csvReaderImpl.doesHeaderColContainNote(null));
 
     }
 
@@ -205,24 +205,24 @@ class CsvReaderAndProcessImplTest {
                 Arrays.asList("Net profit", "", "8379", "8,39"));
 
         // initializing lists to escape nullpointerexception
-        csvReaderAndProcessImpl.balanceList = new ArrayList<>();
-        csvReaderAndProcessImpl.cashflowList = new ArrayList<>();
-        csvReaderAndProcessImpl.incomeList = new ArrayList<>();
+        csvReaderImpl.balanceList = new ArrayList<>();
+        csvReaderImpl.cashflowList = new ArrayList<>();
+        csvReaderImpl.incomeList = new ArrayList<>();
 
-        Assert.assertFalse(csvReaderAndProcessImpl.incomeList.contains(incomeLine));
-        csvReaderAndProcessImpl.currentStatement = Statement.Statement_income;
-        csvReaderAndProcessImpl.incomeList.add(incomeLine);
-        Assert.assertTrue(csvReaderAndProcessImpl.incomeList.contains(incomeLine));
+        Assert.assertFalse(csvReaderImpl.incomeList.contains(incomeLine));
+        csvReaderImpl.currentStatement = Statement.Statement_income;
+        csvReaderImpl.incomeList.add(incomeLine);
+        Assert.assertTrue(csvReaderImpl.incomeList.contains(incomeLine));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.cashflowList.contains(cashflowLine));
-        csvReaderAndProcessImpl.currentStatement = Statement.Statement_cashflow;
-        csvReaderAndProcessImpl.cashflowList.add(cashflowLine);
-        Assert.assertTrue(csvReaderAndProcessImpl.cashflowList.contains(cashflowLine));
+        Assert.assertFalse(csvReaderImpl.cashflowList.contains(cashflowLine));
+        csvReaderImpl.currentStatement = Statement.Statement_cashflow;
+        csvReaderImpl.cashflowList.add(cashflowLine);
+        Assert.assertTrue(csvReaderImpl.cashflowList.contains(cashflowLine));
 
-        Assert.assertFalse(csvReaderAndProcessImpl.balanceList.contains(balanceLine));
-        csvReaderAndProcessImpl.currentStatement = Statement.Statement_balance;
-        csvReaderAndProcessImpl.balanceList.add(balanceLine);
-        Assert.assertTrue(csvReaderAndProcessImpl.balanceList.contains(balanceLine));
+        Assert.assertFalse(csvReaderImpl.balanceList.contains(balanceLine));
+        csvReaderImpl.currentStatement = Statement.Statement_balance;
+        csvReaderImpl.balanceList.add(balanceLine);
+        Assert.assertTrue(csvReaderImpl.balanceList.contains(balanceLine));
     }
 
     @Test
@@ -231,17 +231,17 @@ class CsvReaderAndProcessImplTest {
                 Arrays.asList("Cash and cash equivalents", "2", "5,774", "32,372"));
         List<String> balanceLine2 = new LinkedList<>(
                 Arrays.asList("Cash and cash equivalents", "3", "6,77", "52,3"));
-        csvReaderAndProcessImpl.foundNoteColumn = true;
+        csvReaderImpl.foundNoteColumn = true;
 
         // If note column is found
-        csvReaderAndProcessImpl.addNoteToFieldIfNecessary(balanceLine);
+        csvReaderImpl.addNoteToFieldIfNecessary(balanceLine);
 
         Assert.assertEquals("Cash and cash equivalents (note: 2)", balanceLine.get(0));
 
         // If note column isn't found
-        csvReaderAndProcessImpl.foundNoteColumn = false;
+        csvReaderImpl.foundNoteColumn = false;
 
-        csvReaderAndProcessImpl.addNoteToFieldIfNecessary(balanceLine2);
+        csvReaderImpl.addNoteToFieldIfNecessary(balanceLine2);
         Assert.assertEquals("Cash and cash equivalents", balanceLine2.get(0));
     }
 
@@ -263,7 +263,7 @@ class CsvReaderAndProcessImplTest {
                 Arrays.asList("Interest expense","383","431")
         ));
 
-        csvReaderAndProcessImpl.removeUnnecessaryCols(testFinStatementList, emptyLineOrNoteLineStatement);
+        csvReaderImpl.removeUnnecessaryCols(testFinStatementList, emptyLineOrNoteLineStatement);
         Assert.assertTrue(testFinStatementList.equals(expectedFinStatList));
 
     }
@@ -284,7 +284,7 @@ class CsvReaderAndProcessImplTest {
         determineAndRemoveUnnecessaryCols(balanceList);
         determineAndRemoveUnnecessaryCols(incomeList);
         */
-        csvReaderAndProcessImpl.determineUnnecessaryCols(testFinStatementList, resultList);
+        csvReaderImpl.determineUnnecessaryCols(testFinStatementList, resultList);
         Assert.assertTrue(expectedResultList.equals(resultList));
 
     }
@@ -316,7 +316,7 @@ class CsvReaderAndProcessImplTest {
                     .withFieldAsNull(CSVReaderNullFieldIndicator.EMPTY_QUOTES)
                     .build();
 
-            result = csvReaderAndProcessImpl.readCsvAndReturnLists(csvReader);
+            result = csvReaderImpl.readCsvAndReturnLists(csvReader);
         }
         catch (Exception e) {
             LOGGER.info("{}", e.getMessage());
@@ -337,7 +337,7 @@ class CsvReaderAndProcessImplTest {
 
         String fileName = "tkm-2017_q2_CSV_modified_by_frontend";
         try {
-            result = csvReaderAndProcessImpl.createReaderAndUseReadingMethod(fileName);
+            result = csvReaderImpl.createReaderAndUseReadingMethod(fileName);
         }
         catch (Exception e) {
 
@@ -351,14 +351,14 @@ class CsvReaderAndProcessImplTest {
 
     @Test
     void initListsAndDefaultReadProperties() {
-        Assert.assertNull(csvReaderAndProcessImpl.balanceList);
-        Assert.assertNull(csvReaderAndProcessImpl.cashflowList);
-        Assert.assertNull(csvReaderAndProcessImpl.incomeList);
-        csvReaderAndProcessImpl.initListsAndDefaultReadProperties();
-        Assert.assertNotNull(csvReaderAndProcessImpl.balanceList);
-        Assert.assertNotNull(csvReaderAndProcessImpl.cashflowList);
-        Assert.assertNotNull(csvReaderAndProcessImpl.incomeList);
-        Assert.assertEquals(Statement.Statement_notinitialized, csvReaderAndProcessImpl.currentStatement);
-        Assert.assertFalse(csvReaderAndProcessImpl.foundNoteColumn);
+        Assert.assertNull(csvReaderImpl.balanceList);
+        Assert.assertNull(csvReaderImpl.cashflowList);
+        Assert.assertNull(csvReaderImpl.incomeList);
+        csvReaderImpl.initListsAndDefaultReadProperties();
+        Assert.assertNotNull(csvReaderImpl.balanceList);
+        Assert.assertNotNull(csvReaderImpl.cashflowList);
+        Assert.assertNotNull(csvReaderImpl.incomeList);
+        Assert.assertEquals(Statement.Statement_notinitialized, csvReaderImpl.currentStatement);
+        Assert.assertFalse(csvReaderImpl.foundNoteColumn);
     }
 }

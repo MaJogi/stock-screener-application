@@ -1,4 +1,4 @@
-package com.taltech.stockscreenerapplication.service.statementsSave;
+package com.taltech.stockscreenerapplication.service.rawStats;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
@@ -24,9 +24,9 @@ import java.util.List;
 import java.util.Locale;
 
 @Service
-public class RawStatementsToDbHelper {
+public class RawStatsCreation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RawStatementsToDbHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RawStatsCreation.class);
 
     @Autowired
     private CashflowStatRawRepository cashflowStatRawRepository;
@@ -44,7 +44,7 @@ public class RawStatementsToDbHelper {
     public List<CashflowStatRaw> currentCsvCashflowRawList;
     public List<BalanceStatRaw> currentCsvBalanceRawList;
 
-    public RawStatementsToDbHelper() {
+    public RawStatsCreation() {
         currentCsvIncomeRawList = new LinkedList<>();
         currentCsvCashflowRawList = new LinkedList<>();
         currentCsvBalanceRawList = new LinkedList<>();

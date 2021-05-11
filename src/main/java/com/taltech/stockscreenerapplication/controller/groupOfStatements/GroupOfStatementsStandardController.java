@@ -17,7 +17,7 @@ import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatSta
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
-import com.taltech.stockscreenerapplication.service.groupOfStandardStats.StandardGroupOfStatementsCreationHelper;
+import com.taltech.stockscreenerapplication.service.groupOfStandardStats.StandardGroupOfStatsCreation;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +74,7 @@ public class GroupOfStatementsStandardController {
     @GetMapping("/{ticker}/create/forPeriod/{balance_date}/")
     public ResponseEntity<MessageResponse> createGroupOfStandardStatementsWithConfigurations(@PathVariable String ticker,
                                                                                              @PathVariable String balance_date) {
-        StandardGroupOfStatementsCreationHelper standardGroupOfStatementsCreationHelper = new StandardGroupOfStatementsCreationHelper();
+        StandardGroupOfStatsCreation standardGroupOfStatsCreation = new StandardGroupOfStatsCreation();
 
         // Creating empty standardStatements to populate them after.
         BalanceStatStandard balanceStatement = new BalanceStatStandard();
@@ -87,7 +87,7 @@ public class GroupOfStatementsStandardController {
         List<GroupOfStatements> allOfcompanyRawGroupOfStatements = groupOfStatementsRepository
                 .findGroupOfStatementsWhereEveryStatementIsPresent(company.getTicker_id());
 
-        GroupOfStatements rightRawGroupOfStatements = StandardGroupOfStatementsCreationHelper
+        GroupOfStatements rightRawGroupOfStatements = StandardGroupOfStatsCreation
                 .findRightGroupOfStatements(allOfcompanyRawGroupOfStatements, balance_date);
 
         if (rightRawGroupOfStatements == null){
@@ -127,9 +127,9 @@ public class GroupOfStatementsStandardController {
         }
 
 
-        standardGroupOfStatementsCreationHelper.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
+        standardGroupOfStatsCreation.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
 
-        standardGroupOfStatementsCreationHelper.populateContextesWithValues(balanceAttributesWithValues,
+        standardGroupOfStatsCreation.populateContextesWithValues(balanceAttributesWithValues,
                 cashflowAttributesWithValues, incomeAttributesWithValues);
 
 
@@ -139,7 +139,7 @@ public class GroupOfStatementsStandardController {
 
 
         BalanceStatConfig rightCompanyBalanceConfig =
-                (BalanceStatConfig) StandardGroupOfStatementsCreationHelper
+                (BalanceStatConfig) StandardGroupOfStatsCreation
                         .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
         if (rightCompanyBalanceConfig == null) {
@@ -153,9 +153,9 @@ public class GroupOfStatementsStandardController {
         // that i am going to use later, to generate standard statements (group of them).
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
-        CashflowStatConfig cashflowConfig = (CashflowStatConfig) StandardGroupOfStatementsCreationHelper
+        CashflowStatConfig cashflowConfig = (CashflowStatConfig) StandardGroupOfStatsCreation
                 .findRightConfig(companyCashflowConfigs, companyConfigCollectionId);
-        IncomeStatConfig incomeConfig = (IncomeStatConfig) StandardGroupOfStatementsCreationHelper
+        IncomeStatConfig incomeConfig = (IncomeStatConfig) StandardGroupOfStatsCreation
                 .findRightConfig(companyIncomeConfigs, companyConfigCollectionId);
 
 
@@ -168,9 +168,9 @@ public class GroupOfStatementsStandardController {
         }
 
         // new way to do all business logic in standardStatementCreationHelper.
-        standardGroupOfStatementsCreationHelper.createBalanceStatement(rightCompanyBalanceConfig);
-        standardGroupOfStatementsCreationHelper.createCashflowStatement(cashflowConfig);
-        standardGroupOfStatementsCreationHelper.createIncomeStatement(incomeConfig);
+        standardGroupOfStatsCreation.createBalanceStatement(rightCompanyBalanceConfig);
+        standardGroupOfStatsCreation.createCashflowStatement(cashflowConfig);
+        standardGroupOfStatsCreation.createIncomeStatement(incomeConfig);
 
 
         // Setting dependency, so I can get later on information, which config was used.
@@ -178,12 +178,12 @@ public class GroupOfStatementsStandardController {
         cashflowStatement.setCashflow_stat_formula_id(cashflowConfig);
         incomeStatement.setIncome_stat_formula_id(incomeConfig);
 
-        standardGroupOfStatementsCreationHelper.setDateToEachStatement(balanceStatement, cashflowStatement,
+        standardGroupOfStatsCreation.setDateToEachStatement(balanceStatement, cashflowStatement,
                 incomeStatement, rightRawGroupOfStatements);
 
         //This is now the place to create new GroupOfStandardStatements with newly generated standard statements.
         GroupOfStatementsStandard groupOfStandardStatements =
-                standardGroupOfStatementsCreationHelper.createGroupUsingPreviouslyFoundData(balanceStatement,
+                standardGroupOfStatsCreation.createGroupUsingPreviouslyFoundData(balanceStatement,
                         cashflowStatement, incomeStatement, company);
 
         // Check if groupOfStandardStatement with that balance id already exits
@@ -200,7 +200,7 @@ public class GroupOfStatementsStandardController {
         }
         else {
             // Will add each new standard statement separately to company. (without a group)
-            standardGroupOfStatementsCreationHelper.addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
+            standardGroupOfStatsCreation.addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
             groupOfStandardStatementsRepository.save(groupOfStandardStatements);
             LOGGER.info("Created brand new group of standard statements");
         }

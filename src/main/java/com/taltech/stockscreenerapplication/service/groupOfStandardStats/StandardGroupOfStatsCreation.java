@@ -29,9 +29,9 @@ import java.util.List;
 @Getter
 @Setter
 //@Service
-public class StandardGroupOfStatementsCreationHelper {
+public class StandardGroupOfStatsCreation {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StandardGroupOfStatementsCreationHelper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StandardGroupOfStatsCreation.class);
     // Initializing Spel parser and helper class to help controller do its job
     SpelExpressionParser parser = new SpelExpressionParser();
 
@@ -132,7 +132,7 @@ public class StandardGroupOfStatementsCreationHelper {
     String netDebtString;
 
 
-    public StandardGroupOfStatementsCreationHelper() {
+    public StandardGroupOfStatsCreation() {
         incomeStandardFieldFormulas = new LinkedList<>();
         cashflowStandardFieldFormulas = new LinkedList<>();
         balanceStandardFieldFormulas = new LinkedList<>();

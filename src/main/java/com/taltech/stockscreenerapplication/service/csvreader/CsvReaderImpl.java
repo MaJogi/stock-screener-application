@@ -25,8 +25,8 @@ import java.util.List;
  */
 
 @Service
-public class CsvReaderAndProcessImpl implements IReader {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderAndProcessImpl.class);
+public class CsvReaderImpl implements IReader {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsvReaderImpl.class);
 
     CSVParser parser;
     CSVReader csvReader;
@@ -37,7 +37,7 @@ public class CsvReaderAndProcessImpl implements IReader {
     Statement currentStatement;
     boolean foundNoteColumn;
 
-    public CsvReaderAndProcessImpl() {
+    public CsvReaderImpl() {
         LOGGER.info("Default CsvReaderImpl constructor called");
         createCsvParser();
     }
