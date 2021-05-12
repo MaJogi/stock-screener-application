@@ -1,16 +1,18 @@
 package com.taltech.stockscreenerapplication.service.rawStats;
 
 import com.taltech.stockscreenerapplication.model.CompanyDimension;
-import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
+import com.taltech.stockscreenerapplication.model.statement.StatRaw;
 import com.taltech.stockscreenerapplication.model.statement.attribute.Attribute;
 import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
+import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.IncomeStatRawRepository;
+import com.taltech.stockscreenerapplication.service.csvreader.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +42,14 @@ public class RawStatsCreation {
     @Autowired
     private GroupOfStatementsRepository groupOfStatementsRepository;
 
-    public List<IncomeStatRaw> currentCsvIncomeRawList;
-    public List<CashflowStatRaw> currentCsvCashflowRawList;
-    public List<BalanceStatRaw> currentCsvBalanceRawList;
+    public List<IncomeStatRaw> currentRawIncomeList;
+    public List<CashflowStatRaw> currentRawCashflowList;
+    public List<BalanceStatRaw> currentRawBalanceList;
 
     public RawStatsCreation() {
-        currentCsvIncomeRawList = new LinkedList<>();
-        currentCsvCashflowRawList = new LinkedList<>();
-        currentCsvBalanceRawList = new LinkedList<>();
+        currentRawIncomeList = new LinkedList<>();
+        currentRawCashflowList = new LinkedList<>();
+        currentRawBalanceList = new LinkedList<>();
     }
 
     public static double parseNumToDouble(List<String> dataLine, int j) {
@@ -104,7 +106,7 @@ public class RawStatsCreation {
             newCashflowStatRaw.setAttributes(currentPeriodAttributes);
             cashflowStatRawRepository.save(newCashflowStatRaw);
             // new
-            currentCsvCashflowRawList.add(newCashflowStatRaw);
+            currentRawCashflowList.add(newCashflowStatRaw);
             // end new
             company.getCashflowRawStatements().add(newCashflowStatRaw);
 
@@ -116,39 +118,66 @@ public class RawStatsCreation {
 
     public void createNewFinStatementForSpecPeriod(List<String> finStatementListDateEntries,
                                                    List<List<String>> finStatementListAttributesWithData,
-                                                   CompanyDimension company) {
-        // TODO instead of different method for each one
+                                                   CompanyDimension company,
+                                                   SourceCsvFile newSourceFile,
+                                                   Statement statType) {
 
-        /*
+        // Making sure object used as singleton is clean and nothing from previous csv file is present this time.
+        // It should be done only once per file. And Income list is first we encounter in controller.
+        if (statType == Statement.Statement_income) {
+            currentRawIncomeList = new LinkedList<>();
+            currentRawCashflowList = new LinkedList<>();
+            currentRawBalanceList = new LinkedList<>();
+        }
+
         // starting from first value column
         int i = 1;
         //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
         for (String dateEntry : finStatementListDateEntries) {
-            // Creating raw income statement object for specific period (Q2 2017)
-
-            // how to choose type
-            CashflowStatRaw newFinStatementRaw = new CashflowStatRaw();
+            // Creating raw statement object for specific period (Q2 2017)
+            StatRaw newFinStatementRaw = null;
+            switch (statType) {
+                case Statement_balance:
+                    newFinStatementRaw = new BalanceStatRaw();
+                    break;
+                case Statement_income:
+                    newFinStatementRaw = new IncomeStatRaw();
+                    break;
+                case Statement_cashflow:
+                    newFinStatementRaw = new CashflowStatRaw();
+                    break;
+            }
 
             // Setting current period for raw income statement
-            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
+            if (newFinStatementRaw == null) { return;}
             newFinStatementRaw.setDateOrPeriod(dateEntry);
 
             List<Attribute> currentPeriodAttributes = new LinkedList<>();
             iterateDataLinesAndCreateFinStatementAttrs(finStatementListAttributesWithData, currentPeriodAttributes, i);
             newFinStatementRaw.setAttributes(currentPeriodAttributes);
 
-            cashflowStatRawRepository.save(newFinStatementRaw);
-
-
-
-            company.get().getCashflowRawStatements().add(newFinStatementRaw);
-
-
-
+            switch (statType) {
+                case Statement_balance:
+                    balanceStatRawRepository.save((BalanceStatRaw) newFinStatementRaw);
+                    currentRawBalanceList.add((BalanceStatRaw) newFinStatementRaw);
+                    company.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
+                    newSourceFile.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
+                    break;
+                case Statement_cashflow:
+                    cashflowStatRawRepository.save((CashflowStatRaw) newFinStatementRaw);
+                    currentRawCashflowList.add((CashflowStatRaw) newFinStatementRaw);
+                    company.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
+                    newSourceFile.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
+                    break;
+                case Statement_income:
+                    incomeStatRawRepository.save((IncomeStatRaw) newFinStatementRaw);
+                    currentRawIncomeList.add((IncomeStatRaw) newFinStatementRaw);
+                    company.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
+                    newSourceFile.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
+                    break;
+            }
             i++;
         }
-
-         */
     }
 
     public void createNewBalanceFinStatementForSpecPeriod(List<String> balanceListDateEntries,
@@ -173,7 +202,7 @@ public class RawStatsCreation {
             balanceStatRawRepository.save(newBalanceStatRaw);
 
             // new
-            currentCsvBalanceRawList.add(newBalanceStatRaw);
+            currentRawBalanceList.add(newBalanceStatRaw);
             // end new
 
             company.getBalanceRawStatements().add(newBalanceStatRaw);
@@ -191,9 +220,9 @@ public class RawStatsCreation {
 
         // Making sure object used as singleton is clean and nothing from previous csv file is present this time.
         // Must be done!
-        currentCsvIncomeRawList = new LinkedList<>();
-        currentCsvCashflowRawList = new LinkedList<>();
-        currentCsvBalanceRawList = new LinkedList<>();
+        currentRawIncomeList = new LinkedList<>();
+        currentRawCashflowList = new LinkedList<>();
+        currentRawBalanceList = new LinkedList<>();
 
         int i = 1;
         for (String dateEntry : incomeListDateEntries) {
@@ -206,7 +235,7 @@ public class RawStatsCreation {
             newIncomeStatRaw.setAttributes(currentPeriodAttributes);
             incomeStatRawRepository.save(newIncomeStatRaw);
             // new
-            currentCsvIncomeRawList.add(newIncomeStatRaw);
+            currentRawIncomeList.add(newIncomeStatRaw);
             // end new
             company.getIncomeRawStatements().add(newIncomeStatRaw);
             newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
@@ -218,7 +247,7 @@ public class RawStatsCreation {
     public IncomeStatRaw customIncomeRawGet(int i) {
         IncomeStatRaw currentCsvStatement = null;
         try {
-            currentCsvStatement = currentCsvIncomeRawList.get(i);
+            currentCsvStatement = currentRawIncomeList.get(i);
         }
         catch (Exception ignored) { }
 
@@ -228,7 +257,7 @@ public class RawStatsCreation {
     public CashflowStatRaw customCashflowRawGet(int i) {
         CashflowStatRaw currentCsvStatement = null;
         try {
-            currentCsvStatement = currentCsvCashflowRawList.get(i);
+            currentCsvStatement = currentRawCashflowList.get(i);
         }
         catch (Exception ignored) { }
 
@@ -238,7 +267,7 @@ public class RawStatsCreation {
     public BalanceStatRaw customBalanceRawGet(int i) {
         BalanceStatRaw currentCsvStatement = null;
         try {
-            currentCsvStatement = currentCsvBalanceRawList.get(i);
+            currentCsvStatement = currentRawBalanceList.get(i);
         }
         catch (Exception ignored) { }
 
@@ -248,9 +277,9 @@ public class RawStatsCreation {
     List<Integer> listInts;
     public int findMaxAmountOfSpecificStatementsInCsvFile() {
         listInts = new LinkedList<>();
-        listInts.add(currentCsvIncomeRawList.size()); // 4
-        listInts.add(currentCsvCashflowRawList.size()); // 2
-        listInts.add(currentCsvBalanceRawList.size()); // 2
+        listInts.add(currentRawIncomeList.size()); // 4
+        listInts.add(currentRawCashflowList.size()); // 2
+        listInts.add(currentRawBalanceList.size()); // 2
         int maxLength = Collections.max(listInts);
         LOGGER.info("MaxLength: {}", maxLength);
         return maxLength;
@@ -278,9 +307,9 @@ public class RawStatsCreation {
                 "cashflowStatRawRepository=" + cashflowStatRawRepository +
                 ", balanceStatRawRepository=" + balanceStatRawRepository +
                 ", incomeStatRawRepository=" + incomeStatRawRepository +
-                ", currentCsvIncomeRawList=" + currentCsvIncomeRawList +
-                ", currentCsvCashflowRawList=" + currentCsvCashflowRawList +
-                ", currentCsvBalanceRawList=" + currentCsvBalanceRawList +
+                ", currentCsvIncomeRawList=" + currentRawIncomeList +
+                ", currentCsvCashflowRawList=" + currentRawCashflowList +
+                ", currentCsvBalanceRawList=" + currentRawBalanceList +
                 '}';
     }
 }

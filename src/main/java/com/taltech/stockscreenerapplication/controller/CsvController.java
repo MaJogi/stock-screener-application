@@ -5,8 +5,9 @@ import com.taltech.stockscreenerapplication.model.CompanyDimension;
 import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.SourceCsvFileRepository;
-import com.taltech.stockscreenerapplication.service.rawStats.RawStatsCreation;
 import com.taltech.stockscreenerapplication.service.csvreader.CsvReaderImpl;
+import com.taltech.stockscreenerapplication.service.csvreader.Statement;
+import com.taltech.stockscreenerapplication.service.rawStats.RawStatsCreation;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,12 +112,22 @@ public class CsvController {
         SourceCsvFile newSourceFile = new SourceCsvFile();
         newSourceFile.setSourceFileName(String.format(Constants.UPLOADED_FILE_LOCATION, fileName));
 
+
+        /* Old style
         statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile);
         statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries,
                 cashflowListAttributesWithData, company, newSourceFile);
         statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries,
                 balanceListAttributesWithData, company, newSourceFile);
+         */
+
+        statementsToDbHelper.createNewFinStatementForSpecPeriod(incomeListDateEntries,
+                incomeListAttributesWithData, company, newSourceFile, Statement.Statement_income);
+        statementsToDbHelper.createNewFinStatementForSpecPeriod(cashflowListDateEntries,
+                cashflowListAttributesWithData, company, newSourceFile, Statement.Statement_cashflow);
+        statementsToDbHelper.createNewFinStatementForSpecPeriod(balanceListDateEntries,
+                balanceListAttributesWithData, company, newSourceFile, Statement.Statement_balance);
 
         int maxLength = statementsToDbHelper.findMaxAmountOfSpecificStatementsInCsvFile();
         statementsToDbHelper.createGroupsOfStatementsForCompany(maxLength, company);

@@ -30,6 +30,7 @@ public class CsvReaderImpl implements IReader {
 
     CSVParser parser;
     CSVReader csvReader;
+
     List<List<String>> balanceList;
     List<List<String>> cashflowList;
     List<List<String>> incomeList;
@@ -228,14 +229,4 @@ public class CsvReaderImpl implements IReader {
 
         return readCsvAndReturnLists(csvReader);
     }
-
-    /*
-    // 2th step: Remove everything inside parantheses (CURRENTLY DEACTIVATED)
-    String paranthesis = ")";
-    String regexTarget = "\\(([^\\)]+)\\)"; // matches any character inside parantheses
-    String replacement = ""; // empty
-            if (line[0].contains(paranthesis)) {
-        line[0] = line[0].replaceAll(regexTarget, replacement).trim();
-    }
-    */
 }
