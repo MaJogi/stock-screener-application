@@ -181,7 +181,7 @@ public class RawStatsCreation {
     }
 
     List<Integer> listInts;
-    public int findMaxAmountOfSpecificStatementsInCsvFile() {
+    public int findMaxLengthOfStatementsInFile() {
         listInts = new LinkedList<>();
         listInts.add(currentRawIncomeList.size()); // 4
         listInts.add(currentRawCashflowList.size()); // 2

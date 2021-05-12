@@ -11,6 +11,7 @@ import com.taltech.stockscreenerapplication.model.statement.configuration.Income
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatementsStandard;
 import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
+import com.taltech.stockscreenerapplication.service.csvreader.Statement;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -88,6 +89,21 @@ public class StandardGroupOfStatsCreation {
     String otherInvestingActivitiesString;
     String netCashUsedForInvestingActivitiesString;
     String debtRepaymentString;
+    // commonStockIssued
+    // commonStockRepurchased
+    // dividendsPaid
+    // otherFinancingActivites
+    // netCashUsedProvidedByFinancingActivities
+    // effectOfForexChangesOnCash
+    // netChangeInCash
+    // cashAtEndOfPeriod
+    // cashAtBeginningOfPeriod
+    // operatingCashFlow
+    // capitalExpenditure
+    // freeCashFlow
+
+
+
 
     List<String> balanceStandardFieldFormulas;
 
@@ -138,9 +154,17 @@ public class StandardGroupOfStatsCreation {
         balanceStandardFieldFormulas = new LinkedList<>();
     }
 
-    public void populateContextesWithValues(List<Attribute> balanceAttributesWithValues,
-                                            List<Attribute> cashflowAttributesWithValues,
-                                            List<Attribute> incomeAttributesWithValues) {
+    public void createStContexts(BalanceStatStandard balanceStatement,
+                                 CashflowStatStandard cashflowStatement,
+                                 IncomeStatStandard incomeStatement) {
+        stContextBalance = new StandardEvaluationContext(balanceStatement);
+        stContextCashflow = new StandardEvaluationContext(cashflowStatement);
+        stContextIncome = new StandardEvaluationContext(incomeStatement);
+    }
+
+    public void populateContextsWithValues(List<Attribute> balanceAttributesWithValues,
+                                           List<Attribute> cashflowAttributesWithValues,
+                                           List<Attribute> incomeAttributesWithValues) {
         createAttributeWithValuesContext(balanceAttributesWithValues, stContextBalance);
         createAttributeWithValuesContext(cashflowAttributesWithValues, stContextCashflow);
         createAttributeWithValuesContext(incomeAttributesWithValues, stContextIncome);
@@ -518,13 +542,7 @@ public class StandardGroupOfStatsCreation {
             LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
         }
     }
-    public void createStContextes(BalanceStatStandard balanceStatement,
-                                  CashflowStatStandard cashflowStatement,
-                                  IncomeStatStandard incomeStatement) {
-        stContextBalance = new StandardEvaluationContext(balanceStatement);
-        stContextCashflow = new StandardEvaluationContext(cashflowStatement);
-        stContextIncome = new StandardEvaluationContext(incomeStatement);
-    }
+
 
     public void createBalanceStatement(BalanceStatConfig rightCompanyBalanceConfig) {
         // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
@@ -552,6 +570,30 @@ public class StandardGroupOfStatsCreation {
         List<String> incomeStandardFieldFormulas = getIncomeStandardFieldFormulas();
         createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
                 stContextIncome);
+    }
+
+    public void createStatement(FormulaConfig config, Statement statment) {
+        List<String> standardFieldFormulas;
+        switch (statment) {
+            case Statement_income:
+                createIncomeStrings((IncomeStatConfig) config);
+                standardFieldFormulas = getIncomeStandardFieldFormulas();
+                createValuesForStatementFromFormulas(standardFieldFormulas,
+                        stContextIncome);
+                break;
+            case Statement_cashflow:
+                createCashflowStrings((CashflowStatConfig) config);
+                standardFieldFormulas = getCashflowStandardFieldFormulas();
+                createValuesForStatementFromFormulas(standardFieldFormulas,
+                        stContextCashflow);
+                break;
+            case Statement_balance:
+                createBalanceStrings((BalanceStatConfig) config);
+                standardFieldFormulas = getBalanceStandardFieldFormulas();
+                createValuesForStatementFromFormulas(standardFieldFormulas,
+                        stContextBalance);
+                break;
+        }
     }
 
     public void setDateToEachStatement(BalanceStatStandard balanceStatement,

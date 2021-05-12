@@ -17,6 +17,7 @@ import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatSta
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStandardStatementsRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
+import com.taltech.stockscreenerapplication.service.csvreader.Statement;
 import com.taltech.stockscreenerapplication.service.groupOfStandardStats.StandardGroupOfStatsCreation;
 import com.taltech.stockscreenerapplication.util.payload.response.MessageResponse;
 import org.slf4j.Logger;
@@ -127,9 +128,9 @@ public class GroupOfStatementsStandardController {
         }
 
 
-        standardGroupOfStatsCreation.createStContextes(balanceStatement, cashflowStatement, incomeStatement);
+        standardGroupOfStatsCreation.createStContexts(balanceStatement, cashflowStatement, incomeStatement);
 
-        standardGroupOfStatsCreation.populateContextesWithValues(balanceAttributesWithValues,
+        standardGroupOfStatsCreation.populateContextsWithValues(balanceAttributesWithValues,
                 cashflowAttributesWithValues, incomeAttributesWithValues);
 
 
@@ -167,11 +168,17 @@ public class GroupOfStatementsStandardController {
                                     "Does two of them even exist?"));
         }
 
+        /*
         // new way to do all business logic in standardStatementCreationHelper.
         standardGroupOfStatsCreation.createBalanceStatement(rightCompanyBalanceConfig);
         standardGroupOfStatsCreation.createCashflowStatement(cashflowConfig);
         standardGroupOfStatsCreation.createIncomeStatement(incomeConfig);
+         */
 
+        // new way to do all business logic in standardStatementCreationHelper.
+        standardGroupOfStatsCreation.createStatement(rightCompanyBalanceConfig, Statement.Statement_balance);
+        standardGroupOfStatsCreation.createStatement(cashflowConfig, Statement.Statement_cashflow);
+        standardGroupOfStatsCreation.createStatement(incomeConfig, Statement.Statement_income);
 
         // Setting dependency, so I can get later on information, which config was used.
         balanceStatement.setBalance_stat_formula_id(rightCompanyBalanceConfig);

@@ -120,7 +120,7 @@ public class CsvController {
         statementsToDbHelper.createNewFinStatementForSpecPeriod(balanceListDateEntries,
                 balanceListAttributesWithData, company, newSourceFile, Statement.Statement_balance);
 
-        int maxLength = statementsToDbHelper.findMaxAmountOfSpecificStatementsInCsvFile();
+        int maxLength = statementsToDbHelper.findMaxLengthOfStatementsInFile();
         statementsToDbHelper.createGroupsOfStatementsForCompany(maxLength, company);
 
         companyDimensionRepository.save(company);
