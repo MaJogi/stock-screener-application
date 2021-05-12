@@ -86,36 +86,6 @@ public class RawStatsCreation {
         }
     }
 
-    public void createNewCashflowFinStatementForSpecPeriod(List<String> cashflowListDateEntries,
-                                                           List<List<String>> cashflowListAttributesWithData,
-                                                           CompanyDimension company,
-                                                           SourceCsvFile newSourceFile) {
-        // starting from first value column
-        int i = 1;
-        //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-        for (String dateEntry : cashflowListDateEntries) {
-            // Creating raw cashflow statement object for specific period (Q2 2017)
-            CashflowStatRaw newCashflowStatRaw = new CashflowStatRaw();
-
-            // Setting current period for raw cashflow statement
-            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
-            newCashflowStatRaw.setDateOrPeriod(dateEntry);
-
-            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            iterateDataLinesAndCreateFinStatementAttrs(cashflowListAttributesWithData, currentPeriodAttributes, i);
-            newCashflowStatRaw.setAttributes(currentPeriodAttributes);
-            cashflowStatRawRepository.save(newCashflowStatRaw);
-            // new
-            currentRawCashflowList.add(newCashflowStatRaw);
-            // end new
-            company.getCashflowRawStatements().add(newCashflowStatRaw);
-
-            newSourceFile.getCashflowRawStatements().add(newCashflowStatRaw);
-
-            i++;
-        }
-    }
-
     public void createNewFinStatementForSpecPeriod(List<String> finStatementListDateEntries,
                                                    List<List<String>> finStatementListAttributesWithData,
                                                    CompanyDimension company,
@@ -176,70 +146,6 @@ public class RawStatsCreation {
                     newSourceFile.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
                     break;
             }
-            i++;
-        }
-    }
-
-    public void createNewBalanceFinStatementForSpecPeriod(List<String> balanceListDateEntries,
-                                                          List<List<String>> balanceListAttributesWithData,
-                                                          CompanyDimension company,
-                                                          SourceCsvFile newSourceFile) {
-        // starting from first value column
-        int i = 1;
-        //[Q2 2017, Q2 2016, 6 months 2017, 6 months 2016]
-        for (String dateEntry : balanceListDateEntries) {
-            // Creating raw balance statement object for specific period (Q2 2017)
-            BalanceStatRaw newBalanceStatRaw = new BalanceStatRaw();
-
-            // Setting current period for raw income statement
-            LOGGER.info("Working with DATE_OR_PERIOD: {} <---------", dateEntry);
-            newBalanceStatRaw.setDateOrPeriod(dateEntry);
-
-            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            iterateDataLinesAndCreateFinStatementAttrs(balanceListAttributesWithData, currentPeriodAttributes, i);
-            newBalanceStatRaw.setAttributes(currentPeriodAttributes);
-
-            balanceStatRawRepository.save(newBalanceStatRaw);
-
-            // new
-            currentRawBalanceList.add(newBalanceStatRaw);
-            // end new
-
-            company.getBalanceRawStatements().add(newBalanceStatRaw);
-
-            newSourceFile.getBalanceRawStatements().add(newBalanceStatRaw);
-
-            i++;
-        }
-    }
-
-    public void createNewIncomeFinStatementForSpecPeriod(List<String> incomeListDateEntries,
-                                                         List<List<String>> incomeListAttributesWithData,
-                                                         CompanyDimension company,
-                                                         SourceCsvFile newSourceFile) {
-
-        // Making sure object used as singleton is clean and nothing from previous csv file is present this time.
-        // Must be done!
-        currentRawIncomeList = new LinkedList<>();
-        currentRawCashflowList = new LinkedList<>();
-        currentRawBalanceList = new LinkedList<>();
-
-        int i = 1;
-        for (String dateEntry : incomeListDateEntries) {
-            IncomeStatRaw newIncomeStatRaw = new IncomeStatRaw();
-
-            LOGGER.info("Working with date/period: {} <---------", dateEntry);
-            newIncomeStatRaw.setDateOrPeriod(dateEntry);
-            List<Attribute> currentPeriodAttributes = new LinkedList<>();
-            iterateDataLinesAndCreateFinStatementAttrs(incomeListAttributesWithData, currentPeriodAttributes, i);
-            newIncomeStatRaw.setAttributes(currentPeriodAttributes);
-            incomeStatRawRepository.save(newIncomeStatRaw);
-            // new
-            currentRawIncomeList.add(newIncomeStatRaw);
-            // end new
-            company.getIncomeRawStatements().add(newIncomeStatRaw);
-            newSourceFile.getIncomeRawStatements().add(newIncomeStatRaw);
-
             i++;
         }
     }

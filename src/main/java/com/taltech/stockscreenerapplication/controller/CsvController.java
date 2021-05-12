@@ -113,15 +113,6 @@ public class CsvController {
         newSourceFile.setSourceFileName(String.format(Constants.UPLOADED_FILE_LOCATION, fileName));
 
 
-        /* Old style
-        statementsToDbHelper.createNewIncomeFinStatementForSpecPeriod(incomeListDateEntries,
-                incomeListAttributesWithData, company, newSourceFile);
-        statementsToDbHelper.createNewCashflowFinStatementForSpecPeriod(cashflowListDateEntries,
-                cashflowListAttributesWithData, company, newSourceFile);
-        statementsToDbHelper.createNewBalanceFinStatementForSpecPeriod(balanceListDateEntries,
-                balanceListAttributesWithData, company, newSourceFile);
-         */
-
         statementsToDbHelper.createNewFinStatementForSpecPeriod(incomeListDateEntries,
                 incomeListAttributesWithData, company, newSourceFile, Statement.Statement_income);
         statementsToDbHelper.createNewFinStatementForSpecPeriod(cashflowListDateEntries,
@@ -136,13 +127,6 @@ public class CsvController {
 
         newSourceFile.setTicker_id(ticker);
         sourceCsvFileRepository.save(newSourceFile);
-
-        /*
-        CompanyDimension com = findCompanyByIdWithExceptionHelper(ticker);
-        LOGGER.info("Thats how many company have incomestatements now: {} ", com.getIncomeRawStatements().size());
-        LOGGER.info("Thats how many company have cashflowstatements now: {} ", com.getCashflowRawStatements().size());
-        LOGGER.info("Thats how many company have balancestatements now: {} ", com.getBalanceRawStatements().size());
-         */
 
         return ResponseEntity
                 .status(200)
