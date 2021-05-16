@@ -2,14 +2,11 @@ package com.taltech.stockscreenerapplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatStandard;
 import com.taltech.stockscreenerapplication.model.statement.configuration.BalanceStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatStandard;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,15 +66,6 @@ public class CompanyDimension {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatConfig> cashflowConfigurations = new LinkedList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<IncomeStatStandard> incomeStatements = new LinkedList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CashflowStatStandard> cashflowStatements = new LinkedList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BalanceStatStandard> balanceStatements = new LinkedList<>();
 
     public CompanyDimension() { }
 

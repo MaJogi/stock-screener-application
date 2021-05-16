@@ -5,6 +5,7 @@ import com.taltech.stockscreenerapplication.model.statement.configuration.Balanc
 import com.taltech.stockscreenerapplication.model.statement.configuration.CashflowStatConfig;
 import com.taltech.stockscreenerapplication.model.statement.configuration.IncomeStatConfig;
 import com.taltech.stockscreenerapplication.repository.CompanyDimensionRepository;
+import com.taltech.stockscreenerapplication.repository.configuration.CompanyBalanceStatConfigRepository;
 import com.taltech.stockscreenerapplication.service.configuration.ConfigCreation;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.BalanceMappingRequest;
 import com.taltech.stockscreenerapplication.util.payload.request.statementMapping.CashflowMappingRequest;
@@ -26,6 +27,9 @@ public class ConfigurationController {
 
     @Autowired
     private CompanyDimensionRepository companyDimensionRepository;
+
+    @Autowired
+    private CompanyBalanceStatConfigRepository companyBalanceStatConfigRepository;
 
     @PostMapping(value = "/create/{ticker}/income",
             produces = "application/json", consumes = "application/json")
@@ -83,6 +87,31 @@ public class ConfigurationController {
                 .body(new MessageResponse(
                         "Mapping created, check if balance configuration containing new formulas has been created"));
     }
+
+    @PutMapping(value = "/update/{ticker}/balance/{id}",
+            produces = "application/json", consumes = "application/json")
+    public ResponseEntity<MessageResponse> updatBalanceConfigMapping(
+            @PathVariable String ticker, @RequestBody final BalanceMappingRequest balanceRequest,
+            @PathVariable Long id) {
+
+        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
+
+        BalanceStatConfig balanceConfig = companyBalanceStatConfigRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Unable to find balance configuration with id: " + id));
+        ConfigCreation.setBalanceConfigObjectFields(balanceConfig, balanceRequest);
+
+        companyDimensionRepository.save(company);
+
+        return ResponseEntity
+                .status(200)
+                .body(new MessageResponse(
+                        "Balance Configuration updated"));
+    }
+
+
+
+
 
     public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
         return companyDimensionRepository.findById(tickerId)

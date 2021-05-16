@@ -131,6 +131,8 @@ public class GroupOfStandardStatementsController {
                 (BalanceStatConfig) StandardGroupOfStatsCreation
                         .findRightBalanceConfig(companyBalanceConfigs, balance_date);
 
+        LOGGER.info(rightCompanyBalanceConfig.toString());
+
         if (rightCompanyBalanceConfig == null) {
             return ResponseEntity
                     .status(404)
@@ -139,7 +141,7 @@ public class GroupOfStandardStatementsController {
         }
 
         // I am looking at a collection id property of balance configuration, to find other (2) related configurations
-        // that i am going to use later, to generate standard statements (group of them).
+        // that I am going to use later, to generate standard statements (group of them).
         Long companyConfigCollectionId = rightCompanyBalanceConfig.getCompany_config_collection_id();
 
         CashflowStatConfig cashflowConfig = (CashflowStatConfig) StandardGroupOfStatsCreation
@@ -160,6 +162,8 @@ public class GroupOfStandardStatementsController {
         standardGroupOfStatsCreation.createStatement(rightCompanyBalanceConfig, Statement.Statement_balance);
         standardGroupOfStatsCreation.createStatement(cashflowConfig, Statement.Statement_cashflow);
         standardGroupOfStatsCreation.createStatement(incomeConfig, Statement.Statement_income);
+
+        LOGGER.info("Balance statement after creation: {}", balanceStatement.toString());
 
         // Setting dependency, so I can get later on information, which config was used.
         balanceStatement.setBalance_stat_formula_id(rightCompanyBalanceConfig);
@@ -182,9 +186,11 @@ public class GroupOfStandardStatementsController {
             LOGGER.info("Group of standard statements already exits with that balance date. " +
                     "Updating values with current configurations");
             possibleExistingGroupOfStatements.setBalanceStat(balanceStatement);
+            LOGGER.info("Balance statement after creation 2: {}", balanceStatement.toString());
             possibleExistingGroupOfStatements.setCashflowStat(cashflowStatement);
             possibleExistingGroupOfStatements.setIncomeStat(incomeStatement);
             groupOfStandardStatementsRepository.save(possibleExistingGroupOfStatements);
+
             companyDimensionRepository.save(company);
             return ResponseEntity
                     .status(200)
@@ -193,7 +199,7 @@ public class GroupOfStandardStatementsController {
         }
         else {
             // Will add each new standard statement separately to company. (without a group)
-            standardGroupOfStatsCreation.addStandardStatementsToRightCompany(company, balanceStatement, cashflowStatement, incomeStatement);
+            //standardGroupOfStatsCreation.addStandardStatementsToRightCompany(company, balanceStatement, cashflowStatement, incomeStatement);
             groupOfStandardStatementsRepository.save(groupOfStandardStatements);
             LOGGER.info("Created brand new group of standard statements");
         }

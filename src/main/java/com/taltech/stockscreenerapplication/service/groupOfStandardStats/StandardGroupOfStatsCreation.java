@@ -579,9 +579,9 @@ public class StandardGroupOfStatsCreation {
     public void addStandardStatementsToRightCompany(CompanyDimension company, BalanceStatStandard balanceStatement,
                                                     CashflowStatStandard cashflowStatement,
                                                     IncomeStatStandard incomeStatement){
-        company.getBalanceStatements().add(balanceStatement);
-        company.getCashflowStatements().add(cashflowStatement);
-        company.getIncomeStatements().add(incomeStatement);
+        //company.getBalanceStatements().add(balanceStatement);
+        //company.getCashflowStatements().add(cashflowStatement);
+        //company.getIncomeStatements().add(incomeStatement);
     }
 
     public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandard balanceStatement,

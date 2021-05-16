@@ -143,4 +143,51 @@ public class BalanceStatStandard extends StatStandard {
     private Double netDebt;
 
     public BalanceStatStandard() { }
+
+    @Override
+    public String toString() {
+        return "BalanceStatStandard{" +
+                "balance_stat_standard_id=" + balance_stat_standard_id +
+                ", balance_stat_formula_id=" + balance_stat_formula_id +
+                ", cashAndCashEquivalents=" + cashAndCashEquivalents +
+                ", shortTermInvestments=" + shortTermInvestments +
+                ", cashAndShortTermInvestments=" + cashAndShortTermInvestments +
+                ", netReceivables=" + netReceivables +
+                ", inventory=" + inventory +
+                ", otherCurrentAssets=" + otherCurrentAssets +
+                ", totalCurrentAssets=" + totalCurrentAssets +
+                ", propertyPlantEquipmentAssets=" + propertyPlantEquipmentAssets +
+                ", goodwill=" + goodwill +
+                ", intangibleAssets=" + intangibleAssets +
+                ", goodwillAndIntangibleAssets=" + goodwillAndIntangibleAssets +
+                ", longTermInvestmets=" + longTermInvestmets +
+                ", taxAssets=" + taxAssets +
+                ", otherNonCurrentAssets=" + otherNonCurrentAssets +
+                ", totalNonCurrentAssets=" + totalNonCurrentAssets +
+                ", otherAssets=" + otherAssets +
+                ", totalAssets=" + totalAssets +
+                ", accountPayables=" + accountPayables +
+                ", shortTermDebt=" + shortTermDebt +
+                ", taxPayables=" + taxPayables +
+                ", deferredRevenue=" + deferredRevenue +
+                ", otherCurrentLiabilities=" + otherCurrentLiabilities +
+                ", totalCurrentLiabilities=" + totalCurrentLiabilities +
+                ", longTermDebt=" + longTermDebt +
+                ", deferredRevenueNonCurrent=" + deferredRevenueNonCurrent +
+                ", deferredTaxLiabilitiesNonCurrent=" + deferredTaxLiabilitiesNonCurrent +
+                ", otherNonCurrentLiabilities=" + otherNonCurrentLiabilities +
+                ", totalNonCurrentLiabilities=" + totalNonCurrentLiabilities +
+                ", otherLiabilities=" + otherLiabilities +
+                ", totalLiabilities=" + totalLiabilities +
+                ", commonStock=" + commonStock +
+                ", retainedEarnings=" + retainedEarnings +
+                ", accumulatedOtherComprehensiveIncomeLoss=" + accumulatedOtherComprehensiveIncomeLoss +
+                ", otherTotalStockholdersEquity=" + otherTotalStockholdersEquity +
+                ", totalStockholdersEquity=" + totalStockholdersEquity +
+                ", totalLiabilitiesAndStockHoldersEquity=" + totalLiabilitiesAndStockHoldersEquity +
+                ", totalInvestments=" + totalInvestments +
+                ", totalDebt=" + totalDebt +
+                ", netDebt=" + netDebt +
+                '}';
+    }
 }
