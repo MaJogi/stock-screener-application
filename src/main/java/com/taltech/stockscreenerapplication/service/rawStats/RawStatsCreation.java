@@ -59,7 +59,7 @@ public class RawStatsCreation {
             return valueNum.doubleValue();
         }
         catch (ParseException e) {
-            LOGGER.error("PARSEEXCEPTION <-------------------, value is set to -1");
+            LOGGER.error("Parse exception");
             return -1;
         }
     }
@@ -192,7 +192,6 @@ public class RawStatsCreation {
     }
 
     public void createGroupsOfStatementsForCompany(int maxLength, CompanyDimension company) {
-        // Creating GroupsOfStatements
         for (int i = 0; i < maxLength; i++) {
             GroupOfStatements groupOfStatements = new GroupOfStatements();
             groupOfStatements.setIncomeStatRaw(customIncomeRawGet(i));
@@ -203,8 +202,6 @@ public class RawStatsCreation {
             groupOfStatements.setCompanyDimension(company);
             groupOfStatementsRepository.save(groupOfStatements);
         }
-
-        // End creating GroupsOfStatements
     }
 
     @Override

@@ -29,7 +29,6 @@ import java.util.List;
 
 @Getter
 @Setter
-//@Service
 public class StandardGroupOfStatsCreation {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StandardGroupOfStatsCreation.class);
@@ -530,7 +529,6 @@ public class StandardGroupOfStatsCreation {
         return null;
     }
 
-
     // Adding attribute to context, so I can use them later as variables when creating standard statement.
     // stContext.setVariable("Revenue", 150);
     public void createAttributeWithValuesContext(List<Attribute> statementAttributesWithValues,
@@ -541,35 +539,6 @@ public class StandardGroupOfStatsCreation {
         for (Attribute attr : statementAttributesWithValues) {
             LOGGER.info(attr.getFieldName().replaceAll("\\s+", "_"));
         }
-    }
-
-
-    public void createBalanceStatement(BalanceStatConfig rightCompanyBalanceConfig) {
-        // Dynamically are taken previously inserted formulas into balance conf, then parsed into correct executable
-        // statements which will later be used to populate standard statements. Correct executable statements are added
-        // into list.
-        createBalanceStrings(rightCompanyBalanceConfig);
-        // Now we get dynamically created formulas
-        List<String> balanceStandardFieldFormulas = getBalanceStandardFieldFormulas();
-        // Preparation is done.
-        // Now method is executed, which using formulas with pre defined variables
-        // generates new standard balance statement.
-        createValuesForStatementFromFormulas(balanceStandardFieldFormulas,
-                stContextBalance);
-    }
-
-    public void createCashflowStatement(CashflowStatConfig cashflowConfig) {
-        createCashflowStrings(cashflowConfig);
-        List<String> cashflowStandardFieldFormulas = getCashflowStandardFieldFormulas();
-        createValuesForStatementFromFormulas(cashflowStandardFieldFormulas,
-                stContextCashflow);
-    }
-
-    public void createIncomeStatement(IncomeStatConfig incomeConfig) {
-        createIncomeStrings(incomeConfig);
-        List<String> incomeStandardFieldFormulas = getIncomeStandardFieldFormulas();
-        createValuesForStatementFromFormulas(incomeStandardFieldFormulas,
-                stContextIncome);
     }
 
     public void createStatement(FormulaConfig config, Statement statment) {

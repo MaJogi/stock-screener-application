@@ -21,7 +21,7 @@ import java.util.List;
 
 /*
     This class only reads CSV file and returns clean balance sheet, income statement
-    and cashflow statement AS A list.
+    and cashflow statement as a lists.
  */
 
 @Service
