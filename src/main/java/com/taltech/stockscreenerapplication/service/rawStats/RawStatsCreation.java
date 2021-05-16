@@ -131,19 +131,19 @@ public class RawStatsCreation {
                     balanceStatRawRepository.save((BalanceStatRaw) newFinStatementRaw);
                     currentRawBalanceList.add((BalanceStatRaw) newFinStatementRaw);
                     company.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
-                    newSourceFile.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
+                    //newSourceFile.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
                     break;
                 case Statement_cashflow:
                     cashflowStatRawRepository.save((CashflowStatRaw) newFinStatementRaw);
                     currentRawCashflowList.add((CashflowStatRaw) newFinStatementRaw);
                     company.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
-                    newSourceFile.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
+                    //newSourceFile.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
                     break;
                 case Statement_income:
                     incomeStatRawRepository.save((IncomeStatRaw) newFinStatementRaw);
                     currentRawIncomeList.add((IncomeStatRaw) newFinStatementRaw);
                     company.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
-                    newSourceFile.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
+                    //newSourceFile.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
                     break;
             }
             i++;

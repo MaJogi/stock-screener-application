@@ -1,15 +1,10 @@
 package com.taltech.stockscreenerapplication.model.statement.sourceFile;
 
-import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.LinkedList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +29,7 @@ public class SourceCsvFile {
 
     private String ticker_id;
 
+    /*
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
 
@@ -42,6 +38,8 @@ public class SourceCsvFile {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
+
+     */
 
     public SourceCsvFile() {}
 }
