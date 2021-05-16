@@ -43,7 +43,7 @@ public class ConfigurationController {
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse(
-                        "Mapping created, check if formulas for income statement are done"));
+                        "Mapping created, check if income configuration containing new formulas has been created"));
     }
 
     @PostMapping(value = "/create/{ticker}/cashflow",
@@ -62,7 +62,7 @@ public class ConfigurationController {
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse(
-                        "Mapping created, check if formulas cashflow statement are done"));
+                        "Mapping created, check if cashflow configuration containing new formulas has been created"));
     }
 
     @PostMapping(value = "/create/{ticker}/balance",
@@ -81,7 +81,7 @@ public class ConfigurationController {
         return ResponseEntity
                 .status(200)
                 .body(new MessageResponse(
-                        "Mapping created, check if formulas balance statement are done"));
+                        "Mapping created, check if balance configuration containing new formulas has been created"));
     }
 
     /*

@@ -37,8 +37,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/groupOfStandardStatements")
-public class GroupOfStatementsStandardController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GroupOfStatementsStandardController.class);
+public class GroupOfStandardStatementsController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GroupOfStandardStatementsController.class);
 
     @Autowired
     GroupOfStandardStatementsRepository groupOfStandardStatementsRepository;
@@ -61,7 +61,7 @@ public class GroupOfStatementsStandardController {
                         "Unable to find groupOfStandardStatement with id: " + id));
     }
 
-    @GetMapping("/for/{ticker_id}")
+    @GetMapping("/for/{ticker_id}") // maybe without for
     public Iterable<GroupOfStatementsStandard> getGroupsOfStandardStatementsForCompany(
             @PathVariable final String ticker_id) {
 
@@ -72,7 +72,7 @@ public class GroupOfStatementsStandardController {
 
 
     // without ending "/" it is losing part of date!
-    @GetMapping("/{ticker}/create/forPeriod/{balance_date}/")
+    @GetMapping("/{ticker}/create/forPeriod/{balance_date}/") // maybe without forPeriod
     public ResponseEntity<MessageResponse> createGroupOfStandardStatementsWithConfigurations(@PathVariable String ticker,
                                                                                              @PathVariable String balance_date) {
         StandardGroupOfStatsCreation standardGroupOfStatsCreation = new StandardGroupOfStatsCreation();
@@ -147,7 +147,7 @@ public class GroupOfStatementsStandardController {
             return ResponseEntity
                     .status(404)
                     .body(new MessageResponse(
-                            "Couldn't find suitable balance configuration. Does it even exits?"));
+                            "Couldn't find suitable balance configuration. Does it exist?"));
         }
 
         // I am looking at a collection id property of balance configuration, to find other (2) related configurations
@@ -164,8 +164,8 @@ public class GroupOfStatementsStandardController {
             return ResponseEntity
                     .status(404)
                     .body(new MessageResponse(
-                            "Couldn't find suitable cashflow Or income configuration object. " +
-                                    "Does two of them even exist?"));
+                            "Couldn't find suitable cashflow or income configuration. " +
+                                    "Does two of them exist?"));
         }
 
         /*
@@ -198,16 +198,21 @@ public class GroupOfStatementsStandardController {
                 groupOfStandardStatementsRepository.findByBalanceStat_DatePeriodIs(balance_date);
 
         if (possibleExistingGroupOfStatements != null) {
-            LOGGER.info("GROUP of standard statement already exits with that balance date. " +
+            LOGGER.info("Group of standard statements already exits with that balance date. " +
                     "Updating values with current configurations");
             possibleExistingGroupOfStatements.setBalanceStat(balanceStatement);
             possibleExistingGroupOfStatements.setCashflowStat(cashflowStatement);
             possibleExistingGroupOfStatements.setIncomeStat(incomeStatement);
             groupOfStandardStatementsRepository.save(possibleExistingGroupOfStatements);
+            companyDimensionRepository.save(company);
+            return ResponseEntity
+                    .status(200)
+                    .body(new MessageResponse(
+                            "Group of standard statements updated"));
         }
         else {
             // Will add each new standard statement separately to company. (without a group)
-            standardGroupOfStatsCreation.addStandardStatementsToRightCompanyLists(company, balanceStatement, cashflowStatement, incomeStatement);
+            standardGroupOfStatsCreation.addStandardStatementsToRightCompany(company, balanceStatement, cashflowStatement, incomeStatement);
             groupOfStandardStatementsRepository.save(groupOfStandardStatements);
             LOGGER.info("Created brand new group of standard statements");
         }
@@ -215,9 +220,9 @@ public class GroupOfStatementsStandardController {
         companyDimensionRepository.save(company);
 
         return ResponseEntity
-                .status(200)
+                .status(201)
                 .body(new MessageResponse(
-                        "GET method (balance) returned. Check if result is correct"));
+                        "Group of standard statements created"));
     }
 
     public CompanyDimension findCompanyWithExceptionHandler(String ticker) {

@@ -43,14 +43,6 @@ public class CsvController {
     @PreAuthorize("hasRole('USER')")
     */
 
-    @GetMapping("/") // default mapping without additional arguments. Right now reading in csv
-    public ResponseEntity<MessageResponse> getDefaultPage() {
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse("Welcome to readCsvController homepage. " +
-                        "Read Usage guide to know how this controller can be used"));
-    }
-
     // Ticker can be for example: TKM1T
     @GetMapping("/readAndSave/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
@@ -61,7 +53,7 @@ public class CsvController {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse(
-                            "File is already in the database. No need to add it second time."));
+                            "File is already in the database. No need to add it a second time."));
         }
 
         LOGGER.info("Starting reading in csv file");
@@ -130,7 +122,7 @@ public class CsvController {
 
         return ResponseEntity
                 .status(200)
-                .body(new MessageResponse("Database seems to be populated successfully, check database"));
+                .body(new MessageResponse("As is statements are stored to database successfuly."));
     }
 
     public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {

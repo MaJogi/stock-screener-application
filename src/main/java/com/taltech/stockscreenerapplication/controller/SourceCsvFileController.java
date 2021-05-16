@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/sourceCsvFile")
+@RequestMapping("/sourceCsvFiles")
 public class SourceCsvFileController {
     @Autowired
     private SourceCsvFileRepository sourceCsvFileRepository;

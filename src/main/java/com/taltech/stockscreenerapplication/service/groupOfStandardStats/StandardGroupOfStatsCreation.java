@@ -607,10 +607,9 @@ public class StandardGroupOfStatsCreation {
     }
 
 
-    public void addStandardStatementsToRightCompanyLists(CompanyDimension company,
-                                                         BalanceStatStandard balanceStatement,
-                                                         CashflowStatStandard cashflowStatement,
-                                                         IncomeStatStandard incomeStatement){
+    public void addStandardStatementsToRightCompany(CompanyDimension company, BalanceStatStandard balanceStatement,
+                                                    CashflowStatStandard cashflowStatement,
+                                                    IncomeStatStandard incomeStatement){
         company.getBalanceStatements().add(balanceStatement);
         company.getCashflowStatements().add(cashflowStatement);
         company.getIncomeStatements().add(incomeStatement);
@@ -627,8 +626,5 @@ public class StandardGroupOfStatsCreation {
         groupOfStandardStatements.setCompanyDimension(company);
         return groupOfStandardStatements;
     }
-
-
-
 }
 
