@@ -29,17 +29,5 @@ public class SourceCsvFile {
 
     private String ticker_id;
 
-    /*
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<IncomeStatRaw> incomeRawStatements = new LinkedList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<BalanceStatRaw> balanceRawStatements = new LinkedList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<CashflowStatRaw> cashflowRawStatements = new LinkedList<>();
-
-     */
-
     public SourceCsvFile() {}
 }

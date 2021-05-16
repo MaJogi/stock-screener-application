@@ -79,12 +79,6 @@ public class CompanyDimension {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<BalanceStatStandard> balanceStatements = new LinkedList<>();
 
-    /*
-    // When firm is deleted, all related groupsOfStatements are deleted.
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<GroupOfStatements> groupOfStatements = new LinkedList<>();
-     */
-
     public CompanyDimension() { }
 
     @Override

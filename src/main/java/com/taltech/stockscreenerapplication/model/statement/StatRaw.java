@@ -17,11 +17,11 @@ public class StatRaw {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Attribute> attributes;
 
-    /* Seems like its not necessary
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //@PrimaryKeyJoinColumn(name = "ticker_id") // or maybe joincolumn
-    private CompanyDimension ticker_id;
-    */
+    /* If there is ever need to track where did as is statements come from
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticker_id")
+    private CompanyDimension companyDimension;
+     */
 
     public StatRaw() {}
 }

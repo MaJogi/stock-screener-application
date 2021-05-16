@@ -99,7 +99,6 @@ public class GroupOfStandardStatementsController {
                                     "date is correct"));
         }
 
-
         // now we need to find as is statements, which are going to be used later.
         BalanceStatRaw balanceStatementRaw = rightRawGroupOfStatements.getBalanceStatRaw();
         CashflowStatRaw cashflowStatementRaw = rightRawGroupOfStatements.getCashflowStatRaw();
@@ -117,26 +116,15 @@ public class GroupOfStandardStatementsController {
         List<Attribute> cashflowAttributesWithValues = cashflowStatementRaw.getAttributes();
         List<Attribute> incomeAttributesWithValues = incomeStatementRaw.getAttributes();
 
-        for (Attribute attr : balanceAttributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-        for (Attribute attr : cashflowAttributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-        for (Attribute attr : incomeAttributesWithValues) {
-            LOGGER.info(attr.toString());
-        }
-
-
         standardGroupOfStatsCreation.createStContexts(balanceStatement, cashflowStatement, incomeStatement);
 
         standardGroupOfStatsCreation.populateContextsWithValues(balanceAttributesWithValues,
                 cashflowAttributesWithValues, incomeAttributesWithValues);
 
 
-        List<BalanceStatConfig> companyBalanceConfigs = company.getBalanceConfigurations();   //
-        List<FormulaConfig> companyCashflowConfigs = new LinkedList<>(company.getCashflowConfigurations()); // all this has to be put in helper class
-        List<FormulaConfig> companyIncomeConfigs = new LinkedList<>(company.getIncomeConfigurations());     //
+        List<BalanceStatConfig> companyBalanceConfigs = company.getBalanceConfigurations();
+        List<FormulaConfig> companyCashflowConfigs = new LinkedList<>(company.getCashflowConfigurations());
+        List<FormulaConfig> companyIncomeConfigs = new LinkedList<>(company.getIncomeConfigurations());
 
 
         BalanceStatConfig rightCompanyBalanceConfig =
@@ -167,13 +155,6 @@ public class GroupOfStandardStatementsController {
                             "Couldn't find suitable cashflow or income configuration. " +
                                     "Does two of them exist?"));
         }
-
-        /*
-        // new way to do all business logic in standardStatementCreationHelper.
-        standardGroupOfStatsCreation.createBalanceStatement(rightCompanyBalanceConfig);
-        standardGroupOfStatsCreation.createCashflowStatement(cashflowConfig);
-        standardGroupOfStatsCreation.createIncomeStatement(incomeConfig);
-         */
 
         // new way to do all business logic in standardStatementCreationHelper.
         standardGroupOfStatsCreation.createStatement(rightCompanyBalanceConfig, Statement.Statement_balance);

@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-//@AllArgsConstructor
 @Table(name = "attributes")
 public class Attribute {
     @Id
@@ -21,8 +20,6 @@ public class Attribute {
 
     @Column(name = "value")
     private double value;
-
-    // Maybe we need to add OneToMany. One attribute, many balancestatraw entities. (15:00 min)
 
     public Attribute(String fieldName, double value) {
         this.fieldName = fieldName;

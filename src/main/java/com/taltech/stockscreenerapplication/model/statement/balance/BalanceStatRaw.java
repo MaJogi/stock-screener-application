@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-//@Data
 @Entity
 @Getter
 @Setter
@@ -27,8 +26,6 @@ public class BalanceStatRaw extends StatRaw {
     public String toString() {
         return "BalanceStatRaw{" +
                 "balance_stat_raw_id=" + balance_stat_raw_id +
-                /*", dateOrPeriod='" + dateOrPeriod + '\'' + */
-                /*", attributes=" + attributes + */
                 '}';
     }
 }

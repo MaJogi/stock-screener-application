@@ -75,9 +75,6 @@ public class CashflowStatConfig extends FormulaConfig {
     public String toString() {
         return "CompanyCashflowStatFormulaConfig{" +
                 "cashflow_stat_formula_id=" + cashflow_stat_formula_id +
-//                ", company_config_collection_id=" + company_config_collection_id +
-//                ", dateFrom='" + dateFrom + '\'' +
-//                ", dateTo='" + dateTo + '\'' +
                 ", netIncome='" + netIncome + '\'' +
                 ", depriciationAndAmortization='" + depriciationAndAmortization + '\'' +
                 ", stockBasedCompensation='" + stockBasedCompensation + '\'' +

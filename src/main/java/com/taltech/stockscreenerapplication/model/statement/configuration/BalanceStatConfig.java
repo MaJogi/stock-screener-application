@@ -20,11 +20,6 @@ public class BalanceStatConfig extends FormulaConfig {
     @Column(name = "balance_stat_formula_id")
     private Long income_stat_formula_id;
 
-    /*
-    @Column(name = "symbol") // which company it belong to
-    private String symbol;
-     */
-
     @Column(name = "cash_and_cash_equivalents")
     private String cashAndCashEquivalents;
 

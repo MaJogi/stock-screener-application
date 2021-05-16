@@ -26,8 +26,6 @@ public class CashflowStatRaw extends StatRaw {
     public String toString() {
         return "CashflowStatRaw{" +
                 "cashflow_stat_raw_id=" + cashflow_stat_raw_id +
-                /*", dateOrPeriod='" + dateOrPeriod + '\'' + */
-                /*", attributes=" + attributes + */
                 '}';
     }
 }

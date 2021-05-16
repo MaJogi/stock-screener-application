@@ -34,16 +34,9 @@ public class CsvController {
     @Autowired
     private SourceCsvFileRepository sourceCsvFileRepository;
 
-    /* @Autowired // creates a singleton. Do i even need a singleton? */
     @Autowired
     public RawStatsCreation statementsToDbHelper;
 
-
-    /* Authorization example:
-    @PreAuthorize("hasRole('USER')")
-    */
-
-    // Ticker can be for example: TKM1T
     @GetMapping("/readAndSave/{ticker}/{fileName}")
     public ResponseEntity<MessageResponse> readAndSaveToDb(@PathVariable String ticker, @PathVariable String fileName) {
         boolean fileAlreadyExits = sourceCsvFileRepository
@@ -63,10 +56,10 @@ public class CsvController {
             result = readerImpl.createReaderAndUseReadingMethod(fileName);
         }
         catch (Exception e) {
-            LOGGER.error(e.getMessage()); // siin saab juba kätte exceptioni. Siin peab veel badrequest tagastama.
+            LOGGER.error(e.getMessage());
         }
 
-        if (result == null) { // Vii see meetodisse helper classis. Throw exception.
+        if (result == null) { // Kas viia see meetod helper klassi? Throw exception.
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Something went wrong with reading in values from CSV file." +

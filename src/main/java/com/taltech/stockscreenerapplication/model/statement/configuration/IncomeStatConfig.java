@@ -21,9 +21,8 @@ public class IncomeStatConfig extends FormulaConfig {
 
     @Column(name = "revenue")
     private String revenue; // #Revenue
-    // Later on in config file it can be: #Cost of sales + any additional costs incurred to generate a sale
 
-    @Column(name = "cost_of_revenue") // #Cost of sales + #other operating expenes + #staff costs + #other expenses
+    @Column(name = "cost_of_revenue") // #Cost of sales + #other operating expenes
     private String costOfRevenue;
 
     @Column(name = "gross_profit")

@@ -32,12 +32,10 @@ public class GroupOfStatements {
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL) // When GroupOfStatements is removed, CashflowStatRaw will be removed also.
-    //@JoinColumn(name = "cashflow_stat_raw_id") // or maybe joincolumn
     private CashflowStatRaw cashflowStatRaw;
 
     @OneToOne(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
-    //@JoinColumn(name = "balance_stat_raw_id") // or maybe joincolumn
     private BalanceStatRaw balanceStatRaw;
 
     private Boolean allStatementsPresent; //TODO: remove that
@@ -45,7 +43,7 @@ public class GroupOfStatements {
     public GroupOfStatements() { }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticker_id") // or maybe joincolumn
+    @JoinColumn(name = "ticker_id")
     private CompanyDimension companyDimension;
 
     @Override

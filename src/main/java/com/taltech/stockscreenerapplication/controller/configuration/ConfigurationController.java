@@ -84,41 +84,6 @@ public class ConfigurationController {
                         "Mapping created, check if balance configuration containing new formulas has been created"));
     }
 
-    /*
-    @PostMapping(value = "/create/{ticker}",  produces = "application/json", consumes = "application/json") // Pigem eemalda enne esitamist et ei peaks testima.
-    public ResponseEntity<MessageResponse> allStatementsAsOneMapping(@PathVariable String ticker,
-                                                                     @RequestBody final ObjectNode json) {
-
-        CompanyDimension company = findCompanyByIdWithExceptionHelper(ticker);
-
-        IncomeStatConfig testIncomeConfig = new IncomeStatConfig();
-        CashflowStatConfig testCashflowConfig = new CashflowStatConfig();
-        BalanceStatConfig testBalanceConfig = new BalanceStatConfig();
-
-        testIncomeConfig.setCompany_config_collection_id(
-                Long.parseLong(json.get("companyConfigCollectionId").textValue()));
-
-        JsonNode incomeNode = json.get("incomeRequest");
-        JsonNode cashflowNode = json.get("cashflowRequest");
-        JsonNode balanceNode = json.get("balanceRequest");
-
-        FormulaObjCreationHelper.setJsonValuesToIncomeConfig(testIncomeConfig, incomeNode);
-        FormulaObjCreationHelper.setJsonValuesToCashflowConfig(testCashflowConfig, cashflowNode);
-        FormulaObjCreationHelper.setJsonValuesToBalanceConfig(testBalanceConfig, balanceNode);
-
-        company.getIncomeConfigurations().add(testIncomeConfig);
-        company.getCashflowConfigurations().add(testCashflowConfig);
-        company.getBalanceConfigurations().add(testBalanceConfig);
-
-        companyDimensionRepository.save(company);
-
-        return ResponseEntity
-                .status(200)
-                .body(new MessageResponse(
-                        "Mapping created, check if formulas for income, balance, cashflow statements are done"));
-    }
-     */
-
     public CompanyDimension findCompanyByIdWithExceptionHelper(String tickerId) {
         return companyDimensionRepository.findById(tickerId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
