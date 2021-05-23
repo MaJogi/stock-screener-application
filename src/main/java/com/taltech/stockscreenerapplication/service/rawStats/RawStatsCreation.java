@@ -7,7 +7,6 @@ import com.taltech.stockscreenerapplication.model.statement.balance.BalanceStatR
 import com.taltech.stockscreenerapplication.model.statement.cashflow.CashflowStatRaw;
 import com.taltech.stockscreenerapplication.model.statement.groupOfStatements.GroupOfStatements;
 import com.taltech.stockscreenerapplication.model.statement.income.IncomeStatRaw;
-import com.taltech.stockscreenerapplication.model.statement.sourceFile.SourceCsvFile;
 import com.taltech.stockscreenerapplication.repository.BalanceStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.CashflowStatRawRepository;
 import com.taltech.stockscreenerapplication.repository.GroupOfStatementsRepository;
@@ -53,6 +52,7 @@ public class RawStatsCreation {
     }
 
     public static double parseNumToDouble(List<String> dataLine, int j) {
+        // It is mandatory for number delimiter to be ",". If not, change in source file is has to be done.
         try {
             NumberFormat format = NumberFormat.getInstance(Locale.FRANCE);
             Number valueNum = format.parse(dataLine.get(j));
@@ -64,10 +64,10 @@ public class RawStatsCreation {
         }
     }
 
-    public static void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> incomeListAttributesWithData,
+    public static void iterateDataLinesAndCreateFinStatementAttrs(List<List<String>> statementListAttributesWithData,
                                                                   List<Attribute> currentPeriodAttributes, int i){
         //[Revenue (note: 16), 164,645, 150,534, 315,333, 287,384]
-        for (List<String> dataLine : incomeListAttributesWithData) {
+        for (List<String> dataLine : statementListAttributesWithData) {
             Attribute attr = new Attribute();
             attr.setFieldName(dataLine.get(0).replace(',', ' ')
                     .replace('(', ' ')
@@ -86,10 +86,9 @@ public class RawStatsCreation {
         }
     }
 
-    public void createNewFinStatementForSpecPeriod(List<String> finStatementListDateEntries,
+    public void createNewFinStatementForEachPeriod(List<String> finStatementListDateEntries,
                                                    List<List<String>> finStatementListAttributesWithData,
                                                    CompanyDimension company,
-                                                   SourceCsvFile newSourceFile,
                                                    Statement statType) {
 
         // Making sure object used as singleton is clean and nothing from previous csv file is present this time.
@@ -131,19 +130,16 @@ public class RawStatsCreation {
                     balanceStatRawRepository.save((BalanceStatRaw) newFinStatementRaw);
                     currentRawBalanceList.add((BalanceStatRaw) newFinStatementRaw);
                     company.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
-                    //newSourceFile.getBalanceRawStatements().add((BalanceStatRaw) newFinStatementRaw);
                     break;
                 case Statement_cashflow:
                     cashflowStatRawRepository.save((CashflowStatRaw) newFinStatementRaw);
                     currentRawCashflowList.add((CashflowStatRaw) newFinStatementRaw);
                     company.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
-                    //newSourceFile.getCashflowRawStatements().add((CashflowStatRaw) newFinStatementRaw);
                     break;
                 case Statement_income:
                     incomeStatRawRepository.save((IncomeStatRaw) newFinStatementRaw);
                     currentRawIncomeList.add((IncomeStatRaw) newFinStatementRaw);
                     company.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
-                    //newSourceFile.getIncomeRawStatements().add((IncomeStatRaw) newFinStatementRaw);
                     break;
             }
             i++;
@@ -180,6 +176,26 @@ public class RawStatsCreation {
         return currentCsvStatement;
     }
 
+    /*
+    public StatRaw customRawStatGet(int i, Statement stat) { // Alternative. Didn't want to add complexity to controller
+        StatRaw currentCsvStatement = null;
+        try {
+            if (stat == Statement.Statement_income) {
+                currentCsvStatement = currentRawIncomeList.get(i);
+            }
+            if (stat == Statement.Statement_cashflow) {
+                currentCsvStatement = currentRawCashflowList.get(i);
+            }
+            if (stat == Statement.Statement_balance) {
+                currentCsvStatement = currentRawBalanceList.get(i);
+            }
+        }
+        catch (Exception ignored) { }
+
+        return currentCsvStatement;
+    }
+    */
+
     List<Integer> listInts;
     public int findMaxLengthOfStatementsInFile() {
         listInts = new LinkedList<>();
@@ -202,17 +218,5 @@ public class RawStatsCreation {
             groupOfStatements.setCompanyDimension(company);
             groupOfStatementsRepository.save(groupOfStatements);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "StatementsToDbHelperImpl{" +
-                "cashflowStatRawRepository=" + cashflowStatRawRepository +
-                ", balanceStatRawRepository=" + balanceStatRawRepository +
-                ", incomeStatRawRepository=" + incomeStatRawRepository +
-                ", currentCsvIncomeRawList=" + currentRawIncomeList +
-                ", currentCsvCashflowRawList=" + currentRawCashflowList +
-                ", currentCsvBalanceRawList=" + currentRawBalanceList +
-                '}';
     }
 }

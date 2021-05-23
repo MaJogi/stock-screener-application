@@ -575,7 +575,7 @@ public class StandardGroupOfStatsCreation {
         incomeStatement.setDatePeriod(rightRawGroupOfStatements.getIncomeStatRaw().getDateOrPeriod());
     }
 
-
+    /*
     public void addStandardStatementsToRightCompany(CompanyDimension company, BalanceStatStandard balanceStatement,
                                                     CashflowStatStandard cashflowStatement,
                                                     IncomeStatStandard incomeStatement){
@@ -583,6 +583,7 @@ public class StandardGroupOfStatsCreation {
         //company.getCashflowStatements().add(cashflowStatement);
         //company.getIncomeStatements().add(incomeStatement);
     }
+    */
 
     public GroupOfStatementsStandard createGroupUsingPreviouslyFoundData(BalanceStatStandard balanceStatement,
                                                                          CashflowStatStandard cashflowStatement,

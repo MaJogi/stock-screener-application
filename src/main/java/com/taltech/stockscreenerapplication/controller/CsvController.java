@@ -98,12 +98,12 @@ public class CsvController {
         newSourceFile.setSourceFileName(String.format(Constants.UPLOADED_FILE_LOCATION, fileName));
 
 
-        statementsToDbHelper.createNewFinStatementForSpecPeriod(incomeListDateEntries,
-                incomeListAttributesWithData, company, newSourceFile, Statement.Statement_income);
-        statementsToDbHelper.createNewFinStatementForSpecPeriod(cashflowListDateEntries,
-                cashflowListAttributesWithData, company, newSourceFile, Statement.Statement_cashflow);
-        statementsToDbHelper.createNewFinStatementForSpecPeriod(balanceListDateEntries,
-                balanceListAttributesWithData, company, newSourceFile, Statement.Statement_balance);
+        statementsToDbHelper.createNewFinStatementForEachPeriod(incomeListDateEntries,
+                incomeListAttributesWithData, company, Statement.Statement_income);
+        statementsToDbHelper.createNewFinStatementForEachPeriod(cashflowListDateEntries,
+                cashflowListAttributesWithData, company, Statement.Statement_cashflow);
+        statementsToDbHelper.createNewFinStatementForEachPeriod(balanceListDateEntries,
+                balanceListAttributesWithData, company, Statement.Statement_balance);
 
         int maxLength = statementsToDbHelper.findMaxLengthOfStatementsInFile();
         statementsToDbHelper.createGroupsOfStatementsForCompany(maxLength, company);
