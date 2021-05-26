@@ -60,11 +60,11 @@ public class CompanyDimensionController {
     @GetMapping("/{tickerId}/income/{dateOrPeriod}")
     public IncomeStatRaw getCompanySpecificTimeRawIncomeStats(@PathVariable final String tickerId,
                                                               @PathVariable final String dateOrPeriod) {
-        LOGGER.info("Starting method getCompanySpecificTimeRawCashflowStats with parameters ->" +
+        LOGGER.info("Starting method getCompanySpecificTimeRawIncomeStats with parameters ->" +
                 " tickerId: {} and dateOrPeriod: {}", tickerId, dateOrPeriod);
         Long incomeStatementIdWithSpecificDate = companyDimensionRepository
                 .findIncomeRawIdByDateOrPeriodSpecificCompany(dateOrPeriod, tickerId);
-
+        LOGGER.info("Found income stat id: {}", incomeStatementIdWithSpecificDate);
         return incomeStatRawRepository.findById(incomeStatementIdWithSpecificDate)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Unable to find income financial statement with Id: " + incomeStatementIdWithSpecificDate));

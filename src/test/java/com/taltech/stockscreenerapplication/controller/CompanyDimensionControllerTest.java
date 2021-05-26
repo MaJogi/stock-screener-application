@@ -33,17 +33,36 @@ class CompanyDimensionControllerTest {
 
     @BeforeAll
     static void setup() {
-        //CompanyDimensionControllerTest.populateDatabaseWithRealData();
+        //populateDatabaseWithRealData();
     }
 
-    /*
-    public void populateDatabaseWithRealData() {
-        ResponseEntity<String> response = restTemplate
-                .getForEntity(getRootUrl() + "readCsv/readAndSaveToDb/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
-                        String.class);
+    @Test
+    void getCompanySpecificTimeRawIncomeStats() {
+
+        // Pre population of database before.
+        restTemplate.getForEntity(getRootUrl() + "csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
+                String.class);
+
+
+        IncomeStatRaw incomeStatRaw = restTemplate
+                .getForObject(getRootUrl() + "companies/TKM1T/income/Q2 2016", IncomeStatRaw.class);
+        assertNotNull(incomeStatRaw.getIncome_stat_raw_id(),
+                "The request does not return income statement by id.");
     }
 
-     */
+    @Test
+    void getCompanySpecificTimeRawIncomeStats2() {
+
+        // Pre population of database before.
+        restTemplate.getForEntity(getRootUrl() + "csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
+                String.class);
+
+        IncomeStatRaw incomeStatRaw = restTemplate
+                .getForObject(getRootUrl() + "companies/TKM1T/income/Q2 2017", IncomeStatRaw.class);
+        assertNotNull(incomeStatRaw.getIncome_stat_raw_id(),
+                "The request does not return income statement by id.");
+    }
+
 
     @Test
     void getCompaniesTest() {
@@ -74,14 +93,6 @@ class CompanyDimensionControllerTest {
                 response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
-    @Test // TODO: Requires pre population of database before.
-    void getCompanySpecificTimeRawIncomeStats() {
-        IncomeStatRaw incomeStatRaw = restTemplate
-                .getForObject(getRootUrl() + "companies/TAL1T/TKM1T/income/Q2%202016", IncomeStatRaw.class);
-        assertNotNull(incomeStatRaw.getIncome_stat_raw_id(),
-                "The request does not return cashflow statement by id.");
-    }
-
     @Test
     void getCompanyRawCashflowStatsOK() {
         ResponseEntity<String> response = restTemplate
@@ -89,10 +100,15 @@ class CompanyDimensionControllerTest {
         assertThat("Insert reason here",
                 response.getStatusCode(), equalTo(HttpStatus.OK));
     }
-    @Test // TODO: Requires pre population of database before.
+
+    @Test
     void getCompanySpecificTimeRawCashflowStat() {
+        // Pre population of database before.
+        restTemplate.getForEntity(getRootUrl() + "csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
+                String.class);
+
         CashflowStatRaw cashflowStatRaw = restTemplate
-                .getForObject(getRootUrl() + "companies/TAL1T/TKM1T/cashflow/Q2%202016", CashflowStatRaw.class);
+                .getForObject(getRootUrl() + "companies/TKM1T/cashflow/6 months 2017", CashflowStatRaw.class);
         assertNotNull(cashflowStatRaw.getCashflow_stat_raw_id(),
                 "The request does not return cashflow statement by id.");
     }
@@ -105,10 +121,14 @@ class CompanyDimensionControllerTest {
                 response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
-    @Test // TODO: Requires pre population of database before.
+    @Test
     void getCompanySpecificTimeRawBalanceStat() {
+        // Pre population of database before.
+        restTemplate.getForEntity(getRootUrl() + "csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
+                String.class);
+
         BalanceStatRaw balanceStatRaw = restTemplate
-                .getForObject(getRootUrl() + "companies/TAL1T/TKM1T/cashflow/Q2%202016", BalanceStatRaw.class);
+                .getForObject(getRootUrl() + "companies/TKM1T/balance/30.06.2017/", BalanceStatRaw.class);
         assertNotNull(balanceStatRaw.getBalance_stat_raw_id(),
                 "The request does not return balance statement by id.");
     }
