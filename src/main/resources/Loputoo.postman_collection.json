@@ -6,6 +6,369 @@
 	},
 	"item": [
 		{
+			"name": "CompanyDimension",
+			"item": [
+				{
+					"name": "Company data - TKM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/companies/TKM1T",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"TKM1T"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Company data - SFG",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/companies/TKM1T",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"companies",
+								"TKM1T"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Unstandardized statements",
+			"item": [
+				{
+					"name": "single",
+					"item": [
+						{
+							"name": "Income statement",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/income/Q2%202016",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"income",
+										"Q2%202016"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Balance statement",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/balance/30.06.2017/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"balance",
+										"30.06.2017",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cashflow statement",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/cashflow/6%20months%202017",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"cashflow",
+										"6%20months%202017"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "listOfAll",
+					"item": [
+						{
+							"name": "All incomeStatements - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/incomeStatements",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"incomeStatements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All cashflowStatements - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/cashflowStatements",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"cashflowStatements"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All balanceStatements - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/companies/TKM1T/balanceStatements",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"companies",
+										"TKM1T",
+										"balanceStatements"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Undependent from company",
+					"item": [
+						{
+							"name": "Unstandardized income statement by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/rawIncomeStats/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"rawIncomeStats",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GroupOfUnstandardizedStats",
+			"item": [
+				{
+					"name": "listOfAll",
+					"item": [
+						{
+							"name": "Full groupOfStatements - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groupOfStatements/onlyFullGroups/TKM1T",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groupOfStatements",
+										"onlyFullGroups",
+										"TKM1T"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Full groupOfStatements - SFG",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groupOfStatements/onlyFullGroups/SFG1T",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groupOfStatements",
+										"onlyFullGroups",
+										"SFG1T"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "All existing",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GroupOfStandardStatements",
+			"item": [
+				{
+					"name": "create",
+					"item": [
+						{
+							"name": "Create standstatgroup for 30.06.2017 - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groupOfStandardStatements/TKM1T/create/forPeriod/30.06.2017/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groupOfStandardStatements",
+										"TKM1T",
+										"create",
+										"forPeriod",
+										"30.06.2017",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create standstatgroup for 31.12.2016 - TKM",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/groupOfStandardStatements/TKM1T/create/forPeriod/30.06.2017/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"groupOfStandardStatements",
+										"TKM1T",
+										"create",
+										"forPeriod",
+										"30.06.2017",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "All groups of standard statements - TKM",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				},
+				{
+					"name": "All existing",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/groupOfStandardStatements/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"groupOfStandardStatements",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "FileUploadService",
 			"item": [
 				{
@@ -43,250 +406,406 @@
 			]
 		},
 		{
-			"name": "CreateConfigs",
+			"name": "ReadFromFolder",
 			"item": [
 				{
-					"name": "createMappingForIncomeStatement",
+					"name": "Primary read - TKM",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"revenue\": \"#Revenue + #Other_operating_income\",\r\n    \"costOfRevenue\": \"#Cost_of_sales\",\r\n    \"grossProfit\": \"#Revenue - #Cost_of_sales\",\r\n    \"grossProfitRatio\": \"(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)\",\r\n    \"rAndDexpenses\": null,\r\n    \"generalAndAdminExpenses\": \"#Other_operating_expenses + #Staff_costs\",\r\n    \"sellingAndMarketingExpenses\": null,\r\n    \"otherExpenses\": \"#Other_expenses\",\r\n    \"operatingExpenses\": \"#Other_operating_expenses + #Staff_costs + #Other_expenses\",\r\n    \"costAndExpenses\": \"#Cost_of_sales + (#Other_operating_expenses + #Staff_costs + #Other_expenses + #Depreciation_amortisation_and_impairment_losses)\",\r\n    \"interestExpense\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"depricationAndAmortization\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitda\": \"#Operating_profit + #Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitdaRatio\": \"(#Operating_profit + #Depreciation_amortisation_and_impairment_losses) / (#Revenue + #Other_operating_income)\",\r\n    \"operatingIncome\": \"#Operating_profit\",\r\n    \"operatingIncomeRatio\": \"#Operating_profit / (#Revenue + #Other_operating_income)\",\r\n    \"totalOtherIncomeExpensesNet\": null,\r\n    \"incomeBeforeTax\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"incomeBeforeTaxRatio\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"incomeTaxExpense\": null,\r\n    \"netIncome\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"netIncomeRatio\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"eps\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"epsDiluted\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"weightedAverageShsOut\": null,\r\n    \"weightedAverageShsOutDil\": null\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/income",
+							"raw": "http://localhost:8080/csv/readAndSave/TKM1T/tkm-2017_q2_CSV_modified_by_frontend",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"configuration",
-								"create",
+								"csv",
+								"readAndSave",
 								"TKM1T",
-								"income"
+								"tkm-2017_q2_CSV_modified_by_frontend"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "createMappingForIncomeStatement with 31_12_2016",
+					"name": "Secondary read - TKM",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"Q2 2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"revenue\": \"#Revenue + #Other_operating_income + #Revenue + #Revenue\",\r\n    \"costOfRevenue\": \"#Cost_of_sales\",\r\n    \"grossProfit\": \"#Revenue - #Cost_of_sales\",\r\n    \"grossProfitRatio\": \"(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)\",\r\n    \"rAndDexpenses\": null,\r\n    \"generalAndAdminExpenses\": \"#Other_operating_expenses + #Staff_costs\",\r\n    \"sellingAndMarketingExpenses\": null,\r\n    \"otherExpenses\": \"#Other_expenses\",\r\n    \"operatingExpenses\": \"#Other_operating_expenses + #Staff_costs + #Other_expenses\",\r\n    \"costAndExpenses\": \"#Cost_of_sales + (#Other_operating_expenses + #Staff_costs + #Other_expenses + #Depreciation_amortisation_and_impairment_losses)\",\r\n    \"interestExpense\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"depricationAndAmortization\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitda\": \"#Operating_profit + #Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitdaRatio\": \"(#Operating_profit + #Depreciation_amortisation_and_impairment_losses) / (#Revenue + #Other_operating_income)\",\r\n    \"operatingIncome\": \"#Operating_profit\",\r\n    \"operatingIncomeRatio\": \"#Operating_profit / (#Revenue + #Other_operating_income)\",\r\n    \"totalOtherIncomeExpensesNet\": null,\r\n    \"incomeBeforeTax\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"incomeBeforeTaxRatio\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"incomeTaxExpense\": null,\r\n    \"netIncome\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"netIncomeRatio\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"eps\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"epsDiluted\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"weightedAverageShsOut\": null,\r\n    \"weightedAverageShsOutDil\": null\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/income",
+							"raw": "http://localhost:8080/csv/readAndSave/TKM1T/tkm-2017_q2_CSV_example",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"configuration",
-								"create",
+								"csv",
+								"readAndSave",
 								"TKM1T",
-								"income"
+								"tkm-2017_q2_CSV_example"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "createMappingForCashflowStatement",
+					"name": "Read - SFG",
 					"request": {
-						"method": "POST",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"netIncome\": \"#Net_profit\",\r\n    \"depriciationAndAmortization\": \"#Depreciation_amortisation\",\r\n    \"stockBasedCompensation\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"changeInWorkingCapital\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsReceivables\": null,\r\n    \"inventory\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsPayments\": null,\r\n    \"otherWorkingCapital\": null,\r\n    \"otherNonCashItems\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashProvidedByOperatingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"investmentsInPropertyPlantAndEquipment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"acquisitionsNet\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"purchasesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"salesMaturitiesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"otherInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashUsedForInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"debtRepayment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/cashflow",
+							"raw": "http://localhost:8080/csv/readAndSave/SFG1T/sfg-2019_q3_en_eur_con_00",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"configuration",
-								"create",
-								"TKM1T",
-								"cashflow"
+								"csv",
+								"readAndSave",
+								"SFG1T",
+								"sfg-2019_q3_en_eur_con_00"
 							]
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "createMappingForCashflowStatement with 31_12_2016",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"6 months 2017\",\r\n    \"dateTo\": \"6 months 2019\",\r\n    \"netIncome\": \"#Net_profit + #Depreciation_amortisation + #Depreciation_amortisation + #Net_profit\",\r\n    \"depriciationAndAmortization\": \"#Depreciation_amortisation\",\r\n    \"stockBasedCompensation\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"changeInWorkingCapital\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsReceivables\": null,\r\n    \"inventory\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsPayments\": null,\r\n    \"otherWorkingCapital\": null,\r\n    \"otherNonCashItems\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashProvidedByOperatingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"investmentsInPropertyPlantAndEquipment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"acquisitionsNet\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"purchasesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"salesMaturitiesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"otherInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashUsedForInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"debtRepayment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/cashflow",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"configuration",
-								"create",
-								"TKM1T",
-								"cashflow"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createMappingForBalanceStatementFrom01.01.2017",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"01.01.2017\",\r\n    \"dateTo\": \"30.06.2021\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/balance",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"configuration",
-								"create",
-								"TKM1T",
-								"balance"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "createMappingForBalanceStatementUpTo31_12_2016",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"01.01.2008\",\r\n    \"dateTo\": \"31.12.2016\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents + #Cash_and_cash_equivalents\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/configuration/create/TKM1T/balance",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"configuration",
-								"create",
-								"TKM1T",
-								"balance"
-							]
-						}
-					},
-					"response": []
-				}
-			],
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"type": "text/javascript",
-						"exec": [
-							""
-						]
-					}
 				}
 			]
 		},
 		{
-			"name": "UpdateConfigs",
+			"name": "csvFileLog",
 			"item": [
 				{
-					"name": "updateMappingForBalanceStatementFrom01.01.2017",
+					"name": "Get all",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"01.01.2017\",\r\n    \"dateTo\": \"30.06.2021\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents * 3\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
 						"url": {
-							"raw": "http://localhost:8080/configuration/update/TKM1T/balance/1",
+							"raw": "http://localhost:8080/sourceCsvFiles",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"configuration",
-								"update",
-								"TKM1T",
-								"balance",
+								"sourceCsvFiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/sourceCsvFiles/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"sourceCsvFiles",
 								"1"
 							]
 						}
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Configurations",
+			"item": [
+				{
+					"name": "CreateConfigs",
+					"item": [
+						{
+							"name": "CreateMappingIncomeStat",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"revenue\": \"#Revenue + #Other_operating_income\",\r\n    \"costOfRevenue\": \"#Cost_of_sales\",\r\n    \"grossProfit\": \"#Revenue - #Cost_of_sales\",\r\n    \"grossProfitRatio\": \"(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)\",\r\n    \"rAndDexpenses\": null,\r\n    \"generalAndAdminExpenses\": \"#Other_operating_expenses + #Staff_costs\",\r\n    \"sellingAndMarketingExpenses\": null,\r\n    \"otherExpenses\": \"#Other_expenses\",\r\n    \"operatingExpenses\": \"#Other_operating_expenses + #Staff_costs + #Other_expenses\",\r\n    \"costAndExpenses\": \"#Cost_of_sales + (#Other_operating_expenses + #Staff_costs + #Other_expenses + #Depreciation_amortisation_and_impairment_losses)\",\r\n    \"interestExpense\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"depricationAndAmortization\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitda\": \"#Operating_profit + #Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitdaRatio\": \"(#Operating_profit + #Depreciation_amortisation_and_impairment_losses) / (#Revenue + #Other_operating_income)\",\r\n    \"operatingIncome\": \"#Operating_profit\",\r\n    \"operatingIncomeRatio\": \"#Operating_profit / (#Revenue + #Other_operating_income)\",\r\n    \"totalOtherIncomeExpensesNet\": null,\r\n    \"incomeBeforeTax\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"incomeBeforeTaxRatio\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"incomeTaxExpense\": null,\r\n    \"netIncome\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"netIncomeRatio\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"eps\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"epsDiluted\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"weightedAverageShsOut\": null,\r\n    \"weightedAverageShsOutDil\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/income",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"income"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateMappingIncomeStat with 31_12_2016",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"Q2 2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"revenue\": \"#Revenue + #Other_operating_income + #Revenue + #Revenue\",\r\n    \"costOfRevenue\": \"#Cost_of_sales\",\r\n    \"grossProfit\": \"#Revenue - #Cost_of_sales\",\r\n    \"grossProfitRatio\": \"(#Revenue - #Cost_of_sales) / (#Revenue + #Other_operating_income)\",\r\n    \"rAndDexpenses\": null,\r\n    \"generalAndAdminExpenses\": \"#Other_operating_expenses + #Staff_costs\",\r\n    \"sellingAndMarketingExpenses\": null,\r\n    \"otherExpenses\": \"#Other_expenses\",\r\n    \"operatingExpenses\": \"#Other_operating_expenses + #Staff_costs + #Other_expenses\",\r\n    \"costAndExpenses\": \"#Cost_of_sales + (#Other_operating_expenses + #Staff_costs + #Other_expenses + #Depreciation_amortisation_and_impairment_losses)\",\r\n    \"interestExpense\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"depricationAndAmortization\": \"#Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitda\": \"#Operating_profit + #Depreciation_amortisation_and_impairment_losses\",\r\n    \"ebitdaRatio\": \"(#Operating_profit + #Depreciation_amortisation_and_impairment_losses) / (#Revenue + #Other_operating_income)\",\r\n    \"operatingIncome\": \"#Operating_profit\",\r\n    \"operatingIncomeRatio\": \"#Operating_profit / (#Revenue + #Other_operating_income)\",\r\n    \"totalOtherIncomeExpensesNet\": null,\r\n    \"incomeBeforeTax\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"incomeBeforeTaxRatio\": \"#NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"incomeTaxExpense\": null,\r\n    \"netIncome\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR\",\r\n    \"netIncomeRatio\": \" #NET_PROFIT_FOR_THE_FINANCIAL_YEAR / (#Revenue + #Other_operating_income)\",\r\n    \"eps\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"epsDiluted\": \"#Basic_and_diluted_earnings_per_share_euros\",\r\n    \"weightedAverageShsOut\": null,\r\n    \"weightedAverageShsOutDil\": null\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/income",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"income"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateMappingCashflowStat",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"2017\",\r\n    \"dateTo\": \"Q2 2019\",\r\n    \"netIncome\": \"#Net_profit\",\r\n    \"depriciationAndAmortization\": \"#Depreciation_amortisation\",\r\n    \"stockBasedCompensation\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"changeInWorkingCapital\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsReceivables\": null,\r\n    \"inventory\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsPayments\": null,\r\n    \"otherWorkingCapital\": null,\r\n    \"otherNonCashItems\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashProvidedByOperatingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"investmentsInPropertyPlantAndEquipment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"acquisitionsNet\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"purchasesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"salesMaturitiesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"otherInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashUsedForInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"debtRepayment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/cashflow",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"cashflow"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateMappingCashflowStat with 31_12_2016",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"6 months 2017\",\r\n    \"dateTo\": \"6 months 2019\",\r\n    \"netIncome\": \"#Net_profit + #Depreciation_amortisation + #Depreciation_amortisation + #Net_profit\",\r\n    \"depriciationAndAmortization\": \"#Depreciation_amortisation\",\r\n    \"stockBasedCompensation\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"changeInWorkingCapital\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsReceivables\": null,\r\n    \"inventory\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"accountsPayments\": null,\r\n    \"otherWorkingCapital\": null,\r\n    \"otherNonCashItems\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashProvidedByOperatingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"investmentsInPropertyPlantAndEquipment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"acquisitionsNet\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"purchasesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"salesMaturitiesOfInvestments\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"otherInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"netCashUsedForInvestingActivities\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\",\r\n    \"debtRepayment\": \"#Change_in_receivables_and_prepayments_related_to_operating_activities / #Change_in_inventories\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/cashflow",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"cashflow"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateMappingBalanceStat from 01.01.2017",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"01.01.2017\",\r\n    \"dateTo\": \"30.06.2021\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/balance",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"balance"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateMappingBalanceStat up to 31_12_2016",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 2,\r\n    \"dateFrom\": \"01.01.2008\",\r\n    \"dateTo\": \"31.12.2016\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents + #Cash_and_cash_equivalents\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/create/TKM1T/balance",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"create",
+										"TKM1T",
+										"balance"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "UpdateConfigs",
+					"item": [
+						{
+							"name": "UpdateMappingBalanceStat from 01.01.2017 - TKM",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"companyConfigCollectionId\": 1,\r\n    \"dateFrom\": \"01.01.2017\",\r\n    \"dateTo\": \"30.06.2021\",\r\n    \"cashAndCashEquivalents\": \"#Cash_and_cash_equivalents * 3\",\r\n    \"shortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"cashAndShortTermInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netReceivables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"inventory\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"propertyPlantEquipmentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwill\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"intangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"goodwillAndIntangibleAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermInvestmets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalAssets\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accountPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"shortTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"taxPayables\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenue\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"longTermDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredRevenueNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"deferredTaxLiabilitiesNonCurrent\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalNonCurrentLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilities\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"commonStock\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"retainedEarnings\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"accumulatedOtherComprehensiveIncomeLoss\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"otherTotalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalStockholdersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalLiabilitiesAndStockHoldersEquity\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalInvestments\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"totalDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\",\r\n    \"netDebt\": \"(#Long_term_trade_and_other_receivables + #Total_current_assets) * #Investments_in_associates\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/configuration/update/TKM1T/balance/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"update",
+										"TKM1T",
+										"balance",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get",
+					"item": [
+						{
+							"name": "CashflowConfigs - TKM1T",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": null
+							},
+							"response": []
+						},
+						{
+							"name": "CashflowConfig by id - TKM1T",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/configuration/TKM1T/cashflowConfigs/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"configuration",
+										"TKM1T",
+										"cashflowConfigs",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		}
